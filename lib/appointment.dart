@@ -31,7 +31,7 @@ class appointment extends StatelessWidget {
                     color: const Color.fromARGB(255, 32, 91, 34),
                     child: Row(
                       children: [
-                        Image.asset('assests/wakeel2-removebg-preview.png'),
+                        Image.asset('assests/wakeel2_removebg_preview.png'),
                         const SizedBox(
                           width: 30,
                         ),

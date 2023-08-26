@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:wakeel_app/log_inScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Intro.dart';
 import 'log_inScreen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,16 +15,26 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  Future<bool?> updateState() async
+  {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final bool repeat = prefs.getBool('repeat') ?? true;
+    Timer(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => repeat ? const IntroScreen() : const LogInScreen(),
+          ));
+    });
+  }
+
+
+
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 5), () {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LogInScreen(),
-          ));
-    });
+    updateState();
   }
 
   @override
@@ -41,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
           SizedBox(
             height: 20,
           ),
-          Image.asset('assests/wakeel2-removebg-preview.png')
+          Image.asset('assests/wakeel2_removebg_preview.png')
         ],
       ),
     );

@@ -4,14 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/material/input_decorator.dart';
 import 'package:wakeel_app/appointment.dart';
 import 'package:wakeel_app/profile_screen.dart';
+import 'appointmentList.dart';
 import 'booking.dart';
 import 'chatwidget.dart';
 import 'my_booking.dart';
 import 'legal_sevices.dart';
 import 'find_lawyer.dart';
 import 'LEGAL.dart';
-
-
 
 class appointment extends StatelessWidget {
   const appointment({super.key});
@@ -74,7 +73,8 @@ class appointment extends StatelessWidget {
                         child: Column(
                           children: [
                             Image.asset('assests/book.png',
-                                height: 70, width: 50), //height: 50, width: 30),
+                                height: 70, width: 50),
+                            //height: 50, width: 30),
                             Text('Emergency\nBook'),
                           ],
                         ),
@@ -83,8 +83,10 @@ class appointment extends StatelessWidget {
                     Expanded(
                       child: InkWell(
                         onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => legalser()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => legalser()));
                         },
                         child: Column(
                           children: [
@@ -98,8 +100,10 @@ class appointment extends StatelessWidget {
                     Expanded(
                       child: InkWell(
                         onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => findlawyer()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => findlawyer()));
                         },
                         child: Column(
                           children: [
@@ -205,385 +209,13 @@ class appointment extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 150,
+                Container(
+                    height: 400,
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green),
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(25),
+                      color: Colors.amber,
                     ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 0,
-                                ),
-                                Text('Adv. Bashir'),
-                                Text('Momin'),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Image.asset('assests/LAW.PNG')
-                              ],
-                            ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Column(
-                              children: [
-                                // SizedBox(
-                                //   height: 10,
-                                // ),
-                                Text('Consultation Type'),
-                                Text('Consultation Time'),
-                                Text('Promo Code'),
-                                Text('ASKL2000'),
-                              ],
-                            ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Column(
-                              children: [
-                                Text('Chat'),
-                                Text('25/06/2022'),
-                                Text('05:00 pm'),
-                              ],
-                            ),
-                          ],
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.only(left: 100),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 25,
-                                width: 100,
-                                child: InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ProfileScreen()));
-                                    },
-                                    child: Center(child: Text('View profile'))),
-                                decoration: BoxDecoration(
-                                    color: Colors.amber,
-                                    borderRadius: BorderRadius.circular(15)),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) => ChatScreen()));
-                                },
-                                child: Container(
-                                  height: 25,
-                                  width: 80,
-                                  child: Center(
-                                      child: Text(
-                                    'Chat',
-                                    style: TextStyle(color: Colors.white),
-                                  )),
-                                  decoration: BoxDecoration(
-                                      color:
-                                          const Color.fromARGB(255, 19, 59, 20),
-                                      borderRadius: BorderRadius.circular(15)),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 120,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green),
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text('Adv. Bashir'),
-                                Text('Momin'),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Image.asset('assests/Frame2.png')
-                              ],
-                            ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text('Consultation Type'),
-                                Text('Consultation Time'),
-                                Text('Promo Code'),
-                                Text('ASKL2000'),
-                              ],
-                            ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text('Chat'),
-                                Text('25/06/2022'),
-                                Text('05:00 pm'),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 100),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 25,
-                                width: 100,
-                                child: Center(child: Text('View Profile')),
-                                decoration: BoxDecoration(
-                                    color: Colors.amber,
-                                    borderRadius: BorderRadius.circular(15)),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                height: 25,
-                                width: 80,
-                                child: Center(
-                                    child: Text(
-                                  'Chat',
-                                  style: TextStyle(color: Colors.white),
-                                )),
-                                decoration: BoxDecoration(
-                                    color:
-                                        const Color.fromARGB(255, 19, 59, 20),
-                                    borderRadius: BorderRadius.circular(15)),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 120,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green),
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text('Adv. Bashir'),
-                                Text('Momin'),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Image.asset('assests/Frame2.png')
-                              ],
-                            ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text('Consultation Type'),
-                                Text('Consultation Time'),
-                                Text('Promo Code'),
-                                Text('ASKL2000'),
-                              ],
-                            ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text('Chat'),
-                                Text('25/06/2022'),
-                                Text('05:00 pm'),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 100),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 25,
-                                width: 100,
-                                child: Center(child: Text('View Profile')),
-                                decoration: BoxDecoration(
-                                    color: Colors.amber,
-                                    borderRadius: BorderRadius.circular(15)),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                height: 25,
-                                width: 80,
-                                child: Center(
-                                    child: Text(
-                                  'Chat',
-                                  style: TextStyle(color: Colors.white),
-                                )),
-                                decoration: BoxDecoration(
-                                    color:
-                                        const Color.fromARGB(255, 19, 59, 20),
-                                    borderRadius: BorderRadius.circular(15)),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 120,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green),
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text('Adv. Bashir'),
-                                Text('Momin'),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Image.asset('assests/Frame2.png')
-                              ],
-                            ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text('Consultation Type'),
-                                Text('Consultation Time'),
-                                Text('Promo Code'),
-                                Text('ASKL2000'),
-                              ],
-                            ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text('Chat'),
-                                Text('25/06/2022'),
-                                Text('05:00 pm'),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 100),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 25,
-                                width: 100,
-                                child: Center(child: Text('View Profile')),
-                                decoration: BoxDecoration(
-                                    color: Colors.amber,
-                                    borderRadius: BorderRadius.circular(15)),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                height: 25,
-                                width: 80,
-                                child: Center(
-                                    child: Text(
-                                  'Chat',
-                                  style: TextStyle(color: Colors.white),
-                                )),
-                                decoration: BoxDecoration(
-                                    color:
-                                        const Color.fromARGB(255, 19, 59, 20),
-                                    borderRadius: BorderRadius.circular(15)),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 247,
-                ),
+                    child: appointmentList()),
               ]),
             ),
             bottomNavigationBar: BottomNavigationBar(

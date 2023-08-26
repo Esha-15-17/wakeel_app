@@ -9,6 +9,7 @@ import 'notfications_screen.dart';
 import 'legal_sevices.dart';
 import 'contactus.dart';
 import 'reset_password.dart';
+import 'changed_num.dart';
 
 class menu extends StatelessWidget {
   const menu({super.key});
@@ -124,34 +125,36 @@ class menu extends StatelessWidget {
         SizedBox(
           height: 15,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
 
-              Icons.numbers
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.push
-                  (context,
-                    MaterialPageRoute(
-                        builder: (context) => changednumber()));
-              },
-              child: Text(
-                'Change number',
-                style: TextStyle(fontSize: 15),
+        InkWell(
+          onTap: () {
+            Navigator.push
+              (context,
+                MaterialPageRoute(
+                    builder: (context) => changednum()));
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+
+                Icons.numbers
               ),
-            ),
-            SizedBox(
-              width: 215,
-            ),
-            Icon(
-              Icons.arrow_forward_ios_outlined,
-              color: Colors.black,
-              size: 15,
-            ),
-          ],
+               Text(
+                  'Change number',
+                  style: TextStyle(fontSize: 15),
+                ),
+
+              SizedBox(
+                width: 215,
+              ),
+              Icon(
+                Icons.arrow_forward_ios_outlined,
+                color: Colors.black,
+                size: 15,
+              ),
+            ],
+          ),
         ),SizedBox(
           height: 15,
         ),

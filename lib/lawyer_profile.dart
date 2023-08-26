@@ -37,7 +37,7 @@ class _lawyerprofileState extends State<lawyerprofile> {
   TextEditingController courtController = TextEditingController();
   String _selectedUserRole = 'lawyer'; // Default selected role
   File? _selectedImage;
-
+  List<String> selectedSpecializations = [];
 
   Future<void> registerUser(String gender,
       String language,
@@ -278,32 +278,49 @@ class _lawyerprofileState extends State<lawyerprofile> {
               SizedBox(
                 height: 20,
               ),
+
               Padding(
                 padding: EdgeInsets.only(left: 20, right: 20),
-                child: SizedBox(
-                  height: 40,
-                  child: TextField(
-                    controller: specializationController,
-                    style: TextStyle(color: Color(0xff01411C)),
-                    decoration: InputDecoration(
-                        hintText: 'Specialization',
-                        focusColor: Color(0xff01411C),
-                        contentPadding: EdgeInsets.all(8),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(
-                                color: Color(0xff01411C), width: 2.0)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(
-                                color: const Color(0xff01411C), width: 2.0)),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          borderSide: BorderSide(color: Colors.black),
-                        )),
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Specialization',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Color(0xff01411C),
+                      ),
+                    ),
+                    for (String specialization in [
+                      'Family Court',
+                      'Crime Court',
+                      'Divorce Court',
+                      'Other'
+                    ])
+                      Row(
+                        children: [
+                          Checkbox(
+                            value: selectedSpecializations
+                                .contains(specialization),
+                            onChanged: (bool? value) {
+                              setState(() {
+                                if (value == true) {
+                                  selectedSpecializations.add(specialization);
+                                } else {
+                                  selectedSpecializations
+                                      .remove(specialization);
+                                }
+                              });
+                            },
+                          ),
+                          Text(specialization),
+                        ],
+                      ),
+                  ],
                 ),
               ),
+
               SizedBox(
                 height: 20,
               ),

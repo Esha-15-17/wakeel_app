@@ -540,8 +540,6 @@ class _findlawyerState extends State<findlawyer> {
             ),
           ]),
         ),
-
-
       ),
     );
   }
@@ -549,7 +547,7 @@ class _findlawyerState extends State<findlawyer> {
 
 Widget build (BuildContext context) {
   final List<Widget> _screens = [
-    legalservices(),
+    findlawyer(),
     ChatScreen(),
     Notifications(),
     myprofile(),

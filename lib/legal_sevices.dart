@@ -230,6 +230,39 @@ class _legalservicesState extends State<legalservices> {
               ),
             ),
           ]),
+
+          SizedBox(
+            height: 30,
+          ),
+          Row(children: [
+            Expanded(
+              child: Column(
+                children: [
+                  Image.asset('assests/cc.png', height:50 , width:50),
+                  Text('Cyber crime'),
+                ]
+              ),
+            ),
+            Expanded(
+              child: Column(
+                children: [
+                  Image.asset('assests/tax.png', height: 50, width: 50),
+                  Text('Taxtation'),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Column(
+                children: [
+                  Image.asset('assests/imii.png', height: 50, width: 50),
+                  Text('Immigration'),
+                ],
+              ),
+            ),
+          ]),
+
+
+
           SizedBox(
             height: 20,
           ),
@@ -250,11 +283,11 @@ class _legalservicesState extends State<legalservices> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Divorce',
+                'Human Rights',
                 style: TextStyle(fontSize: 15),
               ),
               SizedBox(
-                width: 248,
+                width: 206,
               ),
               Icon(
                 Icons.arrow_forward_ios_outlined,
@@ -270,11 +303,11 @@ class _legalservicesState extends State<legalservices> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Child Custody',
+                'Banking matters',
                 style: TextStyle(fontSize: 15),
               ),
               SizedBox(
-                width: 202,
+                width: 190,
               ),
               Icon(
                 Icons.arrow_forward_ios_outlined,
@@ -295,6 +328,86 @@ class _legalservicesState extends State<legalservices> {
               ),
               SizedBox(
                 width: 199,
+              ),
+              Icon(
+                Icons.arrow_forward_ios_outlined,
+                color: Colors.black,
+                size: 15,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Company Registration',
+                style: TextStyle(fontSize: 15),
+              ),
+              SizedBox(
+                width: 152,
+              ),
+              Icon(
+                Icons.arrow_forward_ios_outlined,
+                color: Colors.black,
+                size: 15,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Contracts and Documentations',
+                style: TextStyle(fontSize: 15),
+              ),
+              SizedBox(
+                width: 95,
+              ),
+              Icon(
+                Icons.arrow_forward_ios_outlined,
+                color: Colors.black,
+                size: 15,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Medical Negligence',
+                style: TextStyle(fontSize: 15),
+              ),
+              SizedBox(
+                width: 165,
+              ),
+              Icon(
+                Icons.arrow_forward_ios_outlined,
+                color: Colors.black,
+                size: 15,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Consumer court',
+                style: TextStyle(fontSize: 15),
+              ),
+              SizedBox(
+                width: 192,
               ),
               Icon(
                 Icons.arrow_forward_ios_outlined,

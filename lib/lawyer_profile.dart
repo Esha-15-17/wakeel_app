@@ -33,7 +33,7 @@ class _lawyerprofileState extends State<lawyerprofile> {
   TextEditingController aboutmeController = TextEditingController();
   TextEditingController experienceController = TextEditingController();
   TextEditingController zipcodeController = TextEditingController();
-  TextEditingController specializationController = TextEditingController();
+  TextEditingController selectedSpecializationController = TextEditingController();
   TextEditingController courtController = TextEditingController();
   String _selectedUserRole = 'lawyer'; // Default selected role
   File? _selectedImage;
@@ -45,7 +45,7 @@ class _lawyerprofileState extends State<lawyerprofile> {
       String aboutme,
       String experience,
       String zipcode,
-      String specializaton,
+      String selectedSpecializations,
       String court,
       String userRole,) async {
     try {
@@ -63,7 +63,7 @@ class _lawyerprofileState extends State<lawyerprofile> {
         'about_me': aboutme,
         'experience': experience,
         'zip_code': zipcode,
-        'specialization': specializaton,
+        'specializations': selectedSpecializations,
         'court': court,
       });
 
@@ -278,52 +278,6 @@ class _lawyerprofileState extends State<lawyerprofile> {
               SizedBox(
                 height: 20,
               ),
-
-              Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Specialization',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Color(0xff01411C),
-                      ),
-                    ),
-                    for (String specialization in [
-                      'Family Court',
-                      'Crime Court',
-                      'Divorce Court',
-                      'Other'
-                    ])
-                      Row(
-                        children: [
-                          Checkbox(
-                            value: selectedSpecializations
-                                .contains(specialization),
-                            onChanged: (bool? value) {
-                              setState(() {
-                                if (value == true) {
-                                  selectedSpecializations.add(specialization);
-                                } else {
-                                  selectedSpecializations
-                                      .remove(specialization);
-                                }
-                              });
-                            },
-                          ),
-                          Text(specialization),
-                        ],
-                      ),
-                  ],
-                ),
-              ),
-
-              SizedBox(
-                height: 20,
-              ),
               Padding(
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: SizedBox(
@@ -410,6 +364,49 @@ class _lawyerprofileState extends State<lawyerprofile> {
               ),
               SizedBox(
                 height: 20,
+              ),Padding(
+                padding: EdgeInsets.only(left: 20, right: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    Text(
+                      'Specialization',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Color(0xff01411C),
+                      ),
+                    ),
+                    for (String specialization in [
+                      'Family Court',
+                      'Crime Court',
+                      'Divorce Court',
+                      'Other'
+                    ])
+                      Row(
+                        children: [
+                          Checkbox(
+                            value: selectedSpecializations.contains(specialization),
+                            onChanged: (bool? value) {
+                              setState(() {
+                                if (value == true) {
+                                  selectedSpecializations.add(specialization);
+                                } else {
+                                  selectedSpecializations.remove(specialization);
+                                }
+                              });
+                            },
+                          ),
+                          Text(specialization),
+                        ],
+                      ),
+
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
               ),
 
 
@@ -418,9 +415,9 @@ class _lawyerprofileState extends State<lawyerprofile> {
                   registerUser(
                     genderController.text.toString(),
                     languageController.text.toString(),
-                    specializationController.text.toString(),
                     zipcodeController.text.toString(),
                     residentialareaController.text.toString(),
+                    selectedSpecializations.join(','),
                     aboutmeController.text.toString(),
                     experienceController.text.toString(),
                     courtController.text.toString(),
@@ -446,8 +443,6 @@ class _lawyerprofileState extends State<lawyerprofile> {
                   ),
                 ),
               ),
-
-              // Other widgets...
             ],
           ),
         ),

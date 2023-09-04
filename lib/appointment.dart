@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/material/input_decorator.dart';
 import 'package:wakeel_app/appointment.dart';
 import 'package:wakeel_app/profile_screen.dart';
@@ -11,47 +12,69 @@ import 'my_booking.dart';
 import 'legal_sevices.dart';
 import 'find_lawyer.dart';
 import 'LEGAL.dart';
+import 'notfications_screen.dart';
+import 'menu.dart';
+import 'package:wakeel_app/My_profile.dart';
 
-class appointment extends StatelessWidget {
+class appointment extends StatefulWidget {
   const appointment({super.key});
 
+  @override
+  State<appointment> createState() => _appointmentState();
+}
+
+class _appointmentState extends State<appointment> {
+  int _currentIndex = 0;
   // This widget is the root of your application.
-  Widget build(BuildContext context) {
-    int _selectedIndex = 0;
+  Widget appointment(){
     return SafeArea(
         child: Scaffold(
             body: SingleChildScrollView(
               child: Column(children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 0.5),
+                  padding: const EdgeInsets.only(top: 0.1),
                   child: Container(
                     height: 55,
                     width: double.infinity,
                     color: const Color.fromARGB(255, 32, 91, 34),
                     child: Row(
                       children: [
-                        Image.asset('assests/wakeel2_removebg_preview.png'),
-                        const SizedBox(
-                          width: 30,
+                        IconButton(
+                          icon: Icon(Icons.arrow_back, color: Colors.white),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                         ),
+                        SizedBox(width: 5),
+                        Image.asset('assests/wakeel2_removebg_preview.png'),
+                        const SizedBox(width: 5),
                         SizedBox(
                           height: 40,
-                          width: 250,
+                          width: 190,
                           child: TextField(
                             decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(100),
                                     borderSide:
-                                        const BorderSide(color: Colors.white)),
+                                    const BorderSide(color: Colors.white)),
                                 hintText: 'Search',
                                 contentPadding: const EdgeInsets.all(8.0),
-                                suffixIcon: const Icon(Icons.search),
+                                suffixIcon: const Icon(Icons.search,color: Colors.white),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(50),
                                   //  borderSide: BorderSide(color: Colors.white)
                                 )),
                           ),
                         ),
+                        InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => menu(),
+                                  ));
+                            },
+                            child: Icon(Icons.view_headline_sharp,color: Colors.white)),
                       ],
                     ),
                   ),
@@ -218,35 +241,56 @@ class appointment extends StatelessWidget {
                     child: appointmentList()),
               ]),
             ),
-            bottomNavigationBar: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: Color(0xff01411C),
-              selectedItemColor: Colors.white,
-              unselectedItemColor: Colors.white.withOpacity(.60),
-              selectedFontSize: 14,
-              unselectedFontSize: 14,
-              onTap: (value) {
-                // Respond to item press.
-              },
-              // ignore: prefer_const_literals_to_create_immutables
-              items: [
-                BottomNavigationBarItem(
-                  label: 'home',
-                  icon: Icon(Icons.home),
-                ),
-                BottomNavigationBarItem(
-                  label: 'Messages',
-                  icon: Icon(Icons.message_rounded),
-                ),
-                BottomNavigationBarItem(
-                  label: 'Notification',
-                  icon: Icon(Icons.notifications),
-                ),
-                BottomNavigationBarItem(
-                  label: 'Profile',
-                  icon: Icon(Icons.person),
-                ),
-              ],
-            )));
+
+
+        ));
   }
-}
+
+
+  Widget build (BuildContext context) {
+    final List<Widget> _screens = [
+      appointment(),
+      ChatScreen(),
+      Notifications(),
+      myprofile(),
+    ];
+
+    return Scaffold(
+      body: _screens[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Color(0xff01411C),
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white.withOpacity(.60),
+        selectedFontSize: 14,
+        unselectedFontSize: 14,
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+
+// ignore: prefer_const_literals_to_create_immutable
+        items: [
+          BottomNavigationBarItem(
+            label: 'home',
+            icon: Icon(Icons.home),
+          ),
+          BottomNavigationBarItem(
+            label: 'Messages',
+            icon: Icon(Icons.message_rounded),
+          ),
+          BottomNavigationBarItem(
+            label: 'Notification',
+            icon: Icon(Icons.notifications),
+          ),
+          BottomNavigationBarItem(
+            label: 'Profile',
+            icon: Icon(Icons.person),
+          ),
+        ],
+      ),
+    );
+  }
+  }

@@ -3,6 +3,7 @@ import 'package:wakeel_app/my_booking.dart';
 import 'schedule.dart';
 import 'appointment.dart';
 import 'booking.dart';
+import 'menu.dart';
 import 'legal_sevices.dart';
 
 
@@ -11,33 +12,59 @@ class BookEmergency extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 37, 107, 40),
-        title: Row(
-          children: [
-            SizedBox(
-              width: 70,
-            ),
-            SizedBox(width: 100, child: Image.asset('assests/Frame2.png')),
-            SizedBox(
-              width: 50,
-            ),
-            Icon(Icons.search),
-            InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ScheduleScreen()));
-                },
-                child: Icon(Icons.settings)),
-          ],
-        ),
-      ),
+    return  SafeArea(
+      child: Scaffold(
+
       body: SingleChildScrollView(
         child: Column(
-          children: [
+          children: [Padding(
+            padding: const EdgeInsets.only(top: 0.1),
+            child: Container(
+              height: 55,
+              width: double.infinity,
+              color: const Color.fromARGB(255, 32, 91, 34),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.arrow_back, color: Colors.white),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  SizedBox(width: 5),
+                  Image.asset('assests/wakeel2_removebg_preview.png'),
+                  const SizedBox(width: 5),
+                  SizedBox(
+                    height: 40,
+                    width: 190,
+                    child: TextField(
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(100),
+                              borderSide:
+                              const BorderSide(color: Colors.white)),
+                          hintText: 'Search',
+                          contentPadding: const EdgeInsets.all(8.0),
+                          suffixIcon: const Icon(Icons.search,color: Colors.white),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(50),
+                            //  borderSide: BorderSide(color: Colors.white)
+                          )),
+                    ),
+                  ),
+                  InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => menu(),
+                            ));
+                      },
+                      child: Icon(Icons.view_headline_sharp,color: Colors.white)),
+                ],
+              ),
+            ),
+          ),
 
             SizedBox(
               height: 20,
@@ -288,6 +315,7 @@ class BookEmergency extends StatelessWidget {
             ),
           ],
         ),
+      ),
       ),
     );
   }

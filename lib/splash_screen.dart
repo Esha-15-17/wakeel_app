@@ -46,8 +46,8 @@ class _SplashScreenState extends State<SplashScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Center(child: Image.asset('assests/justice.png',
-          height: 100,
-          width: 150)
+              height: 100,
+              width: 150)
 
           ),
           SizedBox(
@@ -60,6 +60,4 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
 }
-
-
 

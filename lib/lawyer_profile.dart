@@ -39,21 +39,24 @@ class _lawyerprofileState extends State<lawyerprofile> {
   File? _selectedImage;
   List<String> selectedSpecializations = [];
 
-  Future<void> registerUser(String gender,
+  Future<void> registerUser(
+      String gender,
       String language,
       String residentialarea,
       String aboutme,
       String experience,
       String zipcode,
-      String selectedSpecializations,
       String court,
-      String userRole,) async {
+      String selectedSpecializations,
+      String userRole,
+      ) async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString("token");
 
       var request = http.MultipartRequest(
-        'POST', Uri.parse('${Constants.API_URL}/profile/updateprofile'),
+        'POST',
+        Uri.parse('${Constants.API_URL}/profile/updateprofile'),
       );
       request.headers['Authorization'] = 'Bearer $token';
       request.fields.addAll({
@@ -63,18 +66,18 @@ class _lawyerprofileState extends State<lawyerprofile> {
         'about_me': aboutme,
         'experience': experience,
         'zip_code': zipcode,
-        'specializations': selectedSpecializations,
         'court': court,
+        'frontend_specializations[]': selectedSpecializations,
       });
 
       if (_selectedImage != null) {
-        print('Selected image path: ${_selectedImage!.path}'); // Add this line
-        request.files.add(await http.MultipartFile.fromPath(
+        final file = await http.MultipartFile.fromPath(
           'profile_picture',
           _selectedImage!.path,
-        ));
+          filename: 'profile_image.jpg',
+        );
+        request.files.add(file);
       }
-
 
       var response = await request.send();
 
@@ -92,6 +95,8 @@ class _lawyerprofileState extends State<lawyerprofile> {
       print(e.toString());
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -415,12 +420,12 @@ class _lawyerprofileState extends State<lawyerprofile> {
                   registerUser(
                     genderController.text.toString(),
                     languageController.text.toString(),
-                    zipcodeController.text.toString(),
                     residentialareaController.text.toString(),
-                    selectedSpecializations.join(','),
                     aboutmeController.text.toString(),
                     experienceController.text.toString(),
+                    zipcodeController.text.toString(),
                     courtController.text.toString(),
+                    selectedSpecializations.join(',') ,
 
                     _selectedUserRole,
                   );

@@ -10,8 +10,13 @@ import 'My_profile.dart';
 import 'notfications_screen.dart';
 import 'profile_screen.dart';
 import 'legal_sevices.dart';
+import 'menu.dart';
+import 'Constant.dart';
 import 'LEGAL.dart';
 import 'my_booking.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'lawyer.dart';
 
 class findlawyer extends StatefulWidget {
   const findlawyer({super.key});
@@ -22,6 +27,33 @@ class findlawyer extends StatefulWidget {
 
 class _findlawyerState extends State<findlawyer> {
   int _currentIndex = 0;
+  TextEditingController searchController = TextEditingController();
+  List<Lawyer> searchResults = [];
+
+  Future<void> searchLawyers(String query) async {
+    final url = Uri.parse('${Constants.API_URL}profile/searchLawyerProfile?specialization=Family Law');
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+        final lawyers = jsonResponse['lawyers'];
+
+        // Assuming you have a Lawyer class to represent the lawyer data
+        final List<Lawyer> lawyerList = lawyers.map<Lawyer>((json) => Lawyer.fromJson(json)).toList();
+
+        setState(() {
+          searchResults = lawyerList;
+        });
+      } else {
+        // Handle error response
+        print('Error: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      // Handle network or other errors
+      print('Error: $e');
+    }
+  }
   // This widget is the root of your application.
   Widget findlawyer() {
 
@@ -29,35 +61,52 @@ class _findlawyerState extends State<findlawyer> {
       child: Scaffold(
         body: SingleChildScrollView(
           child: Column(children: [
-            Container(
-              height: 55,
-              width: double.infinity,
-              color: const Color.fromARGB(255, 32, 91, 34),
-              child: Row(
-                children: [
-                  Image.asset('assests/wakeel2_removebg_preview.png'),
-                  const SizedBox(
-                    width: 30,
-                  ),
-                  SizedBox(
-                    height: 40,
-                    width: 250,
-                    child: TextField(
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(100),
-                              borderSide:
-                              const BorderSide(color: Colors.white)),
-                          hintText: 'Search',
-                          contentPadding: const EdgeInsets.all(8.0),
-                          suffixIcon: const Icon(Icons.search),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            //  borderSide: BorderSide(color: Colors.white)
-                          )),
+            Padding(
+              padding: const EdgeInsets.only(top: 0.1),
+              child: Container(
+                height: 55,
+                width: double.infinity,
+                color: const Color.fromARGB(255, 32, 91, 34),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.arrow_back, color: Colors.white),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
-                  ),
-                ],
+                    SizedBox(width: 5),
+                    Image.asset('assests/wakeel2_removebg_preview.png'),
+                    const SizedBox(width: 5),
+                    SizedBox(
+                      height: 40,
+                      width: 190,
+                      child: TextField(
+                        decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(100),
+                                borderSide:
+                                const BorderSide(color: Colors.white)),
+                            hintText: 'Search',
+                            contentPadding: const EdgeInsets.all(8.0),
+                            suffixIcon: const Icon(Icons.search,color: Colors.white),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                              //  borderSide: BorderSide(color: Colors.white)
+                            )),
+                      ),
+                    ),
+                    InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => menu(),
+                              ));
+                        },
+                        child: Icon(Icons.view_headline_sharp,color: Colors.white)),
+                  ],
+                ),
               ),
             ),
             Padding(
@@ -96,11 +145,6 @@ class _findlawyerState extends State<findlawyer> {
                   ),
                 ),
                 Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => findlawyer()));
-                    },
                     child: Column(
                       children: [
                         Image.asset('assests/ham-200.png',
@@ -109,7 +153,6 @@ class _findlawyerState extends State<findlawyer> {
                         Text('Find\nLawyer'),
                       ],
                     ),
-                  ),
                 ),
                 InkWell(
                   onTap: () {
@@ -143,31 +186,57 @@ class _findlawyerState extends State<findlawyer> {
             SizedBox(
               height: 10,
             ),
-            Container(
-              height: 33,
-              width: 300,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                border: Border.all(color: Colors.green),
-              ),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    'Search By Name',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  SizedBox(
-                    width: 140,
-                  ),
-                  Icon(Icons.arrow_drop_down)
-
-                ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 33,
+                width: 300,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  border: Border.all(color: Colors.green),
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: TextField(
+                        controller: searchController,
+                        decoration: InputDecoration(
+                          hintText: 'Search by Name',
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: () {
+                        final query = searchController.text;
+                        if (query.isNotEmpty) {
+                          searchLawyers(query);
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
-            SizedBox(
+
+            // Display search results
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: searchResults.length,
+              itemBuilder: (context, index) {
+                final lawyer = searchResults[index];
+                return ListTile(
+                  title: Text(lawyer.name),
+                  subtitle: Text(lawyer.specialization),
+                  // Add more lawyer details as needed
+                );
+              },
+            ),
+               SizedBox(
               height: 10,
             ),
             Row(
@@ -243,11 +312,11 @@ class _findlawyerState extends State<findlawyer> {
                             Row(
                               children: [
                                 Icon(Icons.star,
-                                color: Colors.amber,),
-                              SizedBox(
-                                width:5,
-                              ),
-                             Text('3.5',style:TextStyle(color: Colors.amber),),],),
+                                  color: Colors.amber,),
+                                SizedBox(
+                                  width:5,
+                                ),
+                                Text('3.5',style:TextStyle(color: Colors.amber),),],),
                             Text('1278 Ratings'),
                             Text.rich(
                               TextSpan(
@@ -261,7 +330,7 @@ class _findlawyerState extends State<findlawyer> {
                                     ),
                                   ),
                                   new TextSpan(
-                                    text: ' \ RS 5000',style:TextStyle(color: Colors.amber)
+                                      text: ' \ RS 5000',style:TextStyle(color: Colors.amber)
                                   ),
                                 ],
                               ),
@@ -361,7 +430,7 @@ class _findlawyerState extends State<findlawyer> {
                             Row(
                               children: [
                                 Icon(Icons.star,color: Colors.amber),
-                            Text('3.5',style:TextStyle (color: Colors.amber),),],),
+                                Text('3.5',style:TextStyle (color: Colors.amber),),],),
                             Text('1278 Ratings'),
                             Text.rich(
                               TextSpan(
@@ -553,44 +622,44 @@ Widget build (BuildContext context) {
     myprofile(),
   ];
 
-  return Scaffold(
-    body: _screens[_currentIndex],
-    bottomNavigationBar: BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      backgroundColor: Color(0xff01411C),
-      selectedItemColor: Colors.white,
-      unselectedItemColor: Colors.white.withOpacity(.60),
-      selectedFontSize: 14,
-      unselectedFontSize: 14,
-      currentIndex: _currentIndex,
-      onTap: (index) {
-        setState(() {
-          _currentIndex = index;
-        });
-      },
+    return Scaffold(
+      body: _screens[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Color(0xff01411C),
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white.withOpacity(.60),
+        selectedFontSize: 14,
+        unselectedFontSize: 14,
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
 
 // ignore: prefer_const_literals_to_create_immutable
-      items: [
-        BottomNavigationBarItem(
-          label: 'home',
-          icon: Icon(Icons.home),
-        ),
-        BottomNavigationBarItem(
-          label: 'Messages',
-          icon: Icon(Icons.message_rounded),
-        ),
-        BottomNavigationBarItem(
-          label: 'Notification',
-          icon: Icon(Icons.notifications),
-        ),
-        BottomNavigationBarItem(
-          label: 'Profile',
-          icon: Icon(Icons.person),
-        ),
-      ],
-    ),
-  );
-}
+        items: [
+          BottomNavigationBarItem(
+            label: 'home',
+            icon: Icon(Icons.home),
+          ),
+          BottomNavigationBarItem(
+            label: 'Messages',
+            icon: Icon(Icons.message_rounded),
+          ),
+          BottomNavigationBarItem(
+            label: 'Notification',
+            icon: Icon(Icons.notifications),
+          ),
+          BottomNavigationBarItem(
+            label: 'Profile',
+            icon: Icon(Icons.person),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 

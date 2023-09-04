@@ -17,6 +17,7 @@ class legalser extends StatelessWidget {
     int _selectedIndex = 0;
     return SafeArea(
         child: Scaffold(
+
         body:SingleChildScrollView(
         child:Column(
         children: [
@@ -28,13 +29,18 @@ class legalser extends StatelessWidget {
     color: const Color.fromARGB(255, 32, 91, 34),
     child: Row(
     children: [
+      IconButton(
+        icon: Icon(Icons.arrow_back, color: Colors.white),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+      SizedBox(width: 5),
     Image.asset('assests/wakeel2_removebg_preview.png'),
-    const SizedBox(
-    width: 30,
-    ),
+    const SizedBox(width: 5),
     SizedBox(
     height: 40,
-    width: 220,
+    width: 190,
     child: TextField(
     decoration: InputDecoration(
     enabledBorder: OutlineInputBorder(
@@ -43,7 +49,7 @@ class legalser extends StatelessWidget {
     const BorderSide(color: Colors.white)),
     hintText: 'Search',
     contentPadding: const EdgeInsets.all(8.0),
-    suffixIcon: const Icon(Icons.search),
+    suffixIcon: const Icon(Icons.search,color: Colors.white),
     border: OutlineInputBorder(
     borderRadius: BorderRadius.circular(50),
     //  borderSide: BorderSide(color: Colors.white)
@@ -58,7 +64,7 @@ class legalser extends StatelessWidget {
     builder: (context) => menu(),
     ));
     },
-    child: Icon(Icons.view_headline_sharp,)),
+    child: Icon(Icons.view_headline_sharp,color: Colors.white)),
     ],
     ),
     ),
@@ -185,13 +191,34 @@ class legalser extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          Container(
-            height: 130,
-            width: 305,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.black),
-            ),
+          Column(
+            children: [
+              Container(
+                height: 130,
+                width: 305,
+
+                child: TextField(
+                  maxLines: 8,
+                  decoration: InputDecoration(
+                    // Green label text color
+                    focusColor: Colors.black,
+                    contentPadding: EdgeInsets.all(8),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: BorderSide(
+                            color: Colors.black, width: 1.0)),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: BorderSide(
+                            color: const Color(0xff01411C), width: 2.0)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
 
           SizedBox(

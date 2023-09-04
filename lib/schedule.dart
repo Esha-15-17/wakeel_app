@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:wakeel_app/ScheduleListScreen.dart';
 import 'package:wakeel_app/schedule.dart';
 import 'legal_sevices.dart';
 import 'schedule.dart';
-class ScheduleScreen extends StatelessWidget {
+
+class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
+
+  @override
+  ScheduleScreenState createState() => ScheduleScreenState();
+}
+
+class ScheduleScreenState extends State<ScheduleScreen> {
+  int type = 1;
+
+  void setType(int mType) {
+    setState(() {
+      type = mType;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,251 +48,94 @@ class ScheduleScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-          Text('Schedule',style:TextStyle(fontWeight: FontWeight.bold)),
-            SizedBox(
+            const Text('Schedule', style: TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(
               height: 20,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  height: 35,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color: Color(0xff01411C),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Center(child: Text('OnGoing')),
-                ),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xFF01411C),
+                      onPrimary: Color(0xFF3D3D3D),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            20), // Set the button's border radius
+                      ),
+                    ),
+                    onPressed: () {
+                      setType(1);
+                    },
+                    child: const Text(
+                      'Ongoing',
+                      style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 16,
+                      ),
+                    )),
                 SizedBox(
                   width: 30,
                 ),
-                Container(
-                  height: 35,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.amber,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Center(child: Text('Completed')),
-                ),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xFFCA9D3E),
+                      onPrimary: Color(0xFF3D3D3D),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            20), // Set the button's border radius
+                      ),
+                    ),
+                    onPressed: () {
+                      setType(2);
+                    },
+                    child: const Text(
+                      'Completed',
+                      style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 16,
+                      ),
+                    )),
                 SizedBox(
                   width: 30,
                 ),
-                Container(
-                  height: 35,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Center(child: Text('Canceled')),
-                )
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xFFD9D9D9),
+                      onPrimary: Color(0xFF3D3D3D),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            20), // Set the button's border radius
+                      ),
+                    ),
+                    onPressed: () {
+                      setType(3);
+                    },
+                    child: const Text(
+                      'Canceled',
+                      style: TextStyle(
+                        color:
+                            Color(0xFF3D3D3D), // Set the text color to #3D3D3D
+                        fontSize: 16, // Set the font size
+                      ),
+                    ))
               ],
             ),
             SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 200,
-                width: double.infinity,
+            Container(
+                height: 300,
                 decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(25),
+                  color: Colors.amber,
                 ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 35,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: Colors.amber,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Center(child: Text('Completed')),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Container(
-                          height: 35,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Center(child: Text('write review')),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Container(
-                          height: 35,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: Color(0xff01411C),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Center(child: Text('win case')),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Cheque Bounce',style:TextStyle(fontWeight: FontWeight.bold)),
-                          Text('Rs-/3000',style:TextStyle(fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Divider(
-                        thickness: 1,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Servied By \n Avd Bashir'),
-                          Text(
-                            '|',
-                              style: TextStyle (fontSize: 40),
-                          ),
-                          Text('Vehicle \n Kia SLots'),
-                          Text(
-                            '|',
-                            style: TextStyle(fontSize: 40),
-                          ),
-                          Text('25-02-2024 \n Friday')
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 200,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 35,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: Colors.amber,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Center(child: Text('Completed')),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Container(
-                          height: 35,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Center(child: Text('write review')),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Container(
-                          height: 35,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: Color(0xff01411C),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Center(child: Text('win case')),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height:10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Cheque Bounce',style:TextStyle(fontWeight: FontWeight.bold)),
-                          Text('Rs-/3000',style:TextStyle(fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Divider(
-                        thickness: 1,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Servied By \n Avd Bashir'),
-                          Text(
-                            '|',
-                            style: TextStyle(fontSize: 40),
-                          ),
-                          Text('Vehicle \n Kia SLots'),
-                          Text(
-                            '|',
-                            style: TextStyle(fontSize: 40),
-                          ),
-                          Text('25-02-2024 \n Friday')
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+                child: ScheduleListScreen(type: type)),
             SizedBox(
               height: 30,
             ),

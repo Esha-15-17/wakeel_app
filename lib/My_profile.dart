@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:wakeel_app/My_profile.dart';
 import 'package:provider/provider.dart';
+import 'package:wakeel_app/wakeel_app_bar.dart';
 import 'menu.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 import 'package:csc_picker/csc_picker.dart';
@@ -26,39 +27,9 @@ class _myprofileState extends State<myprofile> {
     String _verticalGroupValue = "Pending";
 
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 70,
-        foregroundColor: Colors.white,
-        backgroundColor: Color.fromARGB(255, 20, 74, 22),
-        title: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 90,
-                          ),
-                          Image.asset('assests/Frame2.png'),
-                          SizedBox(
-                            width: 79,
-                          ),
-                          Icon(Icons.view_headline_sharp),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(50),
+        child: WakeelAppBar(back: false),
       ),
       body: SingleChildScrollView(
       child: Column(

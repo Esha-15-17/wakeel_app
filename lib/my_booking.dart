@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wakeel_app/my_booking.dart';
+import 'package:wakeel_app/wakeel_app_bar.dart';
 import 'schedule.dart';
 import 'appointment.dart';
 import 'booking.dart';
@@ -14,59 +15,14 @@ class BookEmergency extends StatelessWidget {
   Widget build(BuildContext context) {
     return  SafeArea(
       child: Scaffold(
-
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(50),
+          child: WakeelAppBar(back: true),
+        ),
       body: SingleChildScrollView(
         child: Column(
-          children: [Padding(
-            padding: const EdgeInsets.only(top: 0.1),
-            child: Container(
-              height: 55,
-              width: double.infinity,
-              color: const Color.fromARGB(255, 32, 91, 34),
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.arrow_back, color: Colors.white),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  SizedBox(width: 5),
-                  Image.asset('assests/wakeel2_removebg_preview.png'),
-                  const SizedBox(width: 5),
-                  SizedBox(
-                    height: 40,
-                    width: 190,
-                    child: TextField(
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(100),
-                              borderSide:
-                              const BorderSide(color: Colors.white)),
-                          hintText: 'Search',
-                          contentPadding: const EdgeInsets.all(8.0),
-                          suffixIcon: const Icon(Icons.search,color: Colors.white),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            //  borderSide: BorderSide(color: Colors.white)
-                          )),
-                    ),
-                  ),
-                  InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => menu(),
-                            ));
-                      },
-                      child: Icon(Icons.view_headline_sharp,color: Colors.white)),
-                ],
-              ),
-            ),
-          ),
-
-            SizedBox(
+          children: [
+            const SizedBox(
               height: 20,
             ),
             Padding(

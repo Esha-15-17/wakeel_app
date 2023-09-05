@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wakeel_app/ScheduleListScreen.dart';
 import 'package:wakeel_app/schedule.dart';
+import 'package:wakeel_app/wakeel_app_bar.dart';
 import 'legal_sevices.dart';
 import 'schedule.dart';
 
@@ -23,28 +24,9 @@ class ScheduleScreenState extends State<ScheduleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 37, 107, 40),
-        title: Row(
-          children: [
-            SizedBox(
-              width: 70,
-            ),
-            SizedBox(width: 100, child: Image.asset('assests/Frame2.png')),
-            SizedBox(
-              width: 50,
-            ),
-            Icon(Icons.search),
-            InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ScheduleScreen()));
-                },
-                child: Icon(Icons.settings)),
-          ],
-        ),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(50),
+        child: WakeelAppBar(back: true),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -130,7 +112,7 @@ class ScheduleScreenState extends State<ScheduleScreen> {
               height: 20,
             ),
             Container(
-                height: 300,
+                height: 400,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25),
                   color: Colors.amber,

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/material/input_decorator.dart';
 import 'package:wakeel_app/appointment.dart';
 import 'package:wakeel_app/profile_screen.dart';
+import 'package:wakeel_app/wakeel_app_bar.dart';
 import 'appointmentList.dart';
 import 'booking.dart';
 import 'chatwidget.dart';
@@ -25,229 +26,175 @@ class appointment extends StatefulWidget {
 
 class _appointmentState extends State<appointment> {
   int _currentIndex = 0;
+
   // This widget is the root of your application.
-  Widget appointment(){
+  Widget appointment() {
     return SafeArea(
         child: Scaffold(
-            body: SingleChildScrollView(
-              child: Column(children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 0.1),
-                  child: Container(
-                    height: 55,
-                    width: double.infinity,
-                    color: const Color.fromARGB(255, 32, 91, 34),
-                    child: Row(
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.arrow_back, color: Colors.white),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                        SizedBox(width: 5),
-                        Image.asset('assests/wakeel2_removebg_preview.png'),
-                        const SizedBox(width: 5),
-                        SizedBox(
-                          height: 40,
-                          width: 190,
-                          child: TextField(
-                            decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(100),
-                                    borderSide:
-                                    const BorderSide(color: Colors.white)),
-                                hintText: 'Search',
-                                contentPadding: const EdgeInsets.all(8.0),
-                                suffixIcon: const Icon(Icons.search,color: Colors.white),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                  //  borderSide: BorderSide(color: Colors.white)
-                                )),
-                          ),
-                        ),
-                        InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => menu(),
-                                  ));
-                            },
-                            child: Icon(Icons.view_headline_sharp,color: Colors.white)),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(children: [
-                    Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => BookEmergency()));
-                        },
-                        child: Column(
-                          children: [
-                            Image.asset('assests/book.png',
-                                height: 70, width: 50),
-                            //height: 50, width: 30),
-                            Text('Emergency\nBook'),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => legalser()));
-                        },
-                        child: Column(
-                          children: [
-                            Image.asset('assests/ls.png',
-                                height: 70, width: 50),
-                            Text('Legal\nService'),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => findlawyer()));
-                        },
-                        child: Column(
-                          children: [
-                            Image.asset('assests/ham-200.png',
-                                height: 70, width: 50),
-                            // height: 50, width: 30),
-                            Text('Find\nLawyer'),
-                          ],
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => appointment(),
-                            ));
-                      },
-                      child: Expanded(
-                        child: Column(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => appointment()));
-                              },
-                              child: Image.asset('assests/app.png',
-                                  height: 70, width: 50),
-                              // height: 50, width: 30),
-                            ),
-                            Text('Appointments'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ]),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      'Select Service',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  height: 30,
-                  width: 350,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    border: Border.all(color: Colors.red),
-                  ),
-                  child: Row(
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(50),
+            child: WakeelAppBar(back: true),
+          ),
+      body: SingleChildScrollView(
+        child: Column(children: [
+          const SizedBox(
+            height: 5,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(children: [
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BookEmergency()));
+                  },
+                  child: Column(
                     children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Ask for legal service',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        height: 100,
-                        width: 183,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: Colors.amber,
-                        ),
-                        child: Center(child: Text('Legal Services')),
-                      ),
+                      Image.asset('assests/book.png', height: 70, width: 50),
+                      //height: 50, width: 30),
+                      Text('Emergency\nBook'),
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 10,
+              ),
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => legalser()));
+                  },
+                  child: Column(
+                    children: [
+                      Image.asset('assests/ls.png', height: 70, width: 50),
+                      Text('Legal\nService'),
+                    ],
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 25,
-                    ),
-                    Text('342 results'),
-                  ],
+              ),
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => findlawyer()));
+                  },
+                  child: Column(
+                    children: [
+                      Image.asset('assests/ham-200.png', height: 70, width: 50),
+                      // height: 50, width: 30),
+                      Text('Find\nLawyer'),
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => appointment(),
+                      ));
+                },
+                child: Expanded(
+                  child: Column(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => appointment()));
+                        },
+                        child: Image.asset('assests/app.png',
+                            height: 70, width: 50),
+                        // height: 50, width: 30),
+                      ),
+                      Text('Appointments'),
+                    ],
+                  ),
+                ),
+              ),
+            ]),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 20,
+              ),
+              Text(
+                'Select Service',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            height: 30,
+            width: 350,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              border: Border.all(color: Colors.red),
+            ),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  'Ask for legal service',
+                  style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(
-                  height: 20,
+                  width: 10,
                 ),
                 Container(
-                    height: 400,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: Colors.amber,
-                    ),
-                    child: appointmentList()),
-              ]),
+                  height: 100,
+                  width: 183,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: Colors.amber,
+                  ),
+                  child: Center(child: Text('Legal Services')),
+                ),
+              ],
             ),
-
-
-        ));
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 25,
+              ),
+              Text('342 results'),
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+              height: 400,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.amber,
+              ),
+              child: appointmentList()),
+        ]),
+      ),
+    ));
   }
 
-
-  Widget build (BuildContext context) {
+  Widget build(BuildContext context) {
     final List<Widget> _screens = [
       appointment(),
       ChatScreen(),
@@ -293,4 +240,4 @@ class _appointmentState extends State<appointment> {
       ),
     );
   }
-  }
+}

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wakeel_app/notfications_screen.dart';
+import 'package:wakeel_app/wakeel_app_bar.dart';
 import 'menu.dart';
 import 'legal_sevices.dart';
 class Notifications extends StatelessWidget {
@@ -8,26 +9,9 @@ class Notifications extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 37, 107, 40),
-        title: Row(
-          children: [
-            SizedBox(
-              width: 70,
-            ),
-            SizedBox(width: 100, child: Image.asset('assests/Frame2.png')),
-            SizedBox(
-              width: 50,
-            ),
-            Icon(Icons.search),
-            InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Notifications()));
-                },
-                child: Icon(Icons.settings)),
-          ],
-        ),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(50),
+        child: WakeelAppBar(back: false),
       ),
       body: Column(
         children: [

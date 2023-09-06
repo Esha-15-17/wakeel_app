@@ -16,8 +16,7 @@ import 'package:image_picker/image_picker.dart';
 import 'verify_email.dart';
 import 'dart:collection';
 import 'package:shared_preferences/shared_preferences.dart';
-
-
+import 'package:file_picker/file_picker.dart';
 
 class lawyerprofile extends StatefulWidget {
   const lawyerprofile({Key? key, required String userRole}) : super(key: key);
@@ -49,6 +48,7 @@ class _lawyerprofileState extends State<lawyerprofile> {
       String court,
       String selectedSpecializations,
       String userRole,
+
       ) async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -59,24 +59,35 @@ class _lawyerprofileState extends State<lawyerprofile> {
         Uri.parse('${Constants.API_URL}/profile/updateprofile'),
       );
       request.headers['Authorization'] = 'Bearer $token';
+      request.headers['Content-Type'] = 'multipart/form-data';
       request.fields.addAll({
         'gender': gender,
         'languages_spoken': language,
-        'residential_area': residentialarea,
+        'residential _area': residentialarea,
         'about_me': aboutme,
         'experience': experience,
         'zip_code': zipcode,
         'court': court,
         'frontend_specializations[]': selectedSpecializations,
       });
-
-      if (_selectedImage != null) {
-        final file = await http.MultipartFile.fromPath(
-          'profile_picture',
-          _selectedImage!.path,
-          filename: 'profile_image.jpg',
-        );
-        request.files.add(file);
+      if (_selectedImage != null && _selectedImage!.path != null) {
+        try {
+          String fileExtension = _selectedImage!.path.split('.').last.toLowerCase();
+          if (fileExtension == 'jpg' || fileExtension == 'jpeg' || fileExtension == 'png') {
+            final file = await http.MultipartFile.fromPath(
+              'profile_picture',
+              _selectedImage!.path,
+              filename: 'profile_image.jpg',
+            );
+            request.files.add(file);
+          } else {
+            print('Invalid File Extension: $fileExtension');
+          }
+        } catch (e) {
+          print('Error uploading file: $e');
+        }
+      } else {
+        print('No Image File Selected');
       }
 
       var response = await request.send();
@@ -96,362 +107,359 @@ class _lawyerprofileState extends State<lawyerprofile> {
     }
   }
 
-
-
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 10),
-              Text('Please update profile before getting login.'),
+    Widget build(BuildContext context) {
+      return SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 10),
+                Text('Please update profile before getting login.'),
 
-              SizedBox(height: 20),
-              Container(
-                width: 150,
-                height: 150,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.grey,
-                ),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    if (_selectedImage != null)
-                      _selectedImage is File // Check if it's a File
-                          ? ClipOval(
-                        child: Image.file(
-                          _selectedImage!,
-                          width: 150,
-                          height: 150,
-                          fit: BoxFit.cover,
-                        ),
-                      )
-                          : Image.network( // Use Image.network for web
-                        _selectedImage!.path,
-                        width: 150,
-                        height: 150,
-                        fit: BoxFit.cover,
-                      ),
-                    GestureDetector(
-                      onTap: () async {
-                        final image = await ImagePicker().pickImage(
-                            source: ImageSource.gallery);
-
-                        if (image != null) {
-                          setState(() {
-                            _selectedImage = File(image.path);
-                          });
-                        }
-                      },
-                      child: Icon(
-                        Icons.camera_alt,
-                        color: Colors.white,
-                        size: 40,
-                      ),
+                SizedBox(height: 20),
+                GestureDetector(
+                  onTap: () async {
+                    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+                    if (image != null) {
+                      setState(() {
+                        _selectedImage = File(image.path);
+                      });
+                    }
+                  },
+                  child: Container( // Wrap the child widgets with a Container
+                    width: 150,
+                    height: 150,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.grey,
                     ),
-                  ],
-                ),
-              ),
-
-              SizedBox(height: 15, width: 50),
-              Text(
-                'Upload your image',
-                style: TextStyle(fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                    color: Color(0xff01411C)),
-              ),
-              SizedBox(height: 20),
-
-              Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
-                child: SizedBox(
-                  height: 40,
-                  child: TextField(
-                    controller: genderController,
-                    style: const TextStyle(color: Color(0xff01411C)),
-                    decoration: InputDecoration(
-                        hintText: 'Gender',
-                        focusColor: Color(0xff01411C),
-                        contentPadding: EdgeInsets.all(8),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(
-                                color: Color(0xff01411C), width: 2.0)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(
-                                color: const Color(0xff01411C), width: 2.0)),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          borderSide: BorderSide(color: Colors.black),
-                        )),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
-                child: SizedBox(
-                  height: 40,
-                  child: TextField(
-                    controller: languageController,
-                    style: TextStyle(color: Color(0xff01411C)),
-                    decoration: InputDecoration(
-                        hintText: 'Spoken Language',
-                        focusColor: Color(0xff01411C),
-                        contentPadding: EdgeInsets.all(8),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(
-                                color: Color(0xff01411C), width: 2.0)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(
-                                color: const Color(0xff01411C), width: 2.0)),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          borderSide: BorderSide(color: Colors.black),
-                        )),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
-                child: SizedBox(
-                  height: 40,
-                  child: TextField(
-                    controller: residentialareaController,
-                    style: TextStyle(color: Color(0xff01411C)),
-                    decoration: InputDecoration(
-                        hintText: 'Residential Area',
-                        focusColor: Color(0xff01411C),
-                        contentPadding: EdgeInsets.all(8),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(
-                                color: Color(0xff01411C), width: 2.0)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(
-                                color: const Color(0xff01411C), width: 2.0)),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          borderSide: BorderSide(color: Colors.black),
-                        )),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ), Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
-                child: SizedBox(
-                  height: 40,
-                  child: TextField(
-                    controller: experienceController,
-                    style: TextStyle(color: Color(0xff01411C)),
-                    decoration: InputDecoration(
-                        hintText: 'Experience',
-                        focusColor: Color(0xff01411C),
-                        contentPadding: EdgeInsets.all(8),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(
-                                color: Color(0xff01411C), width: 2.0)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(
-                                color: const Color(0xff01411C), width: 2.0)),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          borderSide: BorderSide(color: Colors.black),
-                        )),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
-                child: SizedBox(
-                  height: 40,
-                  child: TextField(
-                    controller: zipcodeController,
-                    style: TextStyle(color: Color(0xff01411C)),
-                    decoration: InputDecoration(
-                        hintText: 'Zipcode Area',
-                        focusColor: Color(0xff01411C),
-                        contentPadding: EdgeInsets.all(8),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(
-                                color: Color(0xff01411C), width: 2.0)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(
-                                color: const Color(0xff01411C), width: 2.0)),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          borderSide: BorderSide(color: Colors.black),
-                        )),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
-                child: SizedBox(
-                  height: 40,
-                  child: TextField(
-                    controller: courtController,
-                    style: TextStyle(color: Color(0xff01411C)),
-                    decoration: InputDecoration(
-                        hintText: 'Court',
-                        focusColor: Color(0xff01411C),
-                        contentPadding: EdgeInsets.all(8),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(
-                                color: Color(0xff01411C), width: 2.0)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(
-                                color: const Color(0xff01411C), width: 2.0)),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          borderSide: BorderSide(color: Colors.black),
-                        )),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
-                child: SizedBox(
-                  height: 40,
-                  child: TextField(
-                    controller: aboutmeController,
-                    style: TextStyle(color: Color(0xff01411C)),
-                    decoration: InputDecoration(
-                        hintText: 'About me',
-                        focusColor: Color(0xff01411C),
-                        contentPadding: EdgeInsets.all(8),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(80),
-                            borderSide: BorderSide(
-                                color: Color(0xff01411C), width: 2.0)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(
-                                color: const Color(0xff01411C), width: 2.0)),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          borderSide: BorderSide(color: Colors.black),
-                        )),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-
-                    Text(
-                      'Specialization',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Color(0xff01411C),
-                      ),
-                    ),
-                    for (String specialization in [
-                      'Family Court',
-                      'Crime Court',
-                      'Divorce Court',
-                      'Other'
-                    ])
-                      Row(
-                        children: [
-                          Checkbox(
-                            value: selectedSpecializations.contains(specialization),
-                            onChanged: (bool? value) {
-                              setState(() {
-                                if (value == true) {
-                                  selectedSpecializations.add(specialization);
-                                } else {
-                                  selectedSpecializations.remove(specialization);
-                                }
-                              });
-                            },
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        if (_selectedImage != null)
+                          _selectedImage is File // Check if it's a File
+                              ? ClipOval(
+                            child: Image.file(
+                              _selectedImage!,
+                              width: 150,
+                              height: 150,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                              : Image.network( // Use Image.network for web
+                            _selectedImage!.path,
+                            width: 150,
+                            height: 150,
+                            fit: BoxFit.cover,
                           ),
-                          Text(specialization),
-                        ],
-                      ),
-
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-
-
-              GestureDetector(
-                onTap: () {
-                  registerUser(
-                    genderController.text.toString(),
-                    languageController.text.toString(),
-                    residentialareaController.text.toString(),
-                    aboutmeController.text.toString(),
-                    experienceController.text.toString(),
-                    zipcodeController.text.toString(),
-                    courtController.text.toString(),
-                    selectedSpecializations.join(',') ,
-
-                    _selectedUserRole,
-                  );
-                },
-                child: Container(
-                  height: 50,
-                  width: 122,
-                  decoration: BoxDecoration(
-                    color: Color(0xff01411C),
-                    borderRadius: BorderRadius.circular(20),
+                        Icon(
+                          Icons.camera_alt,
+                          color: Colors.white,
+                          size: 40,
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Center(
-                    child: Text(
-                      'Update Profile',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                ),
+
+                SizedBox(height: 15, width: 50),
+                Text(
+                  'Upload your image',
+                  style: TextStyle(fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      color: Color(0xff01411C)),
+                ),
+                SizedBox(height: 20),
+
+                Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  child: SizedBox(
+                    height: 40,
+                    child: TextField(
+                      controller: genderController,
+                      style: const TextStyle(color: Color(0xff01411C)),
+                      decoration: InputDecoration(
+                          hintText: 'Gender',
+                          focusColor: Color(0xff01411C),
+                          contentPadding: EdgeInsets.all(8),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                              borderSide: BorderSide(
+                                  color: Color(0xff01411C), width: 2.0)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                              borderSide: BorderSide(
+                                  color: const Color(0xff01411C), width: 2.0)),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(50),
+                            borderSide: BorderSide(color: Colors.black),
+                          )),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  child: SizedBox(
+                    height: 40,
+                    child: TextField(
+                      controller: languageController,
+                      style: TextStyle(color: Color(0xff01411C)),
+                      decoration: InputDecoration(
+                          hintText: 'Spoken Language',
+                          focusColor: Color(0xff01411C),
+                          contentPadding: EdgeInsets.all(8),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                              borderSide: BorderSide(
+                                  color: Color(0xff01411C), width: 2.0)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                              borderSide: BorderSide(
+                                  color: const Color(0xff01411C), width: 2.0)),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(50),
+                            borderSide: BorderSide(color: Colors.black),
+                          )),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  child: SizedBox(
+                    height: 40,
+                    child: TextField(
+                      controller: residentialareaController,
+                      style: TextStyle(color: Color(0xff01411C)),
+                      decoration: InputDecoration(
+                          hintText: 'Residential Area',
+                          focusColor: Color(0xff01411C),
+                          contentPadding: EdgeInsets.all(8),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                              borderSide: BorderSide(
+                                  color: Color(0xff01411C), width: 2.0)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                              borderSide: BorderSide(
+                                  color: const Color(0xff01411C), width: 2.0)),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(50),
+                            borderSide: BorderSide(color: Colors.black),
+                          )),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ), Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  child: SizedBox(
+                    height: 40,
+                    child: TextField(
+                      controller: experienceController,
+                      style: TextStyle(color: Color(0xff01411C)),
+                      decoration: InputDecoration(
+                          hintText: 'Experience',
+                          focusColor: Color(0xff01411C),
+                          contentPadding: EdgeInsets.all(8),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                              borderSide: BorderSide(
+                                  color: Color(0xff01411C), width: 2.0)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                              borderSide: BorderSide(
+                                  color: const Color(0xff01411C), width: 2.0)),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(50),
+                            borderSide: BorderSide(color: Colors.black),
+                          )),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  child: SizedBox(
+                    height: 40,
+                    child: TextField(
+                      controller: zipcodeController,
+                      style: TextStyle(color: Color(0xff01411C)),
+                      decoration: InputDecoration(
+                          hintText: 'Zipcode Area',
+                          focusColor: Color(0xff01411C),
+                          contentPadding: EdgeInsets.all(8),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                              borderSide: BorderSide(
+                                  color: Color(0xff01411C), width: 2.0)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                              borderSide: BorderSide(
+                                  color: const Color(0xff01411C), width: 2.0)),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(50),
+                            borderSide: BorderSide(color: Colors.black),
+                          )),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  child: SizedBox(
+                    height: 40,
+                    child: TextField(
+                      controller: courtController,
+                      style: TextStyle(color: Color(0xff01411C)),
+                      decoration: InputDecoration(
+                          hintText: 'Court',
+                          focusColor: Color(0xff01411C),
+                          contentPadding: EdgeInsets.all(8),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                              borderSide: BorderSide(
+                                  color: Color(0xff01411C), width: 2.0)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                              borderSide: BorderSide(
+                                  color: const Color(0xff01411C), width: 2.0)),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(50),
+                            borderSide: BorderSide(color: Colors.black),
+                          )),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  child: SizedBox(
+                    height: 40,
+                    child: TextField(
+                      controller: aboutmeController,
+                      style: TextStyle(color: Color(0xff01411C)),
+                      decoration: InputDecoration(
+                          hintText: 'About me',
+                          focusColor: Color(0xff01411C),
+                          contentPadding: EdgeInsets.all(8),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(80),
+                              borderSide: BorderSide(
+                                  color: Color(0xff01411C), width: 2.0)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                              borderSide: BorderSide(
+                                  color: const Color(0xff01411C), width: 2.0)),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(50),
+                            borderSide: BorderSide(color: Colors.black),
+                          )),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ), Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+
+                      Text(
+                        'Specialization',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Color(0xff01411C),
+                        ),
+                      ),
+                      for (String specialization in [
+                        'Family Court',
+                        'Crime Court',
+                        'Divorce Court',
+                        'Other'
+                      ])
+                        Row(
+                          children: [
+                            Checkbox(
+                              value: selectedSpecializations.contains(
+                                  specialization),
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  if (value == true) {
+                                    selectedSpecializations.add(specialization);
+                                  } else {
+                                    selectedSpecializations.remove(
+                                        specialization);
+                                  }
+                                });
+                              },
+                            ),
+                            Text(specialization),
+                          ],
+                        ),
+
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+
+
+                GestureDetector(
+                  onTap: () {
+                    registerUser(
+                      genderController.text.toString(),
+                      languageController.text.toString(),
+                      residentialareaController.text.toString(),
+                      aboutmeController.text.toString(),
+                      experienceController.text.toString(),
+                      zipcodeController.text.toString(),
+                      courtController.text.toString(),
+                      selectedSpecializations.join(','),
+                      _selectedUserRole,
+                    );
+                  },
+                  child: Container(
+                    height: 50,
+                    width: 122,
+                    decoration: BoxDecoration(
+                      color: Color(0xff01411C),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Update Profile',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    }
   }
-}

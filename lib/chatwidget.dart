@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:wakeel_app/Constant.dart';
 
 import 'package:wakeel_app/chatwidget.dart';
 import 'package:wakeel_app/wakeel_app_bar.dart';
@@ -24,7 +25,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
-        child: WakeelAppBar(back: false),
+        child: WakeelAppBar(back: true),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -35,9 +36,24 @@ class _ChatScreenState extends State<ChatScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(Icons.arrow_back),
-                Text('Adv. Bashir Momin'),
-                Icon(Icons.more_vert),
+                IconButton(
+                  icon: const Icon(Icons.arrow_back,
+                      color: Color(Constants.App_green_color)),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                const Text('Adv. Bashir Momin',style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: Color(Constants.App_txt_color))),
+                IconButton(
+                  icon: const Icon(Icons.more_vert,
+                      color: Color(Constants.App_green_color)),
+                  onPressed: () {
+                    // Navigator.pop(context);
+                  },
+                )
               ],
             ),
             SizedBox(

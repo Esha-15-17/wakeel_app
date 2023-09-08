@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/material/input_decorator.dart';
 import 'package:wakeel_app/Constant.dart';
+import 'package:wakeel_app/MessaeHistory.dart';
 import 'package:wakeel_app/wakeel_app_bar.dart';
 import 'My_profile.dart';
 import 'my_booking.dart';
@@ -478,7 +479,8 @@ class _legalservicesState extends State<legalservices> {
   Widget build(BuildContext context) {
     final List<Widget> _screens = [
       homeScreen(),
-      ChatScreen(),
+      MessageHistory(),
+      // ChatScreen(),
       Notifications(),
       myprofile(),
     ];

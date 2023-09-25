@@ -29,7 +29,7 @@ class _myprofileState extends State<myprofile> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
-        child: WakeelAppBar(back: false),
+        child: WakeelAppBar(back: true),
       ),
       body: SingleChildScrollView(
       child: Column(

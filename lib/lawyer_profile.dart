@@ -41,8 +41,8 @@ class _lawyerprofileState extends State<lawyerprofile> {
 
   // Define gender avatars
   Map<String, String> genderAvatars = {
-    'Male': 'assets/male_avatar.png', // Replace with your male avatar path
-    'Female': 'assets/female_avatar.png', // Replace with your female avatar path
+    'Male': 'assests/male.png', // Replace with your male avatar path
+    'Female': 'assests/female.png', // Replace with your female avatar path
   };
 
 
@@ -160,6 +160,13 @@ class _lawyerprofileState extends State<lawyerprofile> {
                           height: 150,
                           fit: BoxFit.cover,
                         ),
+                      if (_selectedGender.isNotEmpty)
+                        Image.asset(
+                          genderAvatars[_selectedGender] ?? '',
+                          width: 150,
+                          height: 150,
+                          fit: BoxFit.cover,
+                        ),
                       Icon(
                         Icons.camera_alt,
                         color: Colors.white,
@@ -203,13 +210,7 @@ class _lawyerprofileState extends State<lawyerprofile> {
               ),
               SizedBox(height: 20),
               // Display the selected gender's avatar
-              if (_selectedGender.isNotEmpty)
-                Image.asset(
-                  genderAvatars[_selectedGender] ?? '',
-                  width: 150,
-                  height: 150,
-                  fit: BoxFit.cover,
-                ),
+
               Padding(
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: SizedBox(

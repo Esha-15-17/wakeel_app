@@ -1,42 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:wakeel_app/Constant.dart';
 import 'chatwidget.dart';
 import 'appointment.dart';
 class Chat extends StatelessWidget {
   Chat(
       {super.key,
         required this.text,
-        required this.color,
-        required this.topLeft,
-        required this.topRight,
-        required this.bottomLeft,
-        required this.bottomRight});
+        required this.type,
+        required this.textColor,
+       });
 
   String text;
-  Color color;
-  double topLeft;
-  double topRight;
-  double bottomLeft;
-  double bottomRight;
+  int textColor;
+  String type;
+
 
   @override
   Widget build(BuildContext context) {
+
+    bool isSender = type == "sender";
+    int textColor = isSender ? Constants.App_yellow_color : Constants.App_txt_color ;
+    int boxColor = isSender ? Constants.App_green_color : Constants.App_yellow_color;
+    int borderColor = isSender ? Constants.App_green_color : Constants.App_txt_color;
+    var alignment = isSender ?  MainAxisAlignment.end : MainAxisAlignment.start;
+    double topRight = isSender ? 0 : 5;
+    double topLeft = isSender ? 5 : 0;
+
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: alignment,
         children: [
           Container(
             height: 50,
             width: 150,
-            child: Center(child: Text(text)),
             decoration: BoxDecoration(
-              color: color,
+              color: Color(boxColor),
+              border: Border.all(
+                color: Color(borderColor),
+                width: 1.0,
+              ),
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(topRight),
                   topLeft: Radius.circular(topLeft),
-                  bottomLeft: Radius.circular(bottomLeft),
-                  bottomRight: Radius.circular(bottomRight)),
+                  bottomLeft: const Radius.circular(5),
+                  bottomRight: const Radius.circular(5)),
             ),
+            child: Center(child: Text(text,
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: Color(textColor)))),
           ),
         ],
       ),

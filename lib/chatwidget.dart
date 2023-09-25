@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:wakeel_app/Constant.dart';
 
@@ -20,6 +19,34 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final List<Map<String, String>> list = [
+    {
+      'msg': 'Hey! How are you \n going ?',
+      'status': 'Delivered', // seen // sent
+      'type': 'sender',
+    },
+    {
+      'msg': 'Hey! How are you \n going ?',
+      'status': 'Delivered', // seen // sent
+      'type': 'receiver',
+    },
+    {
+      'msg': 'Hey! How are you \n going ?',
+      'status': 'Delivered', // seen // sent
+      'type': 'sender',
+    },
+    {
+      'msg': 'Hey! How are you \n going ?',
+      'status': 'Delivered', // seen // sent
+      'type': 'sender',
+    },
+    {
+      'msg': 'Hey! How are you \n going ?',
+      'status': 'Delivered', // seen // sent
+      'type': 'receiver',
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,179 +54,149 @@ class _ChatScreenState extends State<ChatScreen> {
         preferredSize: const Size.fromHeight(50),
         child: WakeelAppBar(back: true),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 10,
+      body: Column(
+        children: [
+          const SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back,
+                    color: Color(Constants.App_green_color)),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              const Text('Adv. Bashir Momin',
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: Color(Constants.App_txt_color))),
+              IconButton(
+                icon: const Icon(Icons.more_vert,
+                    color: Color(Constants.App_green_color)),
+                onPressed: () {
+                  // Navigator.pop(context);
+                },
+              )
+            ],
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: list.length, // Adjust the number of items as needed
+              itemBuilder: (context, index) {
+                final item = list[index];
+
+                return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Chat(
+                            textColor: Constants.App_yellow_color,
+                            text: item["msg"]!,
+                            type: item["type"]!,
+                          ),
+                        ),
+                        item["type"] == "sender"
+                            ? const Align(
+                                alignment: Alignment.centerRight,
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 8.0),
+                                  child: Text('Delieverd',
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w400,
+                                          color:
+                                              Color(Constants.App_txt_color))),
+                                ),
+                              )
+                            : const Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 8.0),
+                                  child: Text('Delieverd',
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w400,
+                                          color:
+                                              Color(Constants.App_txt_color))),
+                                ),
+                              )
+                      ],
+                    ));
+              },
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back,
-                      color: Color(Constants.App_green_color)),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                const Text('Adv. Bashir Momin',style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: Color(Constants.App_txt_color))),
-                IconButton(
-                  icon: const Icon(Icons.more_vert,
-                      color: Color(Constants.App_green_color)),
-                  onPressed: () {
-                    // Navigator.pop(context);
-                  },
-                )
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Chat(
-                text: 'Hey! How are you \n going ?',
-                color: Colors.green,
-                topLeft: 5,
-                topRight: 0,
-                bottomLeft: 5,
-                bottomRight: 5),
-            Padding(
-              padding: const EdgeInsets.only(left: 300),
-              child: Text('Delieverd'),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 180),
-              child: Chat(
-                  text: 'Hey! How are you \n going ?',
-                  color: Colors.white,
-                  topLeft: 5,
-                  topRight: 0,
-                  bottomLeft: 5,
-                  bottomRight: 5),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 300),
-              child: Text('Delieverd'),
-            ),
-            Chat(
-                text: 'Hey! How are you \n going ?',
-                color: Colors.green,
-                topLeft: 5,
-                topRight: 0,
-                bottomLeft: 5,
-                bottomRight: 5),
-            Padding(
-              padding: const EdgeInsets.only(left: 300),
-              child: Text('Delieverd'),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 180),
-              child: Chat(
-                  text: 'Hey! How are you \n going ?',
-                  color: Colors.white,
-                  topLeft: 5,
-                  topRight: 0,
-                  bottomLeft: 5,
-                  bottomRight: 5),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 300),
-              child: Text('Delieverd'),
-            ),
-            Chat(
-                text: 'Hey! How are you \n going ?',
-                color: Colors.green,
-                topLeft: 5,
-                topRight: 0,
-                bottomLeft: 5,
-                bottomRight: 5),
-            Padding(
-              padding: const EdgeInsets.only(left: 300),
-              child: Text('Delieverd'),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 180),
-              child: Chat(
-                  text: 'Hey! How are you \n going ?',
-                  color: Colors.white,
-                  topLeft: 5,
-                  topRight: 0,
-                  bottomLeft: 5,
-                  bottomRight: 5),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 300),
-              child: Text('Delieverd'),
-            ),
-            Chat(
-                text: 'Hey! How are you \n going ?',
-                color: Colors.green,
-                topLeft: 5,
-                topRight: 0,
-                bottomLeft: 5,
-                bottomRight: 5),
-            Padding(
-              padding: const EdgeInsets.only(left: 300),
-              child: Text('Delieverd'),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Container(
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Container(
               height: 30,
-              width: 360,
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
                 children: [
-                  SizedBox(
-                    width: 25,
+                  const SizedBox(
+                    width: 20,
                   ),
-                  Icon(Icons.camera),
-                  Icon(Icons.image),
-                  Icon(Icons.share),
-                  SizedBox(
+                  const Icon(Icons.camera),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  const Icon(Icons.image),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  const Icon(Icons.share),
+                  const SizedBox(
                     width: 10,
                   ),
-                  Text(
+                  const Text(
                     '|',
                     style: TextStyle(fontSize: 25),
                   ),
-                  Text('Write your message here...  '),
-                  Text(
-                    '|',
-                    style: TextStyle(fontSize: 25),
+                  const Expanded(
+                    child: TextField(
+                      style: TextStyle(color: Color(Constants.App_txt_color)),
+                      decoration: InputDecoration(
+                        hintText: 'Write your message here...',
+                      ),
+                    ),
                   ),
-                  const Icon(Icons.mic),
                   InkWell(
                     onTap: () {
-                      Navigator.push
-                        (context,
-                          MaterialPageRoute(
-                              builder: (context) => RecentMessages()));
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => RecentMessages()));
                     },
                     child: Container(
-                      height: 25,
-                      width: 35,
-                      child: Center(child: Text('Send')),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
-                          ),
-                          color: Colors.green),
-                    ),
+                        height: 30,
+                        width: 77,
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(20),
+                              bottomRight: Radius.circular(20),
+                            ),
+                            color: Color(Constants.App_green_color)),
+                        child: const Center(
+                            child: Text('Send',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color:
+                                        Color(Constants.App_yellow_color))))),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

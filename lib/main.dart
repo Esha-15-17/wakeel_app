@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wakeel_app/splash_screen.dart';
+import 'chatwidget.dart';
 import 'legal_sevices.dart';
 
 void main() {

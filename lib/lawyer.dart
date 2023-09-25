@@ -1,4 +1,3 @@
-
 class Lawyer {
   final String name;
   final String specialization;

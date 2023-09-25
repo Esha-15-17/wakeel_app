@@ -6,6 +6,7 @@ import 'package:wakeel_app/MessaeHistory.dart';
 import 'package:wakeel_app/wakeel_app_bar.dart';
 import 'My_profile.dart';
 import 'my_booking.dart';
+import 'profile_setting.dart';
 import 'schedule.dart';
 import 'menu.dart';
 import 'chatwidget.dart';
@@ -14,6 +15,7 @@ import 'LEGAL.dart';
 import 'find_lawyer.dart';
 import 'lawyer_profile.dart';
 import 'notfications_screen.dart';
+import 'profile_screen.dart';
 
 class legalservices extends StatefulWidget {
   const legalservices({super.key});
@@ -48,7 +50,7 @@ class _legalservicesState extends State<legalservices> {
                   child: Column(
                     children: [
                       Image.asset('assests/book.png', height: 70, width: 50),
-                      Text('Emergency\nBook'),
+                      Text('    Book\nEmergency'),
                     ],
                   ),
                 ),
@@ -62,7 +64,7 @@ class _legalservicesState extends State<legalservices> {
                   child: Column(
                     children: [
                       Image.asset('assests/ls.png', height: 70, width: 50),
-                      Text('Legal\nService'),
+                      Text('  Legal\nService'),
                     ],
                   ),
                 ),
@@ -77,7 +79,7 @@ class _legalservicesState extends State<legalservices> {
                     children: [
                       Image.asset('assests/ham-200.png', height: 70, width: 50),
                       // height: 50, width: 30),
-                      Text('Find\nLawyer'),
+                      Text('  Find\nLawyer'),
                     ],
                   ),
                 ),
@@ -104,7 +106,7 @@ class _legalservicesState extends State<legalservices> {
                             height: 70, width: 50),
                         // height: 50, width: 30),
                       ),
-                      Text('Appointments'),
+                      Text('       Book\nAppointments'),
                     ],
                   ),
                 ),
@@ -157,8 +159,8 @@ class _legalservicesState extends State<legalservices> {
               Expanded(
                 child: Column(
                   children: [
-                    Image.asset('assests/cs3.PNG', height: 50, width: 50),
-                    Text('Property'),
+                    Image.asset('assests/cs5.PNG', height: 50, width: 50),
+                    Text('Child Custody'),
                   ],
                 ),
               ),
@@ -179,8 +181,8 @@ class _legalservicesState extends State<legalservices> {
             Expanded(
               child: Column(
                 children: [
-                  Image.asset('assests/cs5.PNG', height: 50, width: 50),
-                  Text('Child Custody'),
+                  Image.asset('assests/cs3.PNG', height: 50, width: 50),
+                  Text('Property'),
                 ],
               ),
             ),
@@ -194,12 +196,15 @@ class _legalservicesState extends State<legalservices> {
             ),
           ]),
           SizedBox(
-            height: 15,
+            height: 20,
           ),
           Row(children: [
             Expanded(
               child: Column(children: [
                 Image.asset('assests/cc.png', height: 50, width: 50),
+                SizedBox(
+                  height: 8,
+                ),
                 Text('Cyber crime'),
               ]),
             ),
@@ -207,6 +212,9 @@ class _legalservicesState extends State<legalservices> {
               child: Column(
                 children: [
                   Image.asset('assests/tax.png', height: 50, width: 50),
+                  SizedBox(
+                    height: 8,
+                  ),
                   Text('Taxtation'),
                 ],
               ),
@@ -215,6 +223,9 @@ class _legalservicesState extends State<legalservices> {
               child: Column(
                 children: [
                   Image.asset('assests/imii.png', height: 50, width: 50),
+                  SizedBox(
+                    height: 8,
+                  ),
                   Text('Immigration'),
                 ],
               ),
@@ -480,9 +491,8 @@ class _legalservicesState extends State<legalservices> {
     final List<Widget> _screens = [
       homeScreen(),
       MessageHistory(),
-      // ChatScreen(),
       Notifications(),
-      myprofile(),
+      profilesetting(),
     ];
 
     return Scaffold(

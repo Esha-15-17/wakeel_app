@@ -66,44 +66,38 @@ class _resetpasswordState extends State<resetpassword> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
+   Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 30,
-                width: 100,
-              ),
+              SizedBox(height: 30, width: 100),
               Text(
-                'Reset your password?',
+                'Reset Your Password?',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Text('Dont Worry, we are here to help you.'),
-              SizedBox(
-                height: 30,
-              ),
-              SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 10),
+              Text('Don\'t Worry, We Are Here to Help You.'),
+              SizedBox(height: 30),
+              SizedBox(height: 20),
               Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: SizedBox(
-                  height: 40,
+                  height: 50,
                   child: TextField(
                     controller: resetController,
                     style: const TextStyle(color: Color(0xff01411C)),
                     decoration: InputDecoration(
-                      hintText: 'Reset code',
-                      focusColor: Color(0xff01411C),
-                      contentPadding: EdgeInsets.all(8),
+                      hintText: 'Reset Code',
+                      prefixIcon: Icon(
+                        Icons.lock_outline,
+                        color: Colors.grey,
+                      ),
+                      contentPadding: EdgeInsets.all(12),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50),
                         borderSide: BorderSide(
@@ -118,28 +112,26 @@ class _resetpasswordState extends State<resetpassword> {
                           width: 2.0,
                         ),
                       ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
                     ),
                   ),
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 20),
               Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: SizedBox(
-                  height: 40,
+                  height: 50,
                   child: TextField(
                     controller: passwordController,
+                    obscureText: true,
                     style: const TextStyle(color: Color(0xff01411C)),
                     decoration: InputDecoration(
-                      hintText: 'New password',
-                      focusColor: Color(0xff01411C),
-                      contentPadding: EdgeInsets.all(8),
+                      hintText: 'New Password',
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: Colors.grey,
+                      ),
+                      contentPadding: EdgeInsets.all(12),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50),
                         borderSide: BorderSide(
@@ -154,28 +146,26 @@ class _resetpasswordState extends State<resetpassword> {
                           width: 2.0,
                         ),
                       ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
                     ),
                   ),
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 20),
               Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: SizedBox(
-                  height: 40,
+                  height: 50,
                   child: TextField(
                     controller: confirmpasswordController,
+                    obscureText: true,
                     style: const TextStyle(color: Color(0xff01411C)),
                     decoration: InputDecoration(
-                      hintText: 'Confirm password',
-                      focusColor: Color(0xff01411C),
-                      contentPadding: EdgeInsets.all(8),
+                      hintText: 'Confirm Password',
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: Colors.grey,
+                      ),
+                      contentPadding: EdgeInsets.all(12),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50),
                         borderSide: BorderSide(
@@ -190,18 +180,11 @@ class _resetpasswordState extends State<resetpassword> {
                           width: 2.0,
                         ),
                       ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
                     ),
                   ),
                 ),
               ),
-              // ... (similar code for other TextFields)
-              SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 20),
               GestureDetector(
                 onTap: () {
                   resetPassword(

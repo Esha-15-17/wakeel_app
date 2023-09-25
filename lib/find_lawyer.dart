@@ -18,6 +18,9 @@ import 'my_booking.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'lawyer.dart';
+import 'package:wakeel_app/MessaeHistory.dart';
+
+import 'profile_setting.dart';
 
 class findlawyer extends StatefulWidget {
   const findlawyer({super.key});
@@ -55,9 +58,8 @@ class _findlawyerState extends State<findlawyer> {
       print('Error: $e');
     }
   }
-  // This widget is the root of your application.
-  Widget findlawyer() {
 
+  Widget homeScreen() {
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
@@ -570,54 +572,112 @@ class _findlawyerState extends State<findlawyer> {
       ),
     );
   }
-
-
-Widget build (BuildContext context) {
-  final List<Widget> _screens = [
-    findlawyer(),
-    ChatScreen(),
-    Notifications(),
-    myprofile(),
-  ];
+  Widget build(BuildContext context) {
+    final List<Widget> _screens = [
+      homeScreen(),
+      MessageHistory(),
+      // ChatScreen(),
+      Notifications(),
+      profilesetting(),
+    ];
 
     return Scaffold(
       body: _screens[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Color(0xff01411C),
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white.withOpacity(.60),
-        selectedFontSize: 14,
-        unselectedFontSize: 14,
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-
-// ignore: prefer_const_literals_to_create_immutable
-        items: [
-          BottomNavigationBarItem(
-            label: 'home',
-            icon: Icon(Icons.home),
-          ),
-          BottomNavigationBarItem(
-            label: 'Messages',
-            icon: Icon(Icons.message_rounded),
-          ),
-          BottomNavigationBarItem(
-            label: 'Notification',
-            icon: Icon(Icons.notifications),
-          ),
-          BottomNavigationBarItem(
-            label: 'Profile',
-            icon: Icon(Icons.person),
-          ),
-        ],
+      bottomNavigationBar: SizedBox(
+        height: 70,
+        child: Stack(
+          children: [
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                backgroundColor: Color(Constants.App_green_color),
+                selectedItemColor: Colors.white,
+                unselectedItemColor: Colors.white.withOpacity(.60),
+                selectedFontSize: 14,
+                unselectedFontSize: 14,
+                currentIndex: _currentIndex,
+                onTap: (index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+                items: [
+                  BottomNavigationBarItem(
+                    label: '',
+                    icon: Image.asset(
+                        'assests/home_icon.png'), //Icon(Icons.home),
+                  ),
+                  BottomNavigationBarItem(
+                    label: '',
+                    icon: Image.asset(
+                        'assests/message_icon.png'), //Icon(Icons.message_rounded),
+                  ),
+                  BottomNavigationBarItem(
+                    label: '',
+                    icon: Image.asset(
+                        'assests/notification_icon.png'), //Icon(Icons.notifications),
+                  ),
+                  BottomNavigationBarItem(
+                    label: '',
+                    icon: Image.asset(
+                        'assests/profile_icon.png'), //Icon(Icons.person),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              bottom: 10, // Adjust the bottom position as needed
+              left: 0,
+              right: 0,
+              child: GestureDetector(
+                onTap: () {
+                  // Handle the tap on the plus icon here
+                },
+                child: Container(
+                  height: 60, // Set the desired height for the image
+                  decoration: BoxDecoration(
+                    color: Color(Constants.App_green_color),
+                    // Customize the background color
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 19, // Adjust the bottom position as needed
+              left: 0,
+              right: 0,
+              child: GestureDetector(
+                onTap: () {
+                  // Handle the tap on the plus icon here
+                },
+                child: Container(
+                  height: 42, // Set the desired height for the image
+                  decoration: BoxDecoration(
+                    color: Color(Constants.App_green_circle_color),
+                    // Customize the background color
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.add,
+                      size: 16, // Set the size of the plus icon
+                      color: Color(Constants
+                          .App_yellow_color), // Customize the icon color
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
+
 }
 
 

@@ -23,7 +23,8 @@ class ScheduleScreenState extends State<ScheduleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+        child:Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
         child: WakeelAppBar(back: true),
@@ -48,7 +49,7 @@ class ScheduleScreenState extends State<ScheduleScreen> {
                       onPrimary: Color(0xFF3D3D3D),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
-                            20), // Set the button's border radius
+                            15), // Set the button's border radius
                       ),
                     ),
                     onPressed: () {
@@ -62,7 +63,7 @@ class ScheduleScreenState extends State<ScheduleScreen> {
                       ),
                     )),
                 SizedBox(
-                  width: 30,
+                  width: 1,
                 ),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -70,7 +71,7 @@ class ScheduleScreenState extends State<ScheduleScreen> {
                       onPrimary: Color(0xFF3D3D3D),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
-                            20), // Set the button's border radius
+                            15), // Set the button's border radius
                       ),
                     ),
                     onPressed: () {
@@ -84,7 +85,7 @@ class ScheduleScreenState extends State<ScheduleScreen> {
                       ),
                     )),
                 SizedBox(
-                  width: 30,
+                  width: 1,
                 ),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -92,7 +93,7 @@ class ScheduleScreenState extends State<ScheduleScreen> {
                       onPrimary: Color(0xFF3D3D3D),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
-                            20), // Set the button's border radius
+                            15), // Set the button's border radius
                       ),
                     ),
                     onPressed: () {
@@ -133,36 +134,7 @@ class ScheduleScreenState extends State<ScheduleScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Color(0xff01411C),
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white.withOpacity(.60),
-        selectedFontSize: 14,
-        unselectedFontSize: 14,
-        onTap: (value) {
-          // Respond to item press.
-        },
-        // ignore: prefer_const_literals_to_create_immutables
-        items: [
-          BottomNavigationBarItem(
-            label: 'home',
-            icon: Icon(Icons.home),
-          ),
-          BottomNavigationBarItem(
-            label: 'Messages',
-            icon: Icon(Icons.message_rounded),
-          ),
-          BottomNavigationBarItem(
-            label: 'Notification',
-            icon: Icon(Icons.notifications),
-          ),
-          BottomNavigationBarItem(
-            label: 'Profile',
-            icon: Icon(Icons.person),
-          ),
-        ],
-      ),
+        )
     );
   }
 }

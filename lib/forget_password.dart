@@ -50,85 +50,102 @@ class _forgetpasswordState extends State<forgetpassword> {
   }
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(
-        child:Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-        child:Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-        SizedBox(
-        height: 30,
-        width: 100,
-    ),
-    Text (
-    'Forget your password?',
-    style: TextStyle(fontWeight:FontWeight.bold,fontSize: 25 ),
-    ),
-    SizedBox(
-    height: 10,
-    ),
-    Text('Dont Worry,we are here to help you.'),
-    SizedBox(
-    height: 30,
-    ),
-          SizedBox(
-            height: 20,
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Color(0xFFFFFFFF), Color(0xFFFFFFFF)], // Dark green to light green
           ),
-    Padding(
-    padding: EdgeInsets.only(left: 20, right: 20),
-    child: SizedBox(
-    height: 40,
-    child: TextField(
-      controller:forgotController,
-    style: const TextStyle(color: Color(0xff01411C)),
-    decoration: InputDecoration(
-    hintText: 'Enter your email..',
-    focusColor: Color(0xff01411C),
-    contentPadding: EdgeInsets.all(8),
-    focusedBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(50),
-    borderSide: BorderSide(
-    color: Color(0xff01411C), width: 2.0)),
-    enabledBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(50),
-    borderSide: BorderSide(
-    color: const Color(0xff01411C), width: 2.0)),
-    border: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(50),
-    borderSide: BorderSide(color: Colors.black),
-    )),
-    ),
-    ),
-    ),
-          SizedBox(
-            height: 20,
-          ),
-          GestureDetector(
-            onTap: () {
-              forgot(forgotController.text.toString());
-            },
-            child:
-    Container(
-    height: 50,
-    width: 122,
-    decoration: BoxDecoration(
-    color: Color(0xff01411C),
-    borderRadius: BorderRadius.circular(20)),
-    child: Center(
-    child: Text(
-    'Reset',
-    style: TextStyle(
-    color: Colors.white, fontWeight: FontWeight.bold),
-    )),
-    ),
-          ),
-        ],
         ),
+        child: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 100,
+                    child: Image.asset('assests/forgot.png'), // Replace with your logo
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Forget Your Password?',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 28,
+                      color: Color(0xff01411C),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'Don\'t Worry, We Are Here to Help You.',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  SizedBox(height: 30),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: TextField(
+                      controller: forgotController,
+                      style: TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                        hintText: 'Enter Your Email...',
+                        prefixIcon: Icon(
+                          Icons.email,
+                          color: Colors.grey,
+                        ),
+                        contentPadding: EdgeInsets.all(12),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50),
+                          borderSide: BorderSide(
+                            color: Colors.green,
+                            width: 2.0,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50),
+                          borderSide: BorderSide(
+                            color: Colors.grey,
+                            width: 2.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: () {
+                      forgot(forgotController.text.toString());
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 122,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF01411C),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Reset',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
-
-        )
+      ),
     );
   }
 }

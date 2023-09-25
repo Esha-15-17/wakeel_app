@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/material/input_decorator.dart';
-import 'package:molten_navigationbar_flutter/molten_navigationbar_flutter.dart';
 import 'package:wakeel_app/wakeel_app_bar.dart';
-import 'booking.dart';
-import 'schedule.dart';
-import 'legal_sevices.dart';
-import 'menu.dart';
-import 'appointment.dart';
-import 'find_lawyer.dart';
-import 'package:wakeel_app/legal_sevices.dart';
+import 'package:wakeel_app/Constant.dart';
+import 'notfications_screen.dart';
+import 'My_profile.dart';
+import 'package:wakeel_app/MessaeHistory.dart';
 
-class legalser extends StatelessWidget {
+import 'profile_setting.dart';
+
+class legalser extends StatefulWidget {
   const legalser({super.key});
 
-  // This widget is the root of your application.
-  Widget build(BuildContext context) {
-    int _selectedIndex = 0;
+  @override
+  State<legalser> createState() => _legalserState();
+}
+
+class _legalserState extends State<legalser> {
+
+  int _currentIndex = 0;
+  Widget homeScreen() {
     return SafeArea(
         child: Scaffold(
       appBar: PreferredSize(
@@ -157,7 +160,7 @@ class legalser extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
                           borderSide: BorderSide(
-                              color: const Color(0xff01411C), width: 2.0)),
+                              color: const Color(0xFF000000), width: 1.0)),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50),
                         borderSide: BorderSide(color: Colors.black),
@@ -174,7 +177,7 @@ class legalser extends StatelessWidget {
               height: 30,
               width: 100,
               decoration: BoxDecoration(
-                color: Colors.green,
+                color: Color(0xff01411C),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Center(child: Text('Save')),
@@ -184,4 +187,110 @@ class legalser extends StatelessWidget {
       ),
     ));
   }
+  Widget build(BuildContext context) {
+    final List<Widget> _screens = [
+      homeScreen(),
+      MessageHistory(),
+      // ChatScreen(),
+      Notifications(),
+      profilesetting(),
+    ];
+
+    return Scaffold(
+      body: _screens[_currentIndex],
+      bottomNavigationBar: SizedBox(
+        height: 70,
+        child: Stack(
+          children: [
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                backgroundColor: Color(Constants.App_green_color),
+                selectedItemColor: Colors.white,
+                unselectedItemColor: Colors.white.withOpacity(.60),
+                selectedFontSize: 14,
+                unselectedFontSize: 14,
+                currentIndex: _currentIndex,
+                onTap: (index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+                items: [
+                  BottomNavigationBarItem(
+                    label: '',
+                    icon: Image.asset(
+                        'assests/home_icon.png'), //Icon(Icons.home),
+                  ),
+                  BottomNavigationBarItem(
+                    label: '',
+                    icon: Image.asset(
+                        'assests/message_icon.png'), //Icon(Icons.message_rounded),
+                  ),
+                  BottomNavigationBarItem(
+                    label: '',
+                    icon: Image.asset(
+                        'assests/notification_icon.png'), //Icon(Icons.notifications),
+                  ),
+                  BottomNavigationBarItem(
+                    label: '',
+                    icon: Image.asset(
+                        'assests/profile_icon.png'), //Icon(Icons.person),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              bottom: 10, // Adjust the bottom position as needed
+              left: 0,
+              right: 0,
+              child: GestureDetector(
+                onTap: () {
+                  // Handle the tap on the plus icon here
+                },
+                child: Container(
+                  height: 60, // Set the desired height for the image
+                  decoration: BoxDecoration(
+                    color: Color(Constants.App_green_color),
+                    // Customize the background color
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 19, // Adjust the bottom position as needed
+              left: 0,
+              right: 0,
+              child: GestureDetector(
+                onTap: () {
+                  // Handle the tap on the plus icon here
+                },
+                child: Container(
+                  height: 42, // Set the desired height for the image
+                  decoration: BoxDecoration(
+                    color: Color(Constants.App_green_circle_color),
+                    // Customize the background color
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.add,
+                      size: 16, // Set the size of the plus icon
+                      color: Color(Constants
+                          .App_yellow_color), // Customize the icon color
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
 }

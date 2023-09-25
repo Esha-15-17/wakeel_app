@@ -76,6 +76,12 @@ class _LogInScreenState extends State<LogInScreen> {
         }
       } else {
         print('Failed: ${response.body}');
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Color(0xff01411C),
+              content: Text('Invalid credentials.'),
+            )
+            );
       }
 
       } catch (e) {

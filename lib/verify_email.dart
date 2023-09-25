@@ -73,12 +73,12 @@ class _VerifyEmailState extends State<VerifyEmail> {
               SizedBox(
                 height: 20,
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+              Padding(padding: EdgeInsets.symmetric(horizontal: 20),
                 child: SizedBox(
                   height: 40,
                   child: TextField(
                     controller: otpController,
+                    keyboardType: TextInputType.number,
                     style: TextStyle(color: Color(0xff01411C)),
                     decoration: InputDecoration(
                       hintText: 'Enter OTP...',

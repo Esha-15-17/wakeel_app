@@ -17,7 +17,6 @@ class _changednumState extends State<changednum> {
   TextEditingController numController = TextEditingController();
 
   Future<void> verify(String num) async {
-
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString("token");
@@ -81,6 +80,7 @@ class _changednumState extends State<changednum> {
                   height: 40,
                   child: TextField(
                     controller: numController,
+                    keyboardType: TextInputType.number,
                     style: TextStyle(color: Color(0xff01411C)),
                     decoration: InputDecoration(
                       hintText: 'Enter 0300...',

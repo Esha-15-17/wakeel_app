@@ -491,6 +491,7 @@ class _legalservicesState extends State<legalservices> {
     final List<Widget> _screens = [
       homeScreen(),
       MessageHistory(),
+      MessageHistory(),
       Notifications(),
       profilesetting(),
     ];
@@ -520,70 +521,31 @@ class _legalservicesState extends State<legalservices> {
                 },
                 items: [
                   BottomNavigationBarItem(
-                    label: '',
+                    label: 'Home',
                     icon: Image.asset(
                         'assests/home_icon.png'), //Icon(Icons.home),
                   ),
                   BottomNavigationBarItem(
-                    label: '',
+                    label: 'Appointments',
+                    icon: Image.asset(
+                        'assests/appointment_icon.png'), //Icon(Icons.notifications),
+                  ),
+                  BottomNavigationBarItem(
+                    label: 'Messages',
                     icon: Image.asset(
                         'assests/message_icon.png'), //Icon(Icons.message_rounded),
                   ),
                   BottomNavigationBarItem(
-                    label: '',
+                    label: 'Notifications',
                     icon: Image.asset(
                         'assests/notification_icon.png'), //Icon(Icons.notifications),
                   ),
                   BottomNavigationBarItem(
-                    label: '',
+                    label: 'Profile',
                     icon: Image.asset(
                         'assests/profile_icon.png'), //Icon(Icons.person),
                   ),
                 ],
-              ),
-            ),
-            Positioned(
-              bottom: 10, // Adjust the bottom position as needed
-              left: 0,
-              right: 0,
-              child: GestureDetector(
-                onTap: () {
-                  // Handle the tap on the plus icon here
-                },
-                child: Container(
-                  height: 60, // Set the desired height for the image
-                  decoration: BoxDecoration(
-                    color: Color(Constants.App_green_color),
-                    // Customize the background color
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: 19, // Adjust the bottom position as needed
-              left: 0,
-              right: 0,
-              child: GestureDetector(
-                onTap: () {
-                  // Handle the tap on the plus icon here
-                },
-                child: Container(
-                  height: 42, // Set the desired height for the image
-                  decoration: BoxDecoration(
-                    color: Color(Constants.App_green_circle_color),
-                    // Customize the background color
-                    shape: BoxShape.circle,
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.add,
-                      size: 16, // Set the size of the plus icon
-                      color: Color(Constants
-                          .App_yellow_color), // Customize the icon color
-                    ),
-                  ),
-                ),
               ),
             ),
           ],

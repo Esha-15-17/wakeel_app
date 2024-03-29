@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:wakeel_app/Lawyer/Dashboard.dart';
 
 import 'legal_sevices.dart';
 import 'signup_lawyer.dart';
@@ -298,11 +299,22 @@ class _LogInScreenState extends State<LogInScreen> {
                       SizedBox(
                         width: 5,
                       ),
-                      Text(
-                        'Continue with gmail',
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      )
+
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Dashboard(),
+                              ));
+                        },
+                        child: Text(
+                          'Continue with gmail',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+
                     ],
                   )),
               SizedBox(

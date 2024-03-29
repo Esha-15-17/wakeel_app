@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wakeel_app/Lawyer/Dashboard.dart';
 import 'package:wakeel_app/splash_screen.dart';
 import 'chatwidget.dart';
 import 'legal_sevices.dart';
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData().copyWith(useMaterial3: true),
-        home: SplashScreen());
+        home:  SplashScreen() );//SplashScreen());
+        // home:  legalservices() );//SplashScreen());
   }
 }

@@ -3,6 +3,9 @@ import 'package:wakeel_app/notfications_screen.dart';
 import 'package:wakeel_app/wakeel_app_bar.dart';
 import 'menu.dart';
 import 'legal_sevices.dart';
+
+import 'package:flutter/material.dart';
+
 class Notifications extends StatelessWidget {
   const Notifications({super.key});
 
@@ -13,32 +16,22 @@ class Notifications extends StatelessWidget {
         preferredSize: const Size.fromHeight(50),
         child: WakeelAppBar(back: false),
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 20,
-          ),
-          Text('    Recent Notifications'),
-          SizedBox(
-            height: 20,
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text('Adv. Mohd Momin'),
-                  trailing: Text('4h ago'),
-                  subtitle: Text('Messaged You'),
-                  leading: CircleAvatar(
-                    backgroundImage: AssetImage('assests/Frame2.png'),
-                  ),
-                );
-              },
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Text(
+              'Under Development',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          )
-        ],
+            SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }
 }
+

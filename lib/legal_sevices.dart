@@ -37,83 +37,83 @@ class _legalservicesState extends State<legalservices> {
       ),
       body: SingleChildScrollView(
         child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(children: [
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => BookEmergency()));
-                  },
-                  child: Column(
-                    children: [
-                      Image.asset('assests/book.png', height: 70, width: 50),
-                      Text('    Book\nEmergency'),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => legalser()));
-                  },
-                  child: Column(
-                    children: [
-                      Image.asset('assests/ls.png', height: 70, width: 50),
-                      Text('  Legal\nService'),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => findlawyer()));
-                  },
-                  child: Column(
-                    children: [
-                      Image.asset('assests/ham-200.png', height: 70, width: 50),
-                      // height: 50, width: 30),
-                      Text('  Find\nLawyer'),
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => appointment(),
-                      ));
-                },
-                child: Expanded(
-                  child: Column(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => appointment()));
-                        },
-                        child: Image.asset('assests/app.png',
-                            height: 70, width: 50),
-                        // height: 50, width: 30),
-                      ),
-                      Text('       Book\nAppointments'),
-                    ],
-                  ),
-                ),
-              ),
-            ]),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: Row(children: [
+          //     Expanded(
+          //       child: InkWell(
+          //         onTap: () {
+          //           Navigator.push(
+          //               context,
+          //               MaterialPageRoute(
+          //                   builder: (context) => BookEmergency()));
+          //         },
+          //         child: Column(
+          //           children: [
+          //             Image.asset('assests/book.png', height: 70, width: 50),
+          //             Text('    Book\nEmergency'),
+          //           ],
+          //         ),
+          //       ),
+          //     ),
+          //     Expanded(
+          //       child: InkWell(
+          //         onTap: () {
+          //           Navigator.push(context,
+          //               MaterialPageRoute(builder: (context) => legalser()));
+          //         },
+          //         child: Column(
+          //           children: [
+          //             Image.asset('assests/ls.png', height: 70, width: 50),
+          //             Text('  Legal\nService'),
+          //           ],
+          //         ),
+          //       ),
+          //     ),
+          //     Expanded(
+          //       child: InkWell(
+          //         onTap: () {
+          //           Navigator.push(context,
+          //               MaterialPageRoute(builder: (context) => findlawyer()));
+          //         },
+          //         child: Column(
+          //           children: [
+          //             Image.asset('assests/ham-200.png', height: 70, width: 50),
+          //             // height: 50, width: 30),
+          //             Text('  Find\nLawyer'),
+          //           ],
+          //         ),
+          //       ),
+          //     ),
+          //     InkWell(
+          //       onTap: () {
+          //         Navigator.push(
+          //             context,
+          //             MaterialPageRoute(
+          //               builder: (context) => appointment(),
+          //             ));
+          //       },
+          //       child: Expanded(
+          //         child: Column(
+          //           children: [
+          //             InkWell(
+          //               onTap: () {
+          //                 Navigator.push(
+          //                     context,
+          //                     MaterialPageRoute(
+          //                         builder: (context) => appointment()));
+          //               },
+          //               child: Image.asset('assests/app.png',
+          //                   height: 70, width: 50),
+          //               // height: 50, width: 30),
+          //             ),
+          //             Text('       Book\nAppointments'),
+          //           ],
+          //         ),
+          //       ),
+          //     ),
+          //   ]),
+          // ),
           SizedBox(
             height: 30,
           ),
@@ -138,8 +138,7 @@ class _legalservicesState extends State<legalservices> {
               Expanded(
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => findlawyer()));
+
                   },
                   child: Column(
                     children: [
@@ -464,19 +463,19 @@ class _legalservicesState extends State<legalservices> {
               SizedBox(
                 width: 20,
               ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ScheduleScreen()));
-                },
-                child: Text('Schedule',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Color(Constants.App_txt_color))),
-              ),
+              // InkWell(
+              //   onTap: () {
+              //     Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (context) => ScheduleScreen()));
+              //   },
+              //   child: Text('Schedule',
+              //       style: TextStyle(
+              //           fontSize: 20,
+              //           fontWeight: FontWeight.bold,
+              //           color: Color(Constants.App_txt_color))),
+              // ),
             ],
           ),
           SizedBox(
@@ -532,12 +531,12 @@ class _legalservicesState extends State<legalservices> {
                         'assests/appointment_icon.png'), //Icon(Icons.notifications),
                   ),
                   BottomNavigationBarItem(
-                    label: 'Messages',
+                    label: 'Appointments',
                     icon: Image.asset(
                         'assests/message_icon.png'), //Icon(Icons.message_rounded),
                   ),
                   BottomNavigationBarItem(
-                    label: 'Notifications',
+                    label: 'Chat Bot',
                     icon: Image.asset(
                         'assests/notification_icon.png'), //Icon(Icons.notifications),
                   ),

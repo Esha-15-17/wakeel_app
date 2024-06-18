@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:wakeel_app/menu.dart';
+import 'package:wakeel_app/splash_screen.dart';
 import 'profile_screen.dart';
 import 'changed_num.dart';
 import 'My_profile.dart';
@@ -98,33 +99,7 @@ class menu extends StatelessWidget {
           const SizedBox(
             height: 15,
           ),
-          const Row(
-            children: [
-              SizedBox(
-                width: 30,
-              ),
-              Icon(Icons.laptop_chromebook_outlined),
-              SizedBox(
-                width: 20,
-              ),
-              Text(
-                'My Booking',
-                style: TextStyle(fontSize: 15),
-              ),
-              Spacer(),
-              Icon(
-                Icons.arrow_forward_ios_outlined,
-                color: Colors.black,
-                size: 15,
-              ),
-              SizedBox(
-                width: 30,
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 15,
-          ),
+
           InkWell(
             onTap: () {
               Navigator.push(context,
@@ -173,7 +148,7 @@ class menu extends StatelessWidget {
                   width: 20,
                 ),
                 Text(
-                  'Notification',
+                  'Chat Bot',
                   style: TextStyle(fontSize: 15),
                 ),
                 Spacer(),
@@ -189,39 +164,6 @@ class menu extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(
-            height: 15,
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ChatScreen()));
-            },
-            child: const Row(
-              children: [
-                SizedBox(
-                  width: 30,
-                ),
-                Icon(Icons.message_rounded),
-                SizedBox(
-                  width: 20,
-                ),
-                Text(
-                  'Messages',
-                  style: TextStyle(fontSize: 15),
-                ),
-                Spacer(),
-                Icon(
-                  Icons.arrow_forward_ios_outlined,
-                  color: Colors.black,
-                  size: 15,
-                ),
-                SizedBox(
-                  width: 30,
-                ),
-              ],
-            ),
-          ),
           const SizedBox(
             height: 15,
           ),
@@ -261,20 +203,25 @@ class menu extends StatelessWidget {
           const SizedBox(
             height: 15,
           ),
-
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SplashScreen(),
+                  ));
+            },
             child: const Row(
               children: [
                 SizedBox(
                   width: 30,
                 ),
-                Icon(Icons.share),
+                Icon(Icons.contact_page),
                 SizedBox(
                   width: 20,
                 ),
                 Text(
-                  'Share App',
+                  'Logout',
                   style: TextStyle(fontSize: 15),
                 ),
                 Spacer(),
@@ -291,60 +238,6 @@ class menu extends StatelessWidget {
           ),
           const SizedBox(
             height: 15,
-          ),
-          const Row(
-            children: [
-              SizedBox(
-                width: 30,
-              ),
-              Icon(Icons.fork_right),
-              SizedBox(
-                width: 20,
-              ),
-              Text(
-                'Referral your friends',
-                style: TextStyle(fontSize: 15),
-              ),
-              Spacer(),
-              Icon(
-                Icons.arrow_forward_ios_outlined,
-                color: Colors.black,
-                size: 15,
-              ),
-              SizedBox(
-                width: 30,
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          const Row(
-            children: [
-              SizedBox(
-                width: 30,
-              ),
-              Icon(Icons.wallet),
-              SizedBox(
-                width: 20,
-              ),
-              Text(
-                'wallet',
-                style: TextStyle(fontSize: 15),
-              ),
-              Spacer(),
-              Icon(
-                Icons.arrow_forward_ios_outlined,
-                color: Colors.black,
-                size: 15,
-              ),
-              SizedBox(
-                width: 30,
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
           ),
         ]),
       ),

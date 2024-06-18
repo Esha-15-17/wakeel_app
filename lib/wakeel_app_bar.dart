@@ -42,38 +42,38 @@ class WakeelAppBar extends StatelessWidget {
           )
               : SizedBox(),
           back ? SizedBox(width: 2) : SizedBox(),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                isWideScreen ? 16.0 : 8.0, // Left
-                8.0, // Top inset
-                isWideScreen ? 16.0 : 8.0, // Right
-                8.0, // Bottom inset
-              ),
-              child: TextField(
-                style: TextStyle(color: Color(Constants.App_txt_color)),
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(100),
-                    borderSide: BorderSide(
-                      color: Color(Constants.App_yellow_color),
-                    ),
-                  ),
-                  hintText: 'Search',
-                  hintStyle: TextStyle(color: Color(0XFF096A32)),
-                  contentPadding: EdgeInsets.all(8.0),
-                  suffixIcon: Icon(
-                    Icons.search,
-                    size: 15,
-                    color: Color(Constants.App_yellow_color),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // Expanded(
+          //   child: Padding(
+          //     padding: EdgeInsets.fromLTRB(
+          //       isWideScreen ? 16.0 : 8.0, // Left
+          //       8.0, // Top inset
+          //       isWideScreen ? 16.0 : 8.0, // Right
+          //       8.0, // Bottom inset
+          //     ),
+          //     child: TextField(
+          //       style: TextStyle(color: Color(Constants.App_txt_color)),
+          //       decoration: InputDecoration(
+          //         enabledBorder: OutlineInputBorder(
+          //           borderRadius: BorderRadius.circular(100),
+          //           borderSide: BorderSide(
+          //             color: Color(Constants.App_yellow_color),
+          //           ),
+          //         ),
+          //         hintText: 'Search',
+          //         hintStyle: TextStyle(color: Color(0XFF096A32)),
+          //         contentPadding: EdgeInsets.all(8.0),
+          //         suffixIcon: Icon(
+          //           Icons.search,
+          //           size: 15,
+          //           color: Color(Constants.App_yellow_color),
+          //         ),
+          //         border: OutlineInputBorder(
+          //           borderRadius: BorderRadius.circular(50),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           SizedBox(width: isWideScreen ? 10 : 0),
           InkWell(
             onTap: () {

@@ -36,6 +36,8 @@ class _LogInScreenState extends State<LogInScreen> {
 
   TextEditingController passwordController = TextEditingController();
   String _token = "";
+
+
   void loginn (String email, password) async {
     try {
       // final response = await http.post(Uri.parse('http://127.0.0.1:3000/login'),
@@ -99,6 +101,10 @@ class _LogInScreenState extends State<LogInScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    emailController.text = "adilmalik147@gmail.com";
+    passwordController.text = "1234";
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xffFFFFFF),
@@ -228,98 +234,6 @@ class _LogInScreenState extends State<LogInScreen> {
               ),
               SizedBox(
                 height: 30,
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => legalservices(),
-                      ));
-                },
-                child: Text(
-                  'Or connect using',
-                  style: TextStyle(color: Color(0xFF797979)),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => lawyerprofile(userRole: 'lawyer',),
-                      ));
-                },
-                child: Container(
-                  height: 35,
-                  width: 234,
-                  decoration: BoxDecoration(
-                      color: Color(0xff395C8D),
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.facebook,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            'Continue with facebook',
-                            style: TextStyle(
-                                color: Colors.white, fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      )),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                  height: 35,
-                  width: 234,
-                  decoration: BoxDecoration(
-                      color: Color(0xffEF4437),
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.report_gmailerrorred,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Dashboard(),
-                              ));
-                        },
-                        child: Text(
-                          'Continue with gmail',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-
-                    ],
-                  )),
-              SizedBox(
-                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

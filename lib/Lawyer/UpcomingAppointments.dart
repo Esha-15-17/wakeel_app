@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakeel_app/Constant.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:wakeel_app/chatwidget.dart';
 import 'package:wakeel_app/wakeel_app_bar.dart';
@@ -13,69 +17,93 @@ class UpcomingAppointments extends StatefulWidget {
 }
 
 class _UpcomingAppointmentsState extends State<UpcomingAppointments> {
-  final List<Map<String, String>> appointments = [
-    {
-      'lawyer_avatar':
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDeslexVHfYWvbp6HNBGJ5V9lElvRx-lr1ZJS9SH9Ju8HP6GsZcvc60GAaxdCaCLJGROU&usqp=CAU',
-      'appointment_date': '25/06/2022',
-      'appointment_time': '5:00 pm',
-      'lawyer_name': 'Fury',
-      'package_name': 'Silver',
-      'price': '2000.00',
-      'meeting_type': 'Office Consultation',
-      'meeting_duration': '2 hrs',
-    },
-    {
-      'lawyer_avatar':
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDeslexVHfYWvbp6HNBGJ5V9lElvRx-lr1ZJS9SH9Ju8HP6GsZcvc60GAaxdCaCLJGROU&usqp=CAU',
-      'appointment_date': '25/06/2022',
-      'appointment_time': '5:00 pm',
-      'lawyer_name': 'Fury',
-      'package_name': 'Silver',
-      'price': '2000.00',
-      'meeting_type': 'Chat',
-      'meeting_duration': '2 hrs',
-    },
-    {
-      'lawyer_avatar':
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDeslexVHfYWvbp6HNBGJ5V9lElvRx-lr1ZJS9SH9Ju8HP6GsZcvc60GAaxdCaCLJGROU&usqp=CAU',
-      'appointment_date': '25/06/2022',
-      'appointment_time': '5:00 pm',
-      'lawyer_name': 'Fury',
-      'package_name': 'Silver',
-      'price': '2000.00',
-      'meeting_type': 'Chat',
-      'meeting_duration': '2 hrs',
-    },
-    {
-      'lawyer_avatar':
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDeslexVHfYWvbp6HNBGJ5V9lElvRx-lr1ZJS9SH9Ju8HP6GsZcvc60GAaxdCaCLJGROU&usqp=CAU',
-      'appointment_date': '25/06/2022',
-      'appointment_time': '5:00 pm',
-      'lawyer_name': 'Fury',
-      'package_name': 'Silver',
-      'price': '2000.00',
-      'meeting_type': 'Chat',
-      'meeting_duration': '2 hrs',
-    },
-    {
-      'lawyer_avatar':
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDeslexVHfYWvbp6HNBGJ5V9lElvRx-lr1ZJS9SH9Ju8HP6GsZcvc60GAaxdCaCLJGROU&usqp=CAU',
-      'appointment_date': '25/06/2022',
-      'appointment_time': '5:00 pm',
-      'lawyer_name': 'Fury',
-      'package_name': 'Silver',
-      'price': '2000.00',
-      'meeting_type': 'Chat',
-      'meeting_duration': '2 hrs',
-    },
-    // Add more appointment data here
-  ];
+  List<Map<String, String>> appointments = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAppointments();
+  }
+
+  Future<void> fetchAppointments() async {
+    final url = Uri.parse('${Constants.API_URL}/get-lawyer-appointments');
+    // final response = await http.get(url);
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString("token");
+
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json;charSet=UTF-8',
+        'Accept': '*/*',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if (data['success']) {
+        final data = json.decode(response.body);
+        print("data");
+        print(data);
+        final List<Map<String, String>> loadedAppointments = [];
+        for (var appointment in data['appointments']) {
+          loadedAppointments.add({
+            'id': appointment['id'].toString() ?? '',
+            'lawyer_avatar':
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDeslexVHfYWvbp6HNBGJ5V9lElvRx-lr1ZJS9SH9Ju8HP6GsZcvc60GAaxdCaCLJGROU&usqp=CAU',
+            'appointment_date': appointment['appointment_date'],
+            'appointment_time': appointment['appointment_time'],
+            'lawyer_name': appointment['lawyer_name'],
+            'package_name': appointment['package_name'],
+            'price': appointment['price'],
+            'meeting_type': appointment['meeting_type'],
+            'meeting_duration': appointment['meeting_duration'],
+          });
+        }
+
+        setState(() {
+          appointments = loadedAppointments;
+          isLoading = false;
+        });
+
+        // setState(() {
+        //   appointments = (data['appointments']).map((appointment) {
+        //     return {
+        //       'lawyer_avatar':
+        //       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDeslexVHfYWvbp6HNBGJ5V9lElvRx-lr1ZJS9SH9Ju8HP6GsZcvc60GAaxdCaCLJGROU&usqp=CAU',
+        //       'appointment_date': appointment['appointment_date'],
+        //       'appointment_time': appointment['appointment_time'],
+        //       'lawyer_name': appointment['lawyer_name'],
+        //       'package_name': appointment['package_name'],
+        //       'price': appointment['price'],
+        //       'meeting_type': appointment['meeting_type'],
+        //       'meeting_duration': appointment['meeting_duration'],
+        //     };
+        //   }).toList();
+        //   isLoading = false;
+        // });
+      }
+    } else {
+      // Handle error
+      setState(() {
+        isLoading = false;
+      });
+      print('Failed to load appointments');
+      print(response.statusCode);
+    }
+  }
 
   // This widget is the root of your application.
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(50),
+            child: WakeelAppBar(back: false),
+          ),
           body: ListView.builder(
             itemCount: appointments.length,
             itemBuilder: (context, index) {
@@ -92,6 +120,37 @@ class _UpcomingAppointmentsState extends State<UpcomingAppointments> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                height: 25,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                    color: const Color(0xFFCA9D3E),
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: const Center(child: Text('Chat')),
+                              ),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              // Container(
+                              //   height: 25,
+                              //   width: 80,
+                              //   decoration: BoxDecoration(
+                              //       color: const Color.fromARGB(255, 19, 59, 20),
+                              //       borderRadius: BorderRadius.circular(15)),
+                              //   child: const Center(
+                              //       child: Text(
+                              //         'Cancel',
+                              //         style: TextStyle(color: Colors.white),
+                              //       )),
+                              // ),
+                            ],
+                          ),
+                        ),
                         Row(
                           children: [
                             Column(
@@ -191,37 +250,7 @@ class _UpcomingAppointmentsState extends State<UpcomingAppointments> {
                             ),
                           ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 25,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                    color: const Color(0xFFCA9D3E),
-                                    borderRadius: BorderRadius.circular(15)),
-                                child: const Center(child: Text('Chat')),
-                              ),
-                              const SizedBox(
-                                width: 15,
-                              ),
-                              Container(
-                                height: 25,
-                                width: 80,
-                                decoration: BoxDecoration(
-                                    color: const Color.fromARGB(255, 19, 59, 20),
-                                    borderRadius: BorderRadius.circular(15)),
-                                child: const Center(
-                                    child: Text(
-                                      'Cancel',
-                                      style: TextStyle(color: Colors.white),
-                                    )),
-                              ),
-                            ],
-                          ),
-                        )
+
                       ],
                     ),
                   ),

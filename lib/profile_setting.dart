@@ -165,39 +165,6 @@ class _profilesettingState extends State<profilesetting> {
                     ),
                   ),
 
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => ChatScreen()));
-                    },
-                    child: const Row(
-                      children: [
-                        SizedBox(
-                          width: 30,
-                        ),
-                        Icon(Icons.message_rounded),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          'Messages',
-                          style: TextStyle(fontSize: 15),
-                        ),
-                        Spacer(),
-                        Icon(
-                          Icons.arrow_forward_ios_outlined,
-                          color: Colors.black,
-                          size: 15,
-                        ),
-                        SizedBox(
-                          width: 30,
-                        ),
-                      ],
-                    ),
-                  ),
                   SizedBox(
                     height: 50,
                   ),

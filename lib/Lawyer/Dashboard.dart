@@ -7,6 +7,7 @@ import 'package:wakeel_app/Lawyer/LAppointments.dart';
 import 'package:wakeel_app/Lawyer/LMessaeHistory.dart';
 import 'package:wakeel_app/Lawyer/LNotifications.dart';
 import 'package:wakeel_app/Lawyer/NewAppointments.dart';
+import 'package:wakeel_app/Lawyer/UpcomingAppointments.dart';
 import 'package:wakeel_app/MessaeHistory.dart';
 import 'package:wakeel_app/notfications_screen.dart';
 import 'package:wakeel_app/profile_setting.dart';
@@ -100,8 +101,8 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     final List<Widget> _screens = [
       homeScreen(),
-      LAppointments(),
-      LMessaeHistory(),
+      UpcomingAppointments(),
+      // LAppointments(),
       LNotifications(),
       profilesetting(),
     ];
@@ -141,12 +142,7 @@ class _DashboardState extends State<Dashboard> {
                         'assests/appointment_icon.png'), //Icon(Icons.notifications),
                   ),
                   BottomNavigationBarItem(
-                    label: 'Messages',
-                    icon: Image.asset(
-                        'assests/message_icon.png'), //Icon(Icons.message_rounded),
-                  ),
-                  BottomNavigationBarItem(
-                    label: 'Notifications',
+                    label: 'Chat Bot',
                     icon: Image.asset(
                         'assests/notification_icon.png'), //Icon(Icons.notifications),
                   ),

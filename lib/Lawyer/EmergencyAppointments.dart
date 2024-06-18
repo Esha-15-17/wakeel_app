@@ -94,8 +94,7 @@ class _EmergencyAppointmentsState extends State<EmergencyAppointments> {
                       children: [
                         Row(
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Column(crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   appointment['lawyer_name']!,

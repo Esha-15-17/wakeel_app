@@ -27,7 +27,7 @@ class _signuplawyerState extends State<signuplawyer> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
-  String _selectedUserRole = 'client'; // Default selected role
+  String _selectedUserRole = 'user'; // Default selected role
 
   bool _showProgress = false;
 
@@ -329,7 +329,7 @@ class _signuplawyerState extends State<signuplawyer> {
                                         _selectedUserRole = newValue!;
                                       });
                                     },
-                                    items: <String>['client', 'lawyer'] // Add more roles if needed
+                                    items: <String>['user', 'lawyer'] // Add more roles if needed
                                         .map<DropdownMenuItem<String>>((String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
@@ -349,14 +349,14 @@ class _signuplawyerState extends State<signuplawyer> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       // Other text fields...
 
                       // User role selection dropdown
                     ],
                   ),
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 GestureDetector(
                   onTap: () {
                     registerUser(

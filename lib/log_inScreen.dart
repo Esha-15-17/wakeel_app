@@ -61,10 +61,11 @@ class _LogInScreenState extends State<LogInScreen> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => lawyerprofile(userRole: 'lawyer'),
+                // builder: (context) => lawyerprofile(userRole: 'lawyer'),
+                builder: (context) => Dashboard(),
               ),
             );
-          } else if (userRole == 'client') {
+          } else if (userRole == 'user') {
             Navigator.push(
               context,
               MaterialPageRoute(

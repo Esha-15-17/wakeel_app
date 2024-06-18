@@ -1,72 +1,69 @@
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:wakeel_app/Constant.dart';
+import 'package:wakeel_app/profile_screen.dart';
+import 'package:wakeel_app/wakeel_app_bar.dart';
+import 'package:http/http.dart' as http;
 
+class appointmentList extends StatefulWidget {
+  @override
+  _AppointmentListState createState() => _AppointmentListState();
+}
 
-class appointmentList extends StatelessWidget {
+class _AppointmentListState extends State<appointmentList> {
+  List<Map<String, String>> appointments = [];
 
-  final List<Map<String, String>> appointments = [
-    {
-      'lawyer_avatar':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDeslexVHfYWvbp6HNBGJ5V9lElvRx-lr1ZJS9SH9Ju8HP6GsZcvc60GAaxdCaCLJGROU&usqp=CAU',
-      'appointment_date': '25/06/2022',
-      'appointment_time': '5:00 pm',
-      'lawyer_name': 'Fury',
-      'package_name': 'Silver',
-      'price': '2000.00',
-      'meeting_type': 'Office Consultation',
-      'meeting_duration': '2 hrs',
-    },
-    {
-      'lawyer_avatar':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDeslexVHfYWvbp6HNBGJ5V9lElvRx-lr1ZJS9SH9Ju8HP6GsZcvc60GAaxdCaCLJGROU&usqp=CAU',
-      'appointment_date': '25/06/2022',
-      'appointment_time': '5:00 pm',
-      'lawyer_name': 'Fury',
-      'package_name': 'Silver',
-      'price': '2000.00',
-      'meeting_type': 'Chat',
-      'meeting_duration': '2 hrs',
-    },
-    {
-      'lawyer_avatar':
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDeslexVHfYWvbp6HNBGJ5V9lElvRx-lr1ZJS9SH9Ju8HP6GsZcvc60GAaxdCaCLJGROU&usqp=CAU',
-      'appointment_date': '25/06/2022',
-      'appointment_time': '5:00 pm',
-      'lawyer_name': 'Fury',
-      'package_name': 'Silver',
-      'price': '2000.00',
-      'meeting_type': 'Chat',
-      'meeting_duration': '2 hrs',
-    },
-    {
-      'lawyer_avatar':
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDeslexVHfYWvbp6HNBGJ5V9lElvRx-lr1ZJS9SH9Ju8HP6GsZcvc60GAaxdCaCLJGROU&usqp=CAU',
-      'appointment_date': '25/06/2022',
-      'appointment_time': '5:00 pm',
-      'lawyer_name': 'Fury',
-      'package_name': 'Silver',
-      'price': '2000.00',
-      'meeting_type': 'Chat',
-      'meeting_duration': '2 hrs',
-    },
-    {
-      'lawyer_avatar':
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDeslexVHfYWvbp6HNBGJ5V9lElvRx-lr1ZJS9SH9Ju8HP6GsZcvc60GAaxdCaCLJGROU&usqp=CAU',
-      'appointment_date': '25/06/2022',
-      'appointment_time': '5:00 pm',
-      'lawyer_name': 'Fury',
-      'package_name': 'Silver',
-      'price': '2000.00',
-      'meeting_type': 'Chat',
-      'meeting_duration': '2 hrs',
-    },
-    // Add more appointment data here
-  ];
+  @override
+  void initState() {
+    super.initState();
+    fetchAppointments();
+  }
+
+  Future<void> fetchAppointments() async {
+    final url = Uri.parse('${Constants.API_URL}/showall-lawyers');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      print("data");
+      print(data);
+      final List<Map<String, String>> loadedAppointments = [];
+      for (var lawyer in data['lawyers']) {
+        loadedAppointments.add({
+          'id': lawyer['id'].toString() ?? '',
+          'profile': lawyer['profile'] ?? '',
+          'name': lawyer['name'] ?? '',
+          'email': lawyer['email'] ?? '',
+          'gender': lawyer['gender'] ?? '',
+          'court': lawyer['court'] ?? '',
+          'experience': lawyer['experience'] ?? '',
+          'residential_area': lawyer['residential_area'] ?? '',
+          'languages_spoken': lawyer['languages_spoken'] ?? '',
+          'zip_code': lawyer['zip_code'] ?? '',
+          'about_me': lawyer['about_me'] ?? '',
+        });
+      }
+      // print("{$loadedAppointments}");
+
+      setState(() {
+        appointments = loadedAppointments;
+      });
+    } else {
+      throw Exception('Failed to load appointments');
+    }
+  }
 
   // This widget is the root of your application.
   Widget build(BuildContext context) {
+    print('render');
+
     return SafeArea(
         child: Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(50),
+        child: WakeelAppBar(back: false),
+      ),
       body: ListView.builder(
         itemCount: appointments.length,
         itemBuilder: (context, index) {
@@ -86,10 +83,22 @@ class appointmentList extends StatelessWidget {
                     Row(
                       children: [
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            const SizedBox(
+                              height: 2,
+                            ),
+                            Image.asset(
+                                (appointment['gender']! == "female")
+                                    ? 'assests/female.PNG'
+                                    : 'assests/male.PNG',
+                                height: 65,
+                                width: 65),
+                            const SizedBox(
+                              height: 10,
+                            ),
                             Text(
-                              appointment['lawyer_name']!,
+                              appointment['name']!,
                               style: const TextStyle(
                                 color: Color(0xFFCA9D3E),
                                 // Set the desired text color
@@ -97,45 +106,17 @@ class appointmentList extends StatelessWidget {
                                     .bold, // You can adjust other styles as needed
                               ),
                             ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Image.network(
-                                height: 55,
-                                width: 55,
-                                appointment['lawyer_avatar']!),
-
-                            // Use the avatar URL
                           ],
                         ),
                         const SizedBox(
-                          width: 33,
+                          width: 40,
                         ),
-                        Expanded(
+                        const Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                'Consultation Type',
-                                style: TextStyle(
-                                  color: Color(0xFF01411C),
-                                  // Set the desired text color
-                                  fontWeight: FontWeight
-                                      .normal, // You can adjust other styles as needed
-                                ),
-                              ),
-                              const Text(
-                                'Consultation Time',
-                                style: TextStyle(
-                                  color: Color(0xFF01411C),
-                                  // Set the desired text color
-                                  fontWeight: FontWeight
-                                      .normal, // You can adjust other styles as needed
-                                ),
-                              ),
-                              const Text(
-                                'Promo Code',
-                                textAlign: TextAlign.left,
+                              Text(
+                                'Court',
                                 style: TextStyle(
                                   color: Color(0xFF01411C),
                                   // Set the desired text color
@@ -144,9 +125,19 @@ class appointmentList extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "ASK${appointment['price']!}",
-                                style: const TextStyle(
-                                  color: Color(0xFFCA9D3E),
+                                'Experience',
+                                style: TextStyle(
+                                  color: Color(0xFF01411C),
+                                  // Set the desired text color
+                                  fontWeight: FontWeight
+                                      .normal, // You can adjust other styles as needed
+                                ),
+                              ),
+                              Text(
+                                'Area',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: Color(0xFF01411C),
                                   // Set the desired text color
                                   fontWeight: FontWeight
                                       .normal, // You can adjust other styles as needed
@@ -160,19 +151,19 @@ class appointmentList extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                appointment['meeting_type']!,
+                                appointment['court']!,
                                 style: const TextStyle(
                                   color: Color(0xFF01411C),
                                 ),
                               ),
                               Text(
-                                appointment['appointment_date']!,
+                                appointment['experience']!,
                                 style: const TextStyle(
                                   color: Color(0xFF01411C),
                                 ),
                               ),
                               Text(
-                                appointment['appointment_time']!,
+                                appointment['residential_area']!,
                                 style: const TextStyle(
                                   color: Color(0xFF01411C),
                                 ),
@@ -187,13 +178,23 @@ class appointmentList extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            height: 25,
-                            width: 100,
-                            decoration: BoxDecoration(
-                                color: const Color(0xFFCA9D3E),
-                                borderRadius: BorderRadius.circular(15)),
-                            child: const Center(child: Text('View Profile')),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+
+                              builder: (context) =>  ProfileScreen(lawyerId: appointment['id']!,)));
+
+                            },
+                            child: Container(
+                              height: 25,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                  color: const Color(0xFFCA9D3E),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: const Center(child: Text('View Profile')),
+                            ),
                           ),
                           const SizedBox(
                             width: 15,

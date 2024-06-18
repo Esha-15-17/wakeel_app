@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/material/input_decorator.dart';
 import 'package:wakeel_app/Constant.dart';
 import 'package:wakeel_app/MessaeHistory.dart';
+import 'package:wakeel_app/appointmentList.dart';
 import 'package:wakeel_app/wakeel_app_bar.dart';
 import 'My_profile.dart';
 import 'my_booking.dart';
@@ -490,7 +491,7 @@ class _legalservicesState extends State<legalservices> {
   Widget build(BuildContext context) {
     final List<Widget> _screens = [
       homeScreen(),
-      MessageHistory(),
+      appointmentList(),
       MessageHistory(),
       Notifications(),
       profilesetting(),
@@ -526,7 +527,7 @@ class _legalservicesState extends State<legalservices> {
                         'assests/home_icon.png'), //Icon(Icons.home),
                   ),
                   BottomNavigationBarItem(
-                    label: 'Appointments',
+                    label: 'Book',
                     icon: Image.asset(
                         'assests/appointment_icon.png'), //Icon(Icons.notifications),
                   ),

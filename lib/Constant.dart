@@ -1,5 +1,5 @@
 class Constants {
- static const String API_URL = "http://192.168.1.109:3000";
+ static const String API_URL = "http://127.0.0.1:3000";
 
  static const int App_yellow_color = 0xFFFFFFFF;
  static const int App_green_color = 0xff01411C;

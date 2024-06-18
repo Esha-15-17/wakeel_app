@@ -16,6 +16,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
+
   Future<bool?> updateState() async
   {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

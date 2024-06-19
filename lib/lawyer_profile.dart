@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:wakeel_app/Lawyer/Dashboard.dart';
 import 'package:wakeel_app/signup_lawyer.dart';
 import 'log_inScreen.dart';
 import 'client_lawyer.dart';
@@ -100,7 +101,7 @@ class _lawyerprofileState extends State<lawyerprofile> {
         print('Update successful');
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => legalservices()),
+          MaterialPageRoute(builder: (context) => Dashboard()),
         );
       } else {
         print('Update failed: ${response.reasonPhrase}');

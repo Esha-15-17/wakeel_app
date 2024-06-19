@@ -80,11 +80,11 @@ class WakeelAppBar extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => menu(),
+                  builder: (context) => Menu(),
                 ),
               );
             },
-            child: Icon(
+            child: const Icon(
               Icons.view_headline_sharp,
               size: 18,
               color: Color(Constants.App_yellow_color),

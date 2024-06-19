@@ -83,7 +83,7 @@ class _appointmentState extends State<appointment> {
                 child: InkWell(
                   onTap: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => findlawyer()));
+                        MaterialPageRoute(builder: (context) => FindLawyer()));
                   },
                   child: Column(
                     children: [

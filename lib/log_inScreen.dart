@@ -27,9 +27,6 @@ class LogInScreen extends StatefulWidget {
 }
 
 class _LogInScreenState extends State<LogInScreen> {
-
-
-
   bool _obscureText = true;
 
   TextEditingController emailController = TextEditingController();
@@ -37,8 +34,7 @@ class _LogInScreenState extends State<LogInScreen> {
   TextEditingController passwordController = TextEditingController();
   String _token = "";
 
-
-  void loginn (String email, password) async {
+  void loginn(String email, password) async {
     try {
       // final response = await http.post(Uri.parse('http://127.0.0.1:3000/login'),
       final response = await http.post(Uri.parse('${Constants.API_URL}/login'),
@@ -49,29 +45,43 @@ class _LogInScreenState extends State<LogInScreen> {
           body: jsonEncode({
             'email': email,
             'password': password,
-          })
-      );
+          }));
       if (response.statusCode == 200) {
         Map<String, dynamic> responseData = jsonDecode(response.body);
         _token = responseData['token'].toString();
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString("token", _token);
+        await prefs.setBool("isLogin", true);
         print('Login successful');
         if (responseData.containsKey('userRole')) {
           String userRole = responseData['userRole'];
           if (userRole == 'lawyer') {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                // builder: (context) => lawyerprofile(userRole: 'lawyer'),
-                builder: (context) => Dashboard(),
-              ),
-            );
+            await prefs.setBool("isLawyer", true);
+
+            bool profileCreate = responseData['profileCreate'];
+            if (profileCreate) {
+              // ignore: use_build_context_synchronously
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Dashboard(),
+                ),
+              );
+            } else {
+              // ignore: use_build_context_synchronously
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => lawyerprofile(userRole: 'lawyer'),
+                ),
+              );
+            }
           } else if (userRole == 'user') {
+            await prefs.setBool("isLawyer", false);
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => legalservices(),
+                builder: (context) => LegalServices(),
               ),
             );
           }
@@ -80,15 +90,12 @@ class _LogInScreenState extends State<LogInScreen> {
         }
       } else {
         print('Failed: ${response.body}');
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: Color(0xff01411C),
-              content: Text('Invalid credentials.'),
-            )
-            );
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Color(0xff01411C),
+          content: Text('Invalid credentials.'),
+        ));
       }
-
-      } catch (e) {
+    } catch (e) {
       print(e.toString());
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -101,8 +108,8 @@ class _LogInScreenState extends State<LogInScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    emailController.text = "adilmalik147@gmail.com";
+    emailController.text = "adilmalik45235@gmail.com";
+    // emailController.text = "adilmalik147@gmail.com";
     passwordController.text = "1234";
 
     return SafeArea(
@@ -193,7 +200,7 @@ class _LogInScreenState extends State<LogInScreen> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
                           borderSide:
-                          BorderSide(color: Colors.black, width: 2.0),
+                              BorderSide(color: Colors.black, width: 2.0),
                         )),
                   ),
                 ),
@@ -226,10 +233,10 @@ class _LogInScreenState extends State<LogInScreen> {
                       borderRadius: BorderRadius.circular(20)),
                   child: Center(
                       child: Text(
-                        'LOGIN',
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      )),
+                    'LOGIN',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  )),
                 ),
               ),
               SizedBox(
@@ -247,7 +254,8 @@ class _LogInScreenState extends State<LogInScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => signuplawyer(userRole:'client'),
+                            builder: (context) =>
+                                signuplawyer(userRole: 'client'),
                           ));
                     },
                     child: Text(

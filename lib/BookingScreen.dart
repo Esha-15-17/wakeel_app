@@ -6,6 +6,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakeel_app/Constant.dart';
 import 'package:wakeel_app/booking.dart';
+import 'package:wakeel_app/splash_screen.dart';
 import 'package:wakeel_app/wakeel_app_bar.dart';
 import 'find_lawyer.dart';
 import 'signup_lawyer.dart';
@@ -126,16 +127,23 @@ class _BookingScreenState extends State<BookingScreen> {
 
       if (response.statusCode == 200) {
         // Handle success as needed
+        // ignore: use_build_context_synchronously
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Appointment Booked'),
-            content: Text('Your appointment has been booked successfully.'),
+            title: const Text('Appointment Booked'),
+            content: const Text('Your appointment has been booked successfully.'),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
-                  Navigator.of(context).popUntil((route) => route.isFirst);
+
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => SplashScreen()),
+                        (route) => false,
+                  );
+                  // Navigator.of(context).popUntil((route) => route.isFirst);
                 },
                 child: Text('OK'),
               ),

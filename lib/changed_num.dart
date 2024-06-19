@@ -36,7 +36,7 @@ class _changednumState extends State<changednum> {
         print('update successful');
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => menu()),
+          MaterialPageRoute(builder: (context) => Menu()),
         );
       } else {
         print('update failed: ${response.body}');

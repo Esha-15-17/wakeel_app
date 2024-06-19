@@ -156,15 +156,6 @@ class _UpcomingAppointmentsState extends State<UpcomingAppointments> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  appointment['lawyer_name']!,
-                                  style: const TextStyle(
-                                    color: Color(0xFFCA9D3E),
-                                    // Set the desired text color
-                                    fontWeight: FontWeight
-                                        .bold, // You can adjust other styles as needed
-                                  ),
-                                ),
                                 const SizedBox(
                                   height: 5,
                                 ),

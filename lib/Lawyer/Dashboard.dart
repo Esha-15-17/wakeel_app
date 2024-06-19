@@ -5,10 +5,12 @@ import 'package:wakeel_app/Constant.dart';
 import 'package:wakeel_app/Lawyer/EmergencyAppointments.dart';
 import 'package:wakeel_app/Lawyer/LAppointments.dart';
 import 'package:wakeel_app/Lawyer/LMessaeHistory.dart';
+import 'package:wakeel_app/Lawyer/LMyProfile.dart';
 import 'package:wakeel_app/Lawyer/LNotifications.dart';
 import 'package:wakeel_app/Lawyer/NewAppointments.dart';
 import 'package:wakeel_app/Lawyer/UpcomingAppointments.dart';
 import 'package:wakeel_app/MessaeHistory.dart';
+import 'package:wakeel_app/My_profile.dart';
 import 'package:wakeel_app/notfications_screen.dart';
 import 'package:wakeel_app/profile_setting.dart';
 import 'package:wakeel_app/wakeel_app_bar.dart';
@@ -100,10 +102,11 @@ class _DashboardState extends State<Dashboard> {
   // This widget is the root of your application.
   Widget build(BuildContext context) {
     final List<Widget> _screens = [
-      homeScreen(),
+      // homeScreen(),
       UpcomingAppointments(),
       // LAppointments(),
       LNotifications(),
+      LMyProfile(),
       profilesetting(),
     ];
 
@@ -131,11 +134,11 @@ class _DashboardState extends State<Dashboard> {
                   });
                 },
                 items: [
-                  BottomNavigationBarItem(
-                    label: 'Home',
-                    icon: Image.asset(
-                        'assests/home_icon.png'), //Icon(Icons.home),
-                  ),
+                  // BottomNavigationBarItem(
+                  //   label: 'Home',
+                  //   icon: Image.asset(
+                  //       'assests/home_icon.png'), //Icon(Icons.home),
+                  // ),
                   BottomNavigationBarItem(
                     label: 'Appointments',
                     icon: Image.asset(
@@ -145,6 +148,11 @@ class _DashboardState extends State<Dashboard> {
                     label: 'Chat Bot',
                     icon: Image.asset(
                         'assests/notification_icon.png'), //Icon(Icons.notifications),
+                  ),
+                  BottomNavigationBarItem(
+                    label: 'Profile',
+                    icon: Image.asset(
+                        'assests/profile_icon.png'), //Icon(Icons.notifications),
                   ),
                   BottomNavigationBarItem(
                     label: 'Settings',

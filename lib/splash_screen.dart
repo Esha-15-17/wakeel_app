@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:wakeel_app/Lawyer/Dashboard.dart';
+import 'package:wakeel_app/legal_sevices.dart';
 import 'package:wakeel_app/log_inScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,17 +17,20 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
-
-  Future<bool?> updateState() async
-  {
+  Future<bool?> updateState() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final bool repeat = prefs.getBool('repeat') ?? true;
+    final bool isLogin = prefs.getBool('isLogin') ?? false;
+    final bool isLawyer = prefs.getBool('isLawyer') ?? false;
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => repeat ? const IntroScreen() : const LogInScreen(),
+            builder: (context) => repeat
+                ? const IntroScreen()
+                : (isLogin
+                    ? (isLawyer ? const Dashboard(): const LegalServices())
+                    : const LogInScreen()),
           ));
     });
   }
@@ -44,11 +49,9 @@ class _SplashScreenState extends State<SplashScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Center(child: Image.asset('assests/justice.png',
-              height: 100,
-              width: 150)
-
-          ),
+          Center(
+              child:
+                  Image.asset('assests/justice.png', height: 100, width: 150)),
           SizedBox(
             height: 20,
           ),
@@ -58,4 +61,3 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
-

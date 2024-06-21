@@ -45,8 +45,7 @@ class ScheduleScreenState extends State<ScheduleScreen> {
               children: [
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF01411C),
-                      onPrimary: Color(0xFF3D3D3D),
+                      foregroundColor: Color(0xFF3D3D3D), backgroundColor: Color(0xFF01411C),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
                             15), // Set the button's border radius
@@ -67,8 +66,7 @@ class ScheduleScreenState extends State<ScheduleScreen> {
                 ),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Color(0xFFCA9D3E),
-                      onPrimary: Color(0xFF3D3D3D),
+                      foregroundColor: Color(0xFF3D3D3D), backgroundColor: Color(0xFFCA9D3E),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
                             15), // Set the button's border radius
@@ -89,8 +87,7 @@ class ScheduleScreenState extends State<ScheduleScreen> {
                 ),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Color(0xFFD9D9D9),
-                      onPrimary: Color(0xFF3D3D3D),
+                      foregroundColor: Color(0xFF3D3D3D), backgroundColor: Color(0xFFD9D9D9),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
                             15), // Set the button's border radius

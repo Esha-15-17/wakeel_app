@@ -113,7 +113,7 @@ class _IntroScreenState extends State<IntroScreen> {
             ElevatedButton(
               onPressed: _nextSlide,
               style: ElevatedButton.styleFrom(
-                primary: const Color(0xFF193A33), // Set button color
+                backgroundColor: const Color(0xFF193A33), // Set button color
               ),
               child: Text(
                 _currentIndex < images.length - 1 ? 'Next' : 'Finish',

@@ -31,14 +31,14 @@ class WakeelAppBar extends StatelessWidget {
             },
           )
               : Container(
-            margin: EdgeInsets.all(16.0),
-            child: Image.asset('assests/wakeel2_removebg_preview.png'),
+            margin: EdgeInsets.all(5.0),
+            child: Image.asset('assests/jh.png'),
           ),
           Spacer(),
           back
               ? Container(
-            margin: EdgeInsets.all(16.0),
-            child: Image.asset('assests/wakeel2_removebg_preview.png'),
+            margin: EdgeInsets.all(5.0),
+            child: Image.asset('assests/jh.png'),
           )
               : SizedBox(),
           back ? SizedBox(width: 2) : SizedBox(),

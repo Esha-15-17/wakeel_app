@@ -102,7 +102,7 @@ class _DashboardState extends State<Dashboard> {
   // This widget is the root of your application.
   Widget build(BuildContext context) {
     final List<Widget> _screens = [
-      // homeScreen(),
+      homeScreen(),
       UpcomingAppointments(),
       // LAppointments(),
       LNotifications(),
@@ -134,11 +134,11 @@ class _DashboardState extends State<Dashboard> {
                   });
                 },
                 items: [
-                  // BottomNavigationBarItem(
-                  //   label: 'Home',
-                  //   icon: Image.asset(
-                  //       'assests/home_icon.png'), //Icon(Icons.home),
-                  // ),
+                  BottomNavigationBarItem(
+                    label: 'Home',
+                    icon: Image.asset(
+                        'assests/home_icon.png'), //Icon(Icons.home),
+                  ),
                   BottomNavigationBarItem(
                     label: 'Appointments',
                     icon: Image.asset(

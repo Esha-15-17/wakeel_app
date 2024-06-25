@@ -428,10 +428,14 @@ class _lawyerprofileState extends State<lawyerprofile> {
                       ),
                     ),
                     for (String specialization in [
-                      'Family Court',
-                      'Crime Court',
-                      'Divorce Court',
-                      'Other'
+                      'child custody',
+                      'Criminology',
+                      'Property',
+                      'Divorse',
+                      'Child custody',
+                      'Cyber crime',
+                      'Taxtation',
+                      'Immigration',
                     ])
                       Row(
                         children: [

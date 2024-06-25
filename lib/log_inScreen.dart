@@ -3,16 +3,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:wakeel_app/Lawyer/Dashboard.dart';
-
 import 'legal_sevices.dart';
 import 'signup_lawyer.dart';
 import 'client_lawyer.dart';
 import 'forget_password.dart';
-import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'Constant.dart';
-import 'forget_password.dart';
 import 'reset_password.dart';
 import 'lawyer_profile.dart';
 import 'verify_email.dart';
@@ -28,39 +25,41 @@ class LogInScreen extends StatefulWidget {
 
 class _LogInScreenState extends State<LogInScreen> {
   bool _obscureText = true;
-
   TextEditingController emailController = TextEditingController();
-
   TextEditingController passwordController = TextEditingController();
   String _token = "";
 
-  void loginn(String email, password) async {
+  void loginn(String email, String password) async {
     try {
-      // final response = await http.post(Uri.parse('http://127.0.0.1:3000/login'),
-      final response = await http.post(Uri.parse('${Constants.API_URL}/login'),
-          headers: <String, String>{
-            'Content-Type': 'application/json;charSet=UTF-8',
-            'Accept': '*/*'
-          },
-          body: jsonEncode({
-            'email': email,
-            'password': password,
-          }));
+      final response = await http.post(
+        Uri.parse('${Constants.API_URL}/login'),
+        headers: <String, String>{
+          'Content-Type': 'application/json;charSet=UTF-8',
+          'Accept': '*/*'
+        },
+        body: jsonEncode({
+          'email': email,
+          'password': password,
+        }),
+      );
+
       if (response.statusCode == 200) {
         Map<String, dynamic> responseData = jsonDecode(response.body);
         _token = responseData['token'].toString();
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString("token", _token);
         await prefs.setBool("isLogin", true);
+
         print('Login successful');
+
         if (responseData.containsKey('userRole')) {
           String userRole = responseData['userRole'];
           if (userRole == 'lawyer') {
             await prefs.setBool("isLawyer", true);
 
-            bool profileCreate = responseData['profileCreate'];
+            bool profileCreate = responseData['profileCreate'] ?? false;
             if (profileCreate) {
-              // ignore: use_build_context_synchronously
+              if (!mounted) return;
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -68,7 +67,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 ),
               );
             } else {
-              // ignore: use_build_context_synchronously
+              if (!mounted) return;
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -78,6 +77,7 @@ class _LogInScreenState extends State<LogInScreen> {
             }
           } else if (userRole == 'user') {
             await prefs.setBool("isLawyer", false);
+            if (!mounted) return;
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -109,7 +109,6 @@ class _LogInScreenState extends State<LogInScreen> {
   @override
   Widget build(BuildContext context) {
     emailController.text = "adilmalik45235@gmail.com";
-    // emailController.text = "adilmalik147@gmail.com";
     passwordController.text = "1234";
 
     return SafeArea(
@@ -122,24 +121,19 @@ class _LogInScreenState extends State<LogInScreen> {
             children: [
               Center(
                 child: SizedBox(
-                    height: 150,
-                    width: 300,
-                    child: Center(child: Image.asset('assests/tarazo.png'))),
+                  height: 150,
+                  width: 300,
+                  child: Center(child: Image.asset('assets/tarazo.png')),
+                ),
               ),
-              SizedBox(
-                height: 30,
-              ),
+              SizedBox(height: 30),
               Text(
                 'Welcome!',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
               ),
-              SizedBox(
-                height: 10,
-              ),
+              SizedBox(height: 10),
               Text('We are happy to see you here'),
-              SizedBox(
-                height: 30,
-              ),
+              SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: SizedBox(
@@ -148,21 +142,22 @@ class _LogInScreenState extends State<LogInScreen> {
                     controller: emailController,
                     style: TextStyle(color: Color(0xff01411C)),
                     decoration: InputDecoration(
-                        hintText: 'Enter Email',
-                        focusColor: Color(0xff01411C),
-                        contentPadding: EdgeInsets.all(8),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(
-                                color: Color(0xff01411C), width: 2.0)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(
-                                color: const Color(0xff01411C), width: 2.0)),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          borderSide: BorderSide(color: Colors.black),
-                        )),
+                      hintText: 'Enter Email',
+                      focusColor: Color(0xff01411C),
+                      contentPadding: EdgeInsets.all(8),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50),
+                        borderSide: BorderSide(color: Color(0xff01411C), width: 2.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50),
+                        borderSide: BorderSide(color: Color(0xff01411C), width: 2.0),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50),
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -175,73 +170,70 @@ class _LogInScreenState extends State<LogInScreen> {
                     controller: passwordController,
                     style: TextStyle(color: Color(0xff01411C)),
                     decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _obscureText
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _obscureText = !_obscureText;
-                            });
-                          },
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscureText ? Icons.visibility : Icons.visibility_off,
                         ),
-                        hintText: 'Password',
-                        focusColor: Color(0xff01411C),
-                        contentPadding: EdgeInsets.all(8),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(color: Color(0xff01411C))),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(
-                                color: const Color(0xff01411C), width: 2.0)),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          borderSide:
-                              BorderSide(color: Colors.black, width: 2.0),
-                        )),
+                        onPressed: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                      ),
+                      hintText: 'Password',
+                      focusColor: Color(0xff01411C),
+                      contentPadding: EdgeInsets.all(8),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50),
+                        borderSide: BorderSide(color: Color(0xff01411C)),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50),
+                        borderSide: BorderSide(color: Color(0xff01411C), width: 2.0),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50),
+                        borderSide: BorderSide(color: Colors.black, width: 2.0),
+                      ),
+                    ),
                   ),
                 ),
               ),
               Padding(
-                  padding: const EdgeInsets.only(left: 250),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => forgetpassword(),
-                          ));
-                    },
-                    child: Text('Forgot Password?'),
-                  )),
-              SizedBox(
-                height: 50,
+                padding: const EdgeInsets.only(left: 250),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => forgetpassword(),
+                      ),
+                    );
+                  },
+                  child: Text('Forgot Password?'),
+                ),
               ),
+              SizedBox(height: 50),
               GestureDetector(
                 onTap: () {
-                  loginn(emailController.text.toString(),
-                      passwordController.text.toString());
+                  loginn(emailController.text, passwordController.text);
                 },
                 child: Container(
                   height: 35,
                   width: 122,
                   decoration: BoxDecoration(
-                      color: Color(0xff01411C),
-                      borderRadius: BorderRadius.circular(20)),
+                    color: Color(0xff01411C),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                   child: Center(
-                      child: Text(
-                    'LOGIN',
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  )),
+                    child: Text(
+                      'LOGIN',
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ),
               ),
-              SizedBox(
-                height: 30,
-              ),
+              SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -252,17 +244,18 @@ class _LogInScreenState extends State<LogInScreen> {
                   InkWell(
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                signuplawyer(userRole: 'client'),
-                          ));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => signuplawyer(userRole: 'client'),
+                        ),
+                      );
                     },
                     child: Text(
                       'Sign Up',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff01411C)),
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff01411C),
+                      ),
                     ),
                   ),
                 ],

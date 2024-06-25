@@ -201,7 +201,7 @@ class _BookingScreenState extends State<BookingScreen> {
             SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: const Color(Constants.App_green_color),
+                backgroundColor: const Color(Constants.App_green_color),
                 // Change background color here
                 padding: const EdgeInsets.symmetric(
                     vertical: 12.0, horizontal: 20), // Adjust padding as needed
@@ -217,7 +217,7 @@ class _BookingScreenState extends State<BookingScreen> {
             SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: const Color(Constants.App_green_color),
+                backgroundColor: const Color(Constants.App_green_color),
                 // Change background color here
                 padding: const EdgeInsets.symmetric(
                     vertical: 12.0, horizontal: 20), // Adjust padding as needed
@@ -310,7 +310,7 @@ class _BookingScreenState extends State<BookingScreen> {
                 bookAppointment();
               },
               style: ElevatedButton.styleFrom(
-                primary: const Color(Constants.App_green_color),
+                backgroundColor: const Color(Constants.App_green_color),
                 // Change background color here
                 padding: const EdgeInsets.symmetric(
                     vertical: 12.0), // Adjust padding as needed

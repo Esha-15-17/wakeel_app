@@ -109,7 +109,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Color(0xff01411C), // Button background color
+                    backgroundColor: Color(0xff01411C), // Button background color
                   ),
                   child: Text(
                     'Send Message',

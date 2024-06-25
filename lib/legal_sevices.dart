@@ -7,6 +7,10 @@ import 'package:wakeel_app/MessaeHistory.dart';
 import 'package:wakeel_app/appointmentList.dart';
 import 'package:wakeel_app/wakeel_app_bar.dart';
 import 'My_profile.dart';
+import 'cs/childcustody.dart';
+import 'cs/criminal.dart';
+import 'cs/divorse.dart';
+import 'cs/property.dart';
 import 'my_booking.dart';
 import 'profile_setting.dart';
 import 'schedule.dart';
@@ -192,108 +196,158 @@ class _LegalServicesState extends State<LegalServices> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 15,
+        SizedBox(height: 15),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Row(children: [
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  // Navigate to Cheque Bounce screen
+                },
+                child: Column(
+                  children: [
+                    Image.asset('assests/cs1.PNG', height: 50, width: 50),
+                    Text('Cheque Bounce'),
+                  ],
+                ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(children: [
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
+            ),
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  // Navigate to Supreme Court screen
+                },
+                child: Column(
+                  children: [
+                    Image.asset('assests/cs2.PNG', height: 50, width: 50),
+                    Text('Supreme Court'),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  // Navigate to Child Custody screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ChildCustodyScreen()),
+                  );
+                },
+                child: Column(
+                  children: [
+                    Image.asset('assests/cs5.PNG', height: 50, width: 50),
+                    Text('Child Custody'),
+                  ],
+                ),
+              ),
+            ),
+          ]),
+        ),
+        SizedBox(height: 15),
+        Row(children: [
+          Expanded(
+            child: InkWell(
+              onTap: () {Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CriminalLawScreen()),
+              );
+                // Navigate to Criminal creen
+              },
+              child: Column(
+                children: [
+                  Image.asset('assests/cs4.PNG', height: 50, width: 50),
+                  Text('Criminal'),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: InkWell(
+              onTap: () {{Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PropertyLawScreen()),
+              );
+                // Navigate to Criminal creen
+              };
+                // Navigate to Property screen
+              },
+              child: Column(
+                children: [
+                  Image.asset('assests/cs3.PNG', height: 50, width: 50),
+                  Text('Property'),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: InkWell(
+              onTap: () {{{Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DivorceLawScreen()),
+              );
+                // Navigate to Criminal creen
+              };
+                // Navigate to Property screen
+              };
+                // Navigate to Divorce screen
+              },
+              child: Column(
+                children: [
+                  Image.asset('assests/cs6.PNG', height: 50, width: 50),
+                  Text('Divorce'),
+                ],
+              ),
+            ),
+          ),
+        ]),
+        SizedBox(height: 20),
+        Row(children: [
+          Expanded(
+            child: InkWell(
+              onTap: () {
+                // Navigate to Cyber crime screen
+              },
+              child: Column(
+                children: [
+                  Image.asset('assests/cc.png', height: 50, width: 50),
+                  SizedBox(height: 8),
+                  Text('Cyber crime'),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: InkWell(
+              onTap: () {
+                // Navigate to Taxation screen
+              },
+              child: Column(
+                children: [
+                  Image.asset('assests/tax.png', height: 50, width: 50),
+                  SizedBox(height: 8),
+                  Text('Taxation'),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: InkWell(
+              onTap: () {
 
-                      },
-                      child: Column(
-                        children: [
-                          Image.asset('assests/cs1.PNG', height: 50, width: 50),
-                          Text('Cheque Bounce'),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Image.asset('assests/cs2.PNG', height: 50, width: 50),
-                        Text('Supreme Court'),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Image.asset('assests/cs5.PNG', height: 50, width: 50),
-                        Text('Child Custody'),
-                      ],
-                    ),
-                  ),
-                ]),
+                // Navigate to Immigration screen
+              },
+              child: Column(
+                children: [
+                  Image.asset('assests/imii.png', height: 50, width: 50),
+                  SizedBox(height: 8),
+                  Text('Immigration'),
+                ],
               ),
-              SizedBox(
-                height: 15,
-              ),
-              Row(children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      Image.asset('assests/cs4.PNG', height: 50, width: 50),
-                      Text('Criminal'),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Image.asset('assests/cs3.PNG', height: 50, width: 50),
-                      Text('Property'),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Image.asset('assests/cs6.PNG', height: 50, width: 50),
-                      Text('Divorce'),
-                    ],
-                  ),
-                ),
-              ]),
-              SizedBox(
-                height: 20,
-              ),
-              Row(children: [
-                Expanded(
-                  child: Column(children: [
-                    Image.asset('assests/cc.png', height: 50, width: 50),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text('Cyber crime'),
-                  ]),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Image.asset('assests/tax.png', height: 50, width: 50),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text('Taxtation'),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Image.asset('assests/imii.png', height: 50, width: 50),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text('Immigration'),
-                    ],
-                  ),
-                ),
-              ]),
+            ),
+          ),
+        ]),
               SizedBox(
                 height: 30,
               ),
@@ -521,7 +575,7 @@ class _LegalServicesState extends State<LegalServices> {
                 height: 20,
               ),
               // Repeat for more legal issues, if you have dynamic data for them
-              // For now, keep it static as per your original implementation
+
             ],
           ),
         ),

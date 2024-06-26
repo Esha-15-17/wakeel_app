@@ -7,10 +7,16 @@ import 'package:wakeel_app/MessaeHistory.dart';
 import 'package:wakeel_app/appointmentList.dart';
 import 'package:wakeel_app/wakeel_app_bar.dart';
 import 'My_profile.dart';
+import 'cs/WVhumanrights.dart';
+import 'cs/cb.dart';
 import 'cs/childcustody.dart';
 import 'cs/criminal.dart';
+import 'cs/cybercrime.dart';
 import 'cs/divorse.dart';
+import 'cs/immigration.dart';
 import 'cs/property.dart';
+import 'cs/supreme.dart';
+import 'cs/taxation.dart';
 import 'my_booking.dart';
 import 'profile_setting.dart';
 import 'schedule.dart';
@@ -202,7 +208,13 @@ class _LegalServicesState extends State<LegalServices> {
           child: Row(children: [
             Expanded(
               child: InkWell(
-                onTap: () {
+                onTap: () {{Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ChequeBounceLawScreen()),
+                );
+                  // Navigate to Criminal creen
+                };
+                  // Navigate
                   // Navigate to Cheque Bounce screen
                 },
                 child: Column(
@@ -215,7 +227,12 @@ class _LegalServicesState extends State<LegalServices> {
             ),
             Expanded(
               child: InkWell(
-                onTap: () {
+                onTap: () {{Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SupremeCourtLawScreen()),
+                );
+                  // Navigate to Criminal creen
+                };
                   // Navigate to Supreme Court screen
                 },
                 child: Column(
@@ -306,9 +323,17 @@ class _LegalServicesState extends State<LegalServices> {
         Row(children: [
           Expanded(
             child: InkWell(
-              onTap: () {
+              onTap: () {{{Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => CybercrimeLawScreen()),
+    );
+    // Navigate to Criminal creen
+    };
+    // Navigate to Property screen
+    };
+    // Navigate to Divorce screen
+    },
                 // Navigate to Cyber crime screen
-              },
               child: Column(
                 children: [
                   Image.asset('assests/cc.png', height: 50, width: 50),
@@ -320,7 +345,12 @@ class _LegalServicesState extends State<LegalServices> {
           ),
           Expanded(
             child: InkWell(
-              onTap: () {
+              onTap: () {{Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TaxationLawScreen()),
+              );
+                // Navigate to Criminal creen
+              };
                 // Navigate to Taxation screen
               },
               child: Column(
@@ -334,7 +364,12 @@ class _LegalServicesState extends State<LegalServices> {
           ),
           Expanded(
             child: InkWell(
-              onTap: () {
+              onTap: () {{Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ImmigrationLawScreen()),
+              );
+                // Navigate to Criminal creen
+              };
 
                 // Navigate to Immigration screen
               },
@@ -375,7 +410,7 @@ class _LegalServicesState extends State<LegalServices> {
                         width: 20,
                       ),
                       Text(
-                        'Human Rights',
+                        'Women Rights',
                         style: TextStyle(fontSize: 15),
                       ),
                       const Spacer(),

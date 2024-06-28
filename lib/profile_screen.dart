@@ -1,16 +1,11 @@
 import 'dart:convert';
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:http/http.dart' as http;
 import 'package:wakeel_app/BookingScreen.dart';
 import 'package:wakeel_app/Constant.dart';
-import 'package:wakeel_app/booking.dart';
 import 'package:wakeel_app/wakeel_app_bar.dart';
-import 'find_lawyer.dart';
-import 'signup_lawyer.dart';
-import 'menu.dart';
-import 'package:http/http.dart' as http;
+
+import 'feedback.dart';
 
 class ProfileScreen extends StatelessWidget {
   final String lawyerId;
@@ -18,11 +13,7 @@ class ProfileScreen extends StatelessWidget {
   ProfileScreen({Key? key, required this.lawyerId}) : super(key: key);
 
   Future<Map<String, dynamic>> _fetchLawyerProfile() async {
-    // Replace with your API URL
-    final url = Uri.parse(
-        '${Constants.API_URL}/profile/findLawyerById?lawyer_id=$lawyerId');
-
-    // Perform API request
+    final url = Uri.parse('${Constants.API_URL}/profile/findLawyerById?lawyer_id=$lawyerId');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -46,7 +37,6 @@ class ProfileScreen extends StatelessWidget {
         }
 
         final lawyer = snapshot.data!['lawyer'];
-
         return Scaffold(
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(50),
@@ -55,166 +45,106 @@ class ProfileScreen extends StatelessWidget {
           body: SingleChildScrollView(
             child: Column(
               children: [
+                const SizedBox(height: 20),
+                CircleAvatar(
+                  radius: 45,
+                  backgroundImage: AssetImage('assests/male.PNG'),
+                ),
                 const SizedBox(height: 10),
-                Container(
-                  height: 90,
-                  child: Row(
+                Text(
+                  lawyer['name'],
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                ),
+                Text(
+                  '${lawyer['experience']} Years at ${lawyer['court']}',
+                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => BookingScreen(lawyerId: lawyerId)));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  ),
+                  child: Text('Proceed To Booking'),
+                ),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FeedbackForm(lawyerId: lawyerId), // Pass lawyerId to the feedback form
+                        )
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.yellow,  // A distinct color for feedback
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  ),
+                  child: Text('Give Feedback'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(width: 50),
-                      Image.asset('assests/male.PNG'),
-                      const SizedBox(width: 30),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            lawyer['name'],
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Text(lawyer['court']),
-                          Text('${lawyer['experience']} Years'),
-                        ],
-                      ),
+                      Text('About', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                      Text(lawyer['about_me'], textAlign: TextAlign.left),
+                      ProfileInfoRow(title: 'Email', value: lawyer['email']),
+                      ProfileInfoRow(title: 'Gender', value: lawyer['gender']),
+                      ProfileInfoRow(title: 'Court', value: lawyer['court']),
+                      ProfileInfoRow(title: 'Languages', value: lawyer['languages_spoken']),
+                      ProfileInfoRow(title: 'Area', value: lawyer['residential_area']),
+                      ProfileInfoRow(title: 'Zip', value: lawyer['zip_code']),
                     ],
                   ),
-                ),
-                const SizedBox(height: 10),
-
-                InkWell(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => BookingScreen(lawyerId: lawyerId,)));
-                  },
-                  child: Container(
-                    height: 30,
-                    width: 150,
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 29, 86, 31),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'Proceed To Booking',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 10),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(width: 30),
-                    Text(
-                      'About',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Text(lawyer['about_me'], textAlign: TextAlign.left),
-                // email
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(width: 28),
-                    const Expanded(
-                      child: Text(
-                        'Email',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Expanded(child: Text(lawyer['email'])),
-                  ],
-                ),
-
-                //gender
-                const SizedBox(height: 10),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(width: 28),
-                    const Expanded(
-                      child: Text(
-                        'Gender',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Expanded(child: Text(lawyer['gender'])),
-                  ],
-                ),
-
-// court
-                const SizedBox(height: 10),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(width: 28),
-                    const Expanded(
-                      child: Text(
-                        'Court',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Expanded(child: Text(lawyer['court'])),
-                  ],
-                ),
-                //lang
-                const SizedBox(height: 10),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(width: 28),
-                    const Expanded(
-                      child: Text(
-                        'Languages',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Expanded(child: Text(lawyer['languages_spoken'])),
-                  ],
-                ),
-
-                //residential_area
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(width: 28),
-                    const Expanded(
-                      child: Text(
-                        'Area',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Expanded(child: Text(lawyer['residential_area'])),
-                  ],
-                ),
-                // zip
-                const SizedBox(height: 10),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(width: 28),
-                    const Expanded(
-                      child: Text(
-                        'Zip',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Expanded(child: Text(lawyer['zip_code'])),
-                  ],
                 ),
               ],
             ),
           ),
         );
       },
+    );
+  }
+}
+
+class ProfileInfoRow extends StatelessWidget {
+  final String title;
+  final String value;
+
+  const ProfileInfoRow({
+    Key? key,
+    required this.title,
+    required this.value,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          ),
+          Expanded(
+            flex: 3,
+            child: Text(value),
+          ),
+        ],
+      ),
     );
   }
 }

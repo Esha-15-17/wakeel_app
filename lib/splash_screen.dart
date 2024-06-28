@@ -51,11 +51,11 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           Center(
               child:
-                  Image.asset('assests/justice.png', height: 100, width: 150)),
+                  Image.asset('assests/jh.png', height: 200, width: 250)),
           SizedBox(
             height: 20,
           ),
-          Image.asset('assests/wakeel2_removebg_preview.png')
+
         ],
       ),
     );

@@ -20,7 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:file_picker/file_picker.dart';
 
 class lawyerprofile extends StatefulWidget {
-  const lawyerprofile({Key? key, required String userRole}) : super(key: key);
+  const lawyerprofile({Key? key, required String userRole, required String lawyerId}) : super(key: key);
 
   @override
   State<lawyerprofile> createState() => _lawyerprofileState();

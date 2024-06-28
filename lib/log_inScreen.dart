@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:wakeel_app/Lawyer/Dashboard.dart';
+import 'admin/admindashboard.dart';
 import 'legal_sevices.dart';
 import 'signup_lawyer.dart';
 import 'client_lawyer.dart';
@@ -22,44 +23,41 @@ class LogInScreen extends StatefulWidget {
   @override
   State<LogInScreen> createState() => _LogInScreenState();
 }
-
 class _LogInScreenState extends State<LogInScreen> {
   bool _obscureText = true;
+
   TextEditingController emailController = TextEditingController();
+
   TextEditingController passwordController = TextEditingController();
   String _token = "";
 
-  void loginn(String email, String password) async {
+  void loginn(String email, password) async {
     try {
-      final response = await http.post(
-        Uri.parse('${Constants.API_URL}/login'),
-        headers: <String, String>{
-          'Content-Type': 'application/json;charSet=UTF-8',
-          'Accept': '*/*'
-        },
-        body: jsonEncode({
-          'email': email,
-          'password': password,
-        }),
-      );
-
+      // final response = await http.post(Uri.parse('http://127.0.0.1:3000/login'),
+      final response = await http.post(Uri.parse('${Constants.API_URL}/login'),
+          headers: <String, String>{
+            'Content-Type': 'application/json;charSet=UTF-8',
+            'Accept': '*/*'
+          },
+          body: jsonEncode({
+            'email': email,
+            'password': password,
+          }));
       if (response.statusCode == 200) {
         Map<String, dynamic> responseData = jsonDecode(response.body);
         _token = responseData['token'].toString();
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString("token", _token);
         await prefs.setBool("isLogin", true);
-
         print('Login successful');
-
         if (responseData.containsKey('userRole')) {
           String userRole = responseData['userRole'];
           if (userRole == 'lawyer') {
             await prefs.setBool("isLawyer", true);
 
-            bool profileCreate = responseData['profileCreate'] ?? false;
+            bool profileCreate = responseData['profileCreate']?? false;
             if (profileCreate) {
-              if (!mounted) return;
+              // ignore: use_build_context_synchronously
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -67,17 +65,16 @@ class _LogInScreenState extends State<LogInScreen> {
                 ),
               );
             } else {
-              if (!mounted) return;
-              Navigator.push(
+              // ignore: use_build_context_synchronously
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => lawyerprofile(userRole: 'lawyer'),
+                  builder: (context) => lawyerprofile(userRole: 'lawyer', lawyerId: '',),
                 ),
               );
             }
           } else if (userRole == 'user') {
             await prefs.setBool("isLawyer", false);
-            if (!mounted) return;
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -105,7 +102,6 @@ class _LogInScreenState extends State<LogInScreen> {
       );
     }
   }
-
   @override
   Widget build(BuildContext context) {
     emailController.text = "adilmalik45235@gmail.com";
@@ -123,7 +119,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 child: SizedBox(
                   height: 150,
                   width: 300,
-                  child: Center(child: Image.asset('assets/tarazo.png')),
+                  child: Center(child: Image.asset('assests/tarazo.png')),
                 ),
               ),
               SizedBox(height: 30),

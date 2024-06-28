@@ -99,7 +99,6 @@ class _BookingScreenState extends State<BookingScreen> {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString("token");
-      print(token);
       final response = await http.post(
         url,
         headers: <String, String>{

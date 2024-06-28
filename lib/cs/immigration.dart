@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:wakeel_app/SpecializationLawyers.dart';
+import 'package:wakeel_app/wakeel_app_bar.dart';
 
 class ImmigrationLawScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Immigration Laws in Pakistan'),
-        backgroundColor: Color(0xFF01411C),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(50),
+        child: WakeelAppBar(back: true),
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +81,7 @@ class ImmigrationLawScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.gavel),
             label: 'Laws',
@@ -110,7 +112,7 @@ class ImmigrationLawScreen extends StatelessWidget {
             // Navigate to Lawyers section
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LawyersScreen()),
+                MaterialPageRoute(builder: (context) => SpecializationLawyers(specialization : "Immigration")),
               );
               break;
           }
@@ -130,21 +132,6 @@ class QueryScreen extends StatelessWidget {
       ),
       body: Center(
         child: Text('Query screen content here'),
-      ),
-    );
-  }
-}
-
-class LawyersScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Lawyers'),
-        backgroundColor: Color(0xFF01411C),
-      ),
-      body: Center(
-        child: Text('Lawyers screen content here'),
       ),
     );
   }

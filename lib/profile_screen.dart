@@ -65,14 +65,14 @@ class ProfileScreen extends StatelessWidget {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => BookingScreen(lawyerId: lawyerId)));
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    foregroundColor: Colors.white,
+                    backgroundColor: const Color(Constants.App_green_color),
+                    foregroundColor: const Color(Constants.App_yellow_color),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                   ),
-                  child: Text('Proceed To Booking'),
+                  child: const Text('Proceed To Booking'),
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton(
@@ -85,14 +85,14 @@ class ProfileScreen extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.yellow,  // A distinct color for feedback
-                    foregroundColor: Colors.white,
+                    backgroundColor: const Color(Constants.App_yellow_color),  // A distinct color for feedback
+                    foregroundColor: const Color(Constants.App_green_color),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                   ),
-                  child: Text('Give Feedback'),
+                  child: const Text('Give Feedback'),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),

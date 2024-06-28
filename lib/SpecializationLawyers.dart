@@ -182,7 +182,7 @@ class SpecializationLawyers extends StatelessWidget {
                                             color: const Color(0xFFCA9D3E),
                                             borderRadius: BorderRadius.circular(15),
                                           ),
-                                          child: const Center(child: Text('View Profile')),
+                                          child: const Center(child: Text('View Profile', style: TextStyle(color: Color(Constants.App_yellow_color)))),
                                         ),
                                       ),
                                       const SizedBox(width: 15),

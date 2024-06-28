@@ -29,7 +29,6 @@ class Menu extends StatelessWidget {
           const SizedBox(
             height: 30,
           ),
-
           InkWell(
             onTap: () {
               Navigator.push(context,
@@ -96,39 +95,7 @@ class Menu extends StatelessWidget {
           const SizedBox(
             height: 15,
           ),
-          InkWell(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Notifications()));
-            },
-            child: const Row(
-              children: [
-                SizedBox(
-                  width: 30,
-                ),
-                Icon(Icons.notifications),
-                SizedBox(
-                  width: 20,
-                ),
-                Text(
-                  'Chat Bot',
-                  style: TextStyle(fontSize: 15),
-                ),
-                Spacer(),
-                Icon(
-                  Icons.arrow_forward_ios_outlined,
-                  color: Colors.black,
-                  size: 15,
-                ),
-                SizedBox(
-                  width: 30,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
+          // KEEP QIUT
           InkWell(
             onTap: () {
               Navigator.push(
@@ -167,12 +134,13 @@ class Menu extends StatelessWidget {
           ),
           InkWell(
             onTap: () async {
-              final SharedPreferences prefs = await SharedPreferences.getInstance();
+              final SharedPreferences prefs =
+                  await SharedPreferences.getInstance();
               await prefs.setBool("isLogin", false);
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => SplashScreen()),
-                    (route) => false,
+                (route) => false,
               );
             },
             child: const Row(

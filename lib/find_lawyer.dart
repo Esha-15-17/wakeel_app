@@ -257,7 +257,7 @@ class _FindLawyerState extends State<FindLawyer> {
                                         borderRadius: BorderRadius.circular(15),
                                       ),
                                       child: const Center(
-                                          child: Text('View Profile')),
+                                          child: Text('View Profile', style: TextStyle(color: Color(Constants.App_yellow_color)))),
                                     ),
                                   ),
                                   const SizedBox(

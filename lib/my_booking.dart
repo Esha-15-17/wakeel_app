@@ -126,7 +126,7 @@ class _BookEmergencyState extends State<BookEmergency> {
                             child: Center(
                               child: Text(
                                 'View Profile',
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Color(Constants.App_yellow_color)),
                               ),
                             ),
                             decoration: BoxDecoration(

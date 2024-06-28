@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:wakeel_app/wakeel_app_bar.dart';
+
+import 'Constant.dart';
 
 class FeedbackForm extends StatefulWidget {
   final String lawyerId;
@@ -52,9 +55,9 @@ class _FeedbackFormState extends State<FeedbackForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Submit Feedback"),
-        backgroundColor: Colors.green,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(50),
+        child: WakeelAppBar(back: true),
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -62,10 +65,11 @@ class _FeedbackFormState extends State<FeedbackForm> {
           key: _formKey,
           child: Column(
             children: <Widget>[
-              Text('Submitting feedback for Lawyer ID: ${widget.lawyerId}'), // Display the lawyerId for reference
+              const Text('Submitting feedback for Lawyer'),
+              const SizedBox(height: 20),
               TextFormField(
                 controller: _commentController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Your Comment',
                   border: OutlineInputBorder(),
                 ),
@@ -77,10 +81,18 @@ class _FeedbackFormState extends State<FeedbackForm> {
                 },
                 maxLines: 3,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: submitFeedback,
-                child: Text('Submit Feedback'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(Constants.App_green_color),
+                  foregroundColor: const Color(Constants.App_yellow_color),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                ),
+                child: const Text('Submit Feedback'),
               ),
             ],
           ),

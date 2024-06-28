@@ -85,8 +85,8 @@ class ProfileScreen extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(Constants.App_yellow_color),  // A distinct color for feedback
-                    foregroundColor: const Color(Constants.App_green_color),
+                    backgroundColor: const Color(0xFFCA9D3E),  // A distinct color for feedback
+                    foregroundColor: const Color(Constants.App_yellow_color),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
                     ),

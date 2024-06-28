@@ -105,7 +105,6 @@ class _DashboardState extends State<Dashboard> {
       homeScreen(),
       UpcomingAppointments(),
       // LAppointments(),
-      LNotifications(),
       LMyProfile(),
       profilesetting(),
     ];
@@ -144,11 +143,7 @@ class _DashboardState extends State<Dashboard> {
                     icon: Image.asset(
                         'assests/appointment_icon.png'), //Icon(Icons.notifications),
                   ),
-                  BottomNavigationBarItem(
-                    label: 'Chat Bot',
-                    icon: Image.asset(
-                        'assests/notification_icon.png'), //Icon(Icons.notifications),
-                  ),
+
                   BottomNavigationBarItem(
                     label: 'Profile',
                     icon: Image.asset(

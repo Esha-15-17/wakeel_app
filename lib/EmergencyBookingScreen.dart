@@ -1,30 +1,37 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart'; // Import the intl package for date/time formatting
 import 'package:wakeel_app/Constant.dart';
-import 'package:wakeel_app/booking.dart';
 import 'package:wakeel_app/splash_screen.dart';
 import 'package:wakeel_app/wakeel_app_bar.dart';
-import 'package:wakeel_app/find_lawyer.dart';
-import 'package:wakeel_app/signup_lawyer.dart';
-import 'package:wakeel_app/menu.dart';
-import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart'; // Import the intl package for date/time formatting
 
-class BookingScreen extends StatefulWidget {
-  final String lawyerId;
-
-  const BookingScreen({Key? key, required this.lawyerId}) : super(key: key);
+class EmergencyBookingScreen extends StatefulWidget {
+  const EmergencyBookingScreen({Key? key}) : super(key: key);
 
   @override
-  _BookingScreenState createState() => _BookingScreenState();
+  _EmergencyBookingScreenState createState() => _EmergencyBookingScreenState();
 }
 
-class _BookingScreenState extends State<BookingScreen> {
+class _EmergencyBookingScreenState extends State<EmergencyBookingScreen> {
   late List<Map<String, dynamic>> packages = [];
   late DateTime selectedDate;
   late TimeOfDay selectedTime;
   String selectedPackageId = ""; // Default value indicating no package selected
+  String selectedSpecialization = ""; // Default specialization
+
+  final List<String> specializations = [
+    'Cheque Bounce',
+    'Supreme Court',
+    'Child Custody',
+    'Criminal',
+    'Property',
+    'Divorce Court',
+    'Cyber Crime',
+    'Taxation',
+    'Immigration',
+  ];
 
   @override
   void initState() {
@@ -37,7 +44,7 @@ class _BookingScreenState extends State<BookingScreen> {
   Future<void> fetchPackages() async {
     // Replace with your API URL
     final url = Uri.parse('${Constants.API_URL}/showallpackages');
-    print("packages");
+    print("Fetching packages");
 
     try {
       final response = await http.get(url);
@@ -56,19 +63,19 @@ class _BookingScreenState extends State<BookingScreen> {
     }
   }
 
-  Future<void> bookAppointment() async {
-    if (selectedPackageId == "") {
+  Future<void> bookEmergencyAppointment() async {
+    if (selectedPackageId == "" || selectedSpecialization == "") {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Package Required'),
-          content: const Text('Please select a package before booking.'),
+          title: Text('Missing Information'),
+          content: Text('Please select a package and a specialization before booking.'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('OK'),
+              child: Text('OK'),
             ),
           ],
         ),
@@ -76,23 +83,19 @@ class _BookingScreenState extends State<BookingScreen> {
       return;
     }
 
-    print("before");
     String formattedTime = DateFormat('HH:mm:ss').format(
       DateTime(2020, 1, 1, selectedTime.hour, selectedTime.minute),
     );
-    print("formattedTime");
-    print(formattedTime);
 
-    // Replace with your API URL
-    final url = Uri.parse('${Constants.API_URL}/book-appointment');
+    final url = Uri.parse('${Constants.API_URL}/emergency-book-appointment');
 
     final requestBody = {
-      'lawyer_id': widget.lawyerId,
       'appointment_date': selectedDate.toString().substring(0, 10),
       // Format YYYY-MM-DD
       'appointment_time': formattedTime,
       // Format HH:MM:SS
-      'package_id': selectedPackageId,
+      'package_id': int.parse(selectedPackageId),
+      'specialization': selectedSpecialization,
     };
     print(requestBody);
 
@@ -106,14 +109,7 @@ class _BookingScreenState extends State<BookingScreen> {
           'Accept': '*/*',
           'Authorization': 'Bearer $token',
         },
-        body: jsonEncode({
-          'lawyer_id': widget.lawyerId,
-          'appointment_date': selectedDate.toString().substring(0, 10),
-          // Format YYYY-MM-DD
-          'appointment_time': formattedTime,
-          // Format HH:MM:SS
-          'package_id': selectedPackageId,
-        }),
+        body: jsonEncode(requestBody),
       );
 
       if (response.statusCode == 200) {
@@ -123,7 +119,7 @@ class _BookingScreenState extends State<BookingScreen> {
           context: context,
           builder: (context) => AlertDialog(
             title: const Text('Appointment Booked'),
-            content: const Text('Your appointment has been booked successfully.'),
+            content: const Text('Your emergency appointment has been booked successfully.'),
             actions: [
               TextButton(
                 onPressed: () {
@@ -134,7 +130,6 @@ class _BookingScreenState extends State<BookingScreen> {
                     MaterialPageRoute(builder: (context) => SplashScreen()),
                         (route) => false,
                   );
-                  // Navigator.of(context).popUntil((route) => route.isFirst);
                 },
                 child: Text('OK'),
               ),
@@ -142,10 +137,10 @@ class _BookingScreenState extends State<BookingScreen> {
           ),
         );
       } else {
-        throw Exception('Failed to book appointment');
+        throw Exception('Failed to book emergency appointment');
       }
     } catch (error) {
-      print('Error booking appointment: $error');
+      print('Error booking emergency appointment: $error');
       // Handle error as needed
     }
   }
@@ -196,6 +191,10 @@ class _BookingScreenState extends State<BookingScreen> {
               _buildSectionHeader('Select Time'),
               const SizedBox(height: 10),
               _buildTimeButton(context),
+              const SizedBox(height: 20),
+              _buildSectionHeader('Select Specialization'),
+              const SizedBox(height: 10),
+              _buildSpecializationDropdown(),
               const SizedBox(height: 20),
               _buildSectionHeader('Select Package'),
               const SizedBox(height: 10),
@@ -252,6 +251,40 @@ class _BookingScreenState extends State<BookingScreen> {
         ),
         trailing: Icon(Icons.edit, color: Color(Constants.App_green_color)),
         onTap: () => _selectTime(context),
+      ),
+    );
+  }
+
+  Widget _buildSpecializationDropdown() {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: DropdownButton<String>(
+          value: selectedSpecialization.isEmpty ? null : selectedSpecialization,
+          hint: Text('Select Specialization', style: TextStyle(color: Color(Constants.App_green_color))),
+          icon: Icon(Icons.arrow_downward, color: Color(Constants.App_green_color)),
+          iconSize: 24,
+          elevation: 16,
+          style: TextStyle(color: Color(Constants.App_green_color)),
+          underline: Container(
+            height: 2,
+            color: Color(Constants.App_green_color),
+          ),
+          onChanged: (String? newValue) {
+            setState(() {
+              selectedSpecialization = newValue!;
+            });
+          },
+          items: specializations.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
@@ -345,7 +378,7 @@ class _BookingScreenState extends State<BookingScreen> {
     return ElevatedButton(
       onPressed: () {
         // Handle booking logic here
-        bookAppointment();
+        bookEmergencyAppointment();
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: const Color(Constants.App_green_color),
@@ -354,7 +387,7 @@ class _BookingScreenState extends State<BookingScreen> {
             vertical: 12.0, horizontal: 40), // Adjust padding as needed
       ),
       child: const Text(
-        'Book Appointment',
+        'Book Emergency Appointment',
         style: TextStyle(
           fontSize: 18.0,
           color: Color(Constants.App_yellow_color),

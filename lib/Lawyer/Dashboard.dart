@@ -102,7 +102,7 @@ class _DashboardState extends State<Dashboard> {
   // This widget is the root of your application.
   Widget build(BuildContext context) {
     final List<Widget> _screens = [
-      homeScreen(),
+      EmergencyAppointments(),
       UpcomingAppointments(),
       // LAppointments(),
       LMyProfile(),

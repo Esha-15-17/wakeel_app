@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:wakeel_app/SpecializationLawyers.dart';
 import 'package:wakeel_app/wakeel_app_bar.dart';
 
+import '../gpt/Query_Solution.dart';
+
 class ChequeBounceLawScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -115,18 +117,4 @@ class ChequeBounceLawScreen extends StatelessWidget {
   }
 }
 
-class QueryScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Query'),
-        backgroundColor: Color(0xFF01411C),
-      ),
-      body: Center(
-        child: Text('Query screen content here'),
-      ),
-    );
-  }
-}
 

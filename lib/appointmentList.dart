@@ -5,6 +5,7 @@ import 'package:wakeel_app/Constant.dart';
 import 'package:wakeel_app/profile_screen.dart';
 import 'package:wakeel_app/wakeel_app_bar.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class appointmentList extends StatefulWidget {
   @override
@@ -221,20 +222,26 @@ class _AppointmentListState extends State<appointmentList> {
                                       const SizedBox(
                                         width: 15,
                                       ),
-                                      Container(
-                                        height: 25,
-                                        width: 80,
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromARGB(
-                                                255, 19, 59, 20),
-                                            borderRadius:
-                                                BorderRadius.circular(15)),
-                                        child: const Center(
+                                      GestureDetector(
+                                        onTap: () {
+                                          launch('sms:');
+                                        },
+                                        child: Container(
+                                          height: 25,
+                                          width: 80,
+                                          decoration: BoxDecoration(
+                                            color: const Color.fromARGB(255, 19, 59, 20),
+                                            borderRadius: BorderRadius.circular(15),
+                                          ),
+                                          child: const Center(
                                             child: Text(
-                                          'Chat',
-                                          style: TextStyle(color: Colors.white),
-                                        )),
+                                              'Chat',
+                                              style: TextStyle(color: Colors.white),
+                                            ),
+                                          ),
+                                        ),
                                       ),
+
                                     ],
                                   ),
                                 )

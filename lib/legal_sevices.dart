@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakeel_app/Constant.dart';
+import 'package:wakeel_app/EmergencyBookingScreen.dart';
 import 'package:wakeel_app/MessaeHistory.dart';
 import 'package:wakeel_app/appointmentList.dart';
 import 'package:wakeel_app/wakeel_app_bar.dart';
@@ -77,9 +78,15 @@ class _LegalServicesState extends State<LegalServices> {
                     Expanded(
                       child: InkWell(
                         onTap: () {
-                          setState(() {
-                            _currentIndex = 2; // Open Book tab
-                          });
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => EmergencyBookingScreen()),
+                          );
+                          //
+                          // setState(() {
+                          //   _currentIndex = 2; // Open Book tab
+                          // });
                         },
                         child: Column(
                           children: [

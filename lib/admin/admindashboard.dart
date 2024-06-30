@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:wakeel_app/Constant.dart'; // Ensure Constant is defined with the correct API URL
+import 'package:wakeel_app/wakeel_app_bar.dart';
 
 class AdminDashboard extends StatefulWidget {
   @override
@@ -15,6 +15,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
   List<Map<String, dynamic>> lawyers = [];
   List<Map<String, dynamic>> filteredLawyers = [];
   List<dynamic> feedbacks = [];
+  List<dynamic> contactMessages = [];
   int _selectedIndex = 0;
   Timer? _timer;
 
@@ -23,6 +24,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
     super.initState();
     fetchLawyers();
     fetchFeedbacks();
+    fetchContactMessages();
     searchController.addListener(_filterLawyers);
     _timer = Timer.periodic(Duration(seconds: 30), (Timer t) => fetchFeedbacks()); // Refresh feedbacks every 30 seconds
   }
@@ -35,9 +37,13 @@ class _AdminDashboardState extends State<AdminDashboard> {
     super.dispose();
   }
 
-  Future<void> fetchLawyers() async {
-    final url = Uri.parse('${Constants.API_URL}/showall-lawyers');
-    final response = await http.get(url);
+  Future<void> fetchLawyers({String search = ''}) async {
+    final url = Uri.parse('${Constants.API_URL}/admin/getAllLawyers');
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({'search': search}),
+    );
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -79,30 +85,40 @@ class _AdminDashboardState extends State<AdminDashboard> {
     }
   }
 
-  Future<void> deleteLawyerProfile(String id) async {
-    final url = Uri.parse('${Constants.API_URL}/delete-lawyer');
-    final response = await http.post(url, body: {'id': id});
+  Future<void> fetchContactMessages() async {
+    final url = Uri.parse('${Constants.API_URL}/admin/getContactUsMessages');
+    final response = await http.get(url);
 
     if (response.statusCode == 200) {
       setState(() {
-        lawyers.removeWhere((lawyer) => lawyer['id'] == id);
-        filteredLawyers.removeWhere((lawyer) => lawyer['id'] == id);
+        contactMessages = jsonDecode(response.body);
       });
     } else {
-      throw Exception('Failed to delete lawyer profile');
+      print('Failed to fetch contact messages');
+    }
+  }
+  Future<void> deleteLawyerProfile(String id) async {
+    final url = Uri.parse('${Constants.API_URL}/admin/deleteLawyer/11');
+    try {
+      final response = await http.delete(url);
+
+      if (response.statusCode == 200) {
+        setState(() {
+          lawyers.removeWhere((lawyer) => lawyer['id'] == id);
+          filteredLawyers.removeWhere((lawyer) => lawyer['id'] == id);
+        });
+      } else {
+        throw Exception('Failed to delete lawyer profile: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error deleting lawyer profile: $e');
+
     }
   }
 
   void _filterLawyers() {
     String query = searchController.text.toLowerCase();
-    setState(() {
-      filteredLawyers = lawyers.where((lawyer) {
-        return lawyer['name'].toLowerCase().contains(query) ||
-            lawyer['residential_area'].toLowerCase().contains(query) ||
-            (lawyer['specialization'] as List)
-                .any((spec) => spec.toLowerCase().contains(query));
-      }).toList();
-    });
+    fetchLawyers(search: query);
   }
 
   void _onItemTapped(int index) {
@@ -288,6 +304,32 @@ class _AdminDashboardState extends State<AdminDashboard> {
             ),
           ],
         );
+      case 2:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Contact Messages:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff01411C))),
+            SizedBox(height: 10),
+            Expanded(
+              child: ListView.builder(
+                itemCount: contactMessages.length,
+                itemBuilder: (context, index) {
+                  final message = contactMessages[index];
+                  return Card(
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: ListTile(
+                      title: Text('Subject: ${message['subject']}', style: TextStyle(fontWeight: FontWeight.bold)),
+                      subtitle: Text(message['message']),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        );
       default:
         return Container();
     }
@@ -296,10 +338,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Admin Dashboard', style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: Color(0xff01411C),
-        centerTitle: true,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(50),
+        child: WakeelAppBar(back: false),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -314,6 +355,10 @@ class _AdminDashboardState extends State<AdminDashboard> {
           BottomNavigationBarItem(
             icon: Icon(Icons.feedback),
             label: 'Feedbacks',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.contact_mail),
+            label: 'Contact Messages',
           ),
         ],
         currentIndex: _selectedIndex,

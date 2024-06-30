@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakeel_app/wakeel_app_bar.dart';
 
 import 'Constant.dart';
@@ -21,22 +22,29 @@ class _FeedbackFormState extends State<FeedbackForm> {
   @override
   Future<void> submitFeedback() async {
     if (_formKey.currentState!.validate()) {
-      final url = Uri.parse('https://a181-2407-aa80-116-419e-21fd-f168-f137-55cf.ngrok-free.app/comment/add');
+      final url = Uri.parse('${Constants.API_URL}/submit-review');
+
       try {
+
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        String? token = prefs.getString("token");
         final response = await http.post(
           url,
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
+            'Accept': '*/*',
+            'Authorization': 'Bearer $token',
           },
           body: jsonEncode({
             'lawyer_id': int.parse(widget.lawyerId),
-            'comment': _commentController.text,
+            'remarks': _commentController.text,
+            'stars': 5,
           }),
         );
 
         if (response.statusCode == 200) {
           ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Feedback submitted successfully!'), backgroundColor: Colors.green)
+              const SnackBar(content: Text('Feedback submitted successfully!'), backgroundColor: Colors.green)
           );
           Navigator.pop(context);
         } else {

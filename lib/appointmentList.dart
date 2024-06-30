@@ -43,6 +43,7 @@ class _AppointmentListState extends State<appointmentList> {
           'languages_spoken': lawyer['languages_spoken'] ?? '',
           'zip_code': lawyer['zip_code'] ?? '',
           'about_me': lawyer['about_me'] ?? '',
+          'phone_number': lawyer['phone_number'] ?? '', // Add phone_number field
         });
       }
       // print("{$loadedAppointments}");
@@ -224,7 +225,7 @@ class _AppointmentListState extends State<appointmentList> {
                                       ),
                                       GestureDetector(
                                         onTap: () {
-                                          launch('sms:');
+                                          launch('sms:${appointment['phone_number']}');
                                         },
                                         child: Container(
                                           height: 25,

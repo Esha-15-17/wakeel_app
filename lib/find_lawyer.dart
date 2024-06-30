@@ -1,33 +1,15 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/material/input_decorator.dart';
-import 'package:wakeel_app/find_lawyer.dart';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart'; // Import url_launcher package for opening external URLs
 import 'package:wakeel_app/wakeel_app_bar.dart';
-import 'appointment.dart';
-import 'booking.dart';
-import 'chatwidget.dart';
-import 'My_profile.dart';
-import 'notfications_screen.dart';
-import 'profile_screen.dart';
-import 'legal_sevices.dart';
-import 'menu.dart';
+
 import 'Constant.dart';
-import 'LEGAL.dart';
-import 'my_booking.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'lawyer.dart';
-import 'package:wakeel_app/MessaeHistory.dart';
-
-import 'profile_setting.dart';
-
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'profile_screen.dart';
 
 class FindLawyer extends StatefulWidget {
-  const FindLawyer({super.key});
+  const FindLawyer({Key? key}) : super(key: key);
 
   @override
   State<FindLawyer> createState() => _FindLawyerState();
@@ -73,6 +55,7 @@ class _FindLawyerState extends State<FindLawyer> {
           'zip_code': lawyer['zip_code'] ?? '',
           'about_me': lawyer['about_me'] ?? '',
           'specialization': lawyer['specialization'] ?? [],
+          'phone_number': lawyer['phone_number'] ?? '', // Add phone_number field
         });
       }
       setState(() {
@@ -96,6 +79,19 @@ class _FindLawyerState extends State<FindLawyer> {
     });
   }
 
+  void _launchNativeChatApp(String phoneNumber) async {
+    // Replace 'whatsapp://' with the appropriate scheme for the chat app you want to open
+    // String url = 'whatsapp://send?phone=$phoneNumber';
+    String url = 'sms:$phoneNumber';
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -117,8 +113,8 @@ class _FindLawyerState extends State<FindLawyer> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text(
                 "Choose your Lawyer",
                 style: TextStyle(
@@ -179,7 +175,7 @@ class _FindLawyerState extends State<FindLawyer> {
                                 const Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         'Court',
@@ -209,7 +205,7 @@ class _FindLawyerState extends State<FindLawyer> {
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         appointment['court'],
@@ -237,15 +233,18 @@ class _FindLawyerState extends State<FindLawyer> {
                             Padding(
                               padding: const EdgeInsets.only(left: 0),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment:
+                                MainAxisAlignment.center,
                                 children: [
                                   InkWell(
                                     onTap: () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => ProfileScreen(
-                                              lawyerId: appointment['id']),
+                                          builder: (context) =>
+                                              ProfileScreen(
+                                                  lawyerId:
+                                                  appointment['id']),
                                         ),
                                       );
                                     },
@@ -254,28 +253,40 @@ class _FindLawyerState extends State<FindLawyer> {
                                       width: 100,
                                       decoration: BoxDecoration(
                                         color: const Color(0xFFCA9D3E),
-                                        borderRadius: BorderRadius.circular(15),
+                                        borderRadius:
+                                        BorderRadius.circular(15),
                                       ),
                                       child: const Center(
-                                          child: Text('View Profile', style: TextStyle(color: Color(Constants.App_yellow_color)))),
+                                          child: Text('View Profile',
+                                              style: TextStyle(
+                                                  color: Color(Constants
+                                                      .App_yellow_color)))),
                                     ),
                                   ),
                                   const SizedBox(
                                     width: 15,
                                   ),
-                                  Container(
-                                    height: 25,
-                                    width: 80,
-                                    decoration: BoxDecoration(
-                                      color:
-                                          const Color.fromARGB(255, 19, 59, 20),
-                                      borderRadius: BorderRadius.circular(15),
+                                  InkWell(
+                                    onTap: () {
+                                      _launchNativeChatApp(appointment[
+                                      'phone_number']); // Call method to open chat app
+                                    },
+                                    child: Container(
+                                      height: 25,
+                                      width: 80,
+                                      decoration: BoxDecoration(
+                                        color: const Color.fromARGB(
+                                            255, 19, 59, 20),
+                                        borderRadius:
+                                        BorderRadius.circular(15),
+                                      ),
+                                      child: const Center(
+                                          child: Text(
+                                            'Chat',
+                                            style:
+                                            TextStyle(color: Colors.white),
+                                          )),
                                     ),
-                                    child: const Center(
-                                        child: Text(
-                                      'Chat',
-                                      style: TextStyle(color: Colors.white),
-                                    )),
                                   ),
                                 ],
                               ),

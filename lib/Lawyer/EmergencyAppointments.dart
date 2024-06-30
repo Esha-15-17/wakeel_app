@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakeel_app/Constant.dart';
 import 'package:wakeel_app/chatwidget.dart';
 import 'package:wakeel_app/wakeel_app_bar.dart';
+import 'package:intl/intl.dart';
 
 class EmergencyAppointments extends StatefulWidget {
   const EmergencyAppointments({super.key});
@@ -127,6 +128,9 @@ class _EmergencyAppointmentsState extends State<EmergencyAppointments> {
           itemCount: appointments.length,
           itemBuilder: (context, index) {
             final appointment = appointments[index];
+            // Format appointment date
+            final formattedDate = DateFormat.yMMMMd().format(DateTime.parse(appointment['appointment_date']));
+
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
@@ -207,7 +211,7 @@ class _EmergencyAppointmentsState extends State<EmergencyAppointments> {
                                   ),
                                 ),
                                 Text(
-                                  appointment['appointment_date'],
+                                  formattedDate,
                                   style: const TextStyle(
                                     color: Color(0xFF01411C),
                                   ),

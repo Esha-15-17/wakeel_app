@@ -81,12 +81,8 @@ class _LegalServicesState extends State<LegalServices> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => EmergencyBookingScreen()),
+                                builder: (context) => const EmergencyBookingScreen()),
                           );
-                          //
-                          // setState(() {
-                          //   _currentIndex = 2; // Open Book tab
-                          // });
                         },
                         child: Column(
                           children: [
@@ -101,7 +97,7 @@ class _LegalServicesState extends State<LegalServices> {
                       child: InkWell(
                         onTap: () {
                           setState(() {
-                            _currentIndex = 1; // Open Find Lawyer tab
+                            _currentIndex = 1;
                           });
                         },
                         child: Column(
@@ -117,7 +113,7 @@ class _LegalServicesState extends State<LegalServices> {
                       child: InkWell(
                         onTap: () {
                           setState(() {
-                            _currentIndex = 2; // Open Book Appointments tab
+                            _currentIndex = 2;
                           });
                         },
                         child: Column(

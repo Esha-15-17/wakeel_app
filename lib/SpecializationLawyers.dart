@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakeel_app/Constant.dart';
 import 'package:wakeel_app/profile_screen.dart';
+import 'package:url_launcher/url_launcher.dart'; // Import url_launcher package
 import 'package:wakeel_app/wakeel_app_bar.dart';
 
 class SpecializationLawyers extends StatelessWidget {
@@ -12,7 +13,6 @@ class SpecializationLawyers extends StatelessWidget {
   SpecializationLawyers({Key? key, required this.specialization}) : super(key: key);
 
   Future<List<dynamic>> _fetchLawyersBySpecialization() async {
-
     final url = Uri.parse('${Constants.API_URL}/getLawyerBySpecialization?specialization=$specialization');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString("token");
@@ -30,6 +30,15 @@ class SpecializationLawyers extends StatelessWidget {
       return jsonDecode(response.body)['lawyers'];
     } else {
       throw Exception('Failed to load lawyers');
+    }
+  }
+
+  void _openNativeChatApp(String phoneNumber) async {
+    String url = 'sms:$phoneNumber'; // SMS URL scheme
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
     }
   }
 
@@ -186,17 +195,23 @@ class SpecializationLawyers extends StatelessWidget {
                                         ),
                                       ),
                                       const SizedBox(width: 15),
-                                      Container(
-                                        height: 25,
-                                        width: 80,
-                                        decoration: BoxDecoration(
-                                          color: const Color.fromARGB(255, 19, 59, 20),
-                                          borderRadius: BorderRadius.circular(15),
-                                        ),
-                                        child: const Center(
-                                          child: Text(
-                                            'Chat',
-                                            style: TextStyle(color: Colors.white),
+                                      InkWell(
+                                        onTap: () {
+                                          // Call function to open native messaging app
+                                          _openNativeChatApp(lawyer['phone_number']);
+                                        },
+                                        child: Container(
+                                          height: 25,
+                                          width: 80,
+                                          decoration: BoxDecoration(
+                                            color: const Color.fromARGB(255, 19, 59, 20),
+                                            borderRadius: BorderRadius.circular(15),
+                                          ),
+                                          child: const Center(
+                                            child: Text(
+                                              'Chat',
+                                              style: TextStyle(color: Colors.white),
+                                            ),
                                           ),
                                         ),
                                       ),

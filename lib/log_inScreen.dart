@@ -52,8 +52,9 @@ class _LogInScreenState extends State<LogInScreen> {
         print('Login successful');
         if (responseData.containsKey('userRole')) {
           String userRole = responseData['userRole'];
+          await prefs.setString("role", userRole);
+
           if (userRole == 'lawyer') {
-            await prefs.setBool("isLawyer", true);
 
             bool profileCreate = responseData['profileCreate']?? false;
             if (profileCreate) {
@@ -74,7 +75,6 @@ class _LogInScreenState extends State<LogInScreen> {
               );
             }
           } else if (userRole == 'user') {
-            await prefs.setBool("isLawyer", false);
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -83,7 +83,6 @@ class _LogInScreenState extends State<LogInScreen> {
             );
           }
           else if (userRole == 'admin') {
-            await prefs.setBool("isLawyer", false);
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -99,7 +98,7 @@ class _LogInScreenState extends State<LogInScreen> {
         print('Failed: ${response.body}');
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Color(0xff01411C),
-          content: Text('Invalid credentials.'),
+          content: Text('Failed: ${response.body}'),
         ));
       }
     } catch (e) {

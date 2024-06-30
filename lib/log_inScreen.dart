@@ -82,6 +82,16 @@ class _LogInScreenState extends State<LogInScreen> {
               ),
             );
           }
+          else if (userRole == 'admin') {
+            await prefs.setBool("isLawyer", false);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AdminDashboard(),
+              ),
+            );
+          }
+
         } else {
           print('User role not found in response data.');
         }
